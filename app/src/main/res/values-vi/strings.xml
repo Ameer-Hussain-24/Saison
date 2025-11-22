@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Saison</string>
+    
+    <!-- Navigation -->
+    <string name="nav_calendar">Lịch</string>
+    <string name="nav_course">Khóa học</string>
+    <string name="nav_tasks">Việc</string>
+    <string name="nav_pomodoro">Tập trung</string>
+    <string name="nav_metronome">Nhịp</string>
+    <string name="nav_settings">Cài đặt</string>
+    
+    <!-- Common Actions -->
+    <string name="action_add">Thêm</string>
+    <string name="action_edit">Sửa</string>
+    <string name="action_delete">Xóa</string>
+    <string name="action_save">Lưu</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_search">Tìm kiếm</string>
+    <string name="action_filter">Lọc</string>
+    <string name="action_sync">Đồng bộ</string>
+    
+    <!-- Task -->
+    <string name="task_title">Tiêu đề</string>
+    <string name="task_description">Mô tả</string>
+    <string name="task_due_date">Hạn chót</string>
+    <string name="task_reminder">Nhắc nhở</string>
+    <string name="task_priority">Ưu tiên</string>
+    <string name="task_category">Danh mục</string>
+    <string name="task_completed">Hoàn thành</string>
+    <string name="task_incomplete">Chưa hoàn thành</string>
+    
+    <!-- Priority -->
+    <string name="priority_low">Thấp</string>
+    <string name="priority_medium">Trung bình</string>
+    <string name="priority_high">Cao</string>
+    <string name="priority_urgent">Khẩn cấp</string>
+    
+    <!-- Calendar -->
+    <string name="calendar_month">Tháng</string>
+    <string name="calendar_week">Tuần</string>
+    <string name="calendar_day">Ngày</string>
+    <string name="calendar_list">Danh sách</string>
+    <string name="calendar_today">Hôm nay</string>
+    
+    <!-- Pomodoro -->
+    <string name="pomodoro_start">Bắt đầu tập trung</string>
+    <string name="pomodoro_pause">Tạm dừng</string>
+    <string name="pomodoro_resume">Tiếp tục</string>
+    <string name="pomodoro_stop">Dừng</string>
+    <string name="pomodoro_work_duration">Thời gian làm việc</string>
+    <string name="pomodoro_break_duration">Thời gian nghỉ</string>
+    <string name="pomodoro_long_break">Nghỉ dài</string>
+    <string name="pomodoro_sessions_completed">Phiên hoàn thành</string>
+    
+    <!-- Metronome -->
+    <string name="metronome_title">Nhịp</string>
+    <string name="metronome_presets">Cài đặt sẵn</string>
+    <string name="metronome_save_preset">Lưu cài đặt</string>
+    <string name="metronome_bpm">BPM</string>
+    <string name="metronome_start">Bắt đầu</string>
+    <string name="metronome_stop">Dừng</string>
+    <string name="metronome_sound">Âm thanh</string>
+    <string name="metronome_sound_woodblock">Gỗ</string>
+    <string name="metronome_sound_click">Click</string>
+    <string name="metronome_sound_beep">Beep</string>
+    
+    <!-- Settings -->
+    <string name="settings_theme">Chủ đề</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="settings_dark_mode">Chế độ tối</string>
+    <string name="settings_dynamic_color">Màu động</string>
+    <string name="settings_sync">Cài đặt đồng bộ</string>
+    <string name="settings_security">Bảo mật</string>
+    <string name="settings_about">Giới thiệu</string>
+    
+    <!-- WebDAV Sync -->
+    <string name="sync_webdav">Đồng bộ WebDAV</string>
+    <string name="sync_url">URL máy chủ</string>
+    <string name="sync_username">Tên người dùng</string>
+    <string name="sync_password">Mật khẩu</string>
+    <string name="sync_auto_sync">Tự động đồng bộ</string>
+    <string name="sync_last_sync">Đồng bộ lần cuối</string>
+    <string name="sync_now">Đồng bộ ngay</string>
+    <string name="sync_success">Đồng bộ thành công</string>
+    <string name="sync_error">Đồng bộ thất bại</string>
+    
+    <!-- Themes -->
+    <string name="theme_dynamic">Động</string>
+    <string name="theme_sakura">Hoa anh đào</string>
+    <string name="theme_mint">Bạc hà</string>
+    <string name="theme_amber">Hổ phách</string>
+    <string name="theme_snow">Tuyết</string>
+    <string name="theme_rain">Mưa</string>
+    <string name="theme_maple">Lá phong</string>
+    <string name="theme_ocean">Đại dương</string>
+    <string name="theme_sunset">Hoàng hôn</string>
+    <string name="theme_forest">Rừng</string>
+    <string name="theme_lavender">Hoa oải hương</string>
+    <string name="theme_desert">Sa mạc</string>
+    <string name="theme_aurora">Cực quang</string>
+    
+    <!-- Common Time -->
+    <string name="time_just_now">Vừa xong</string>
+    <string name="time_minutes_ago">%d phút trước</string>
+    <string name="time_hours_ago">%d giờ trước</string>
+    <string name="time_days_ago">%d ngày trước</string>
+    <string name="time_today_at">Hôm nay %s</string>
+    <string name="time_tomorrow_at">Ngày mai %s</string>
+    <string name="time_yesterday_at">Hôm qua %s</string>
+    
+    <!-- Task Module -->
+    <string name="task_action_quick_add">Thêm nhanh</string>
+    <string name="task_filter_all">Tất cả</string>
+    <string name="task_filter_active">Đang thực hiện</string>
+    <string name="task_filter_completed">Đã hoàn thành</string>
+    <string name="task_stats_incomplete">Chưa hoàn thành</string>
+    <string name="task_stats_overdue">Quá hạn</string>
+    <string name="task_search_placeholder">Tìm kiếm việc...</string>
+    <string name="task_search_no_results">Không tìm thấy việc nào</string>
+    <string name="task_search_query_format">Tìm kiếm: \"%s\"</string>
+    <string name="task_empty_no_tasks">Chưa có việc nào</string>
+    <string name="task_empty_no_active">Không có việc đang thực hiện</string>
+    <string name="task_empty_no_completed">Chưa có việc hoàn thành</string>
+    <string name="task_empty_hint">Nhấn nút bên dưới để thêm việc mới</string>
+    <string name="task_dialog_quick_add_title">Thêm nhanh việc</string>
+    <string name="task_dialog_description_label">Mô tả việc</string>
+    <string name="task_dialog_example_hint">Sử dụng ngôn ngữ tự nhiên, ví dụ:</string>
+    <string name="task_dialog_example_text">\"Họp ngày mai lúc 3 giờ chiều #công việc\"</string>
+    <string name="task_detail_title">Chi tiết việc</string>
+    <string name="task_error_not_found">Không tìm thấy việc</string>
+    <string name="task_field_title">Tiêu đề</string>
+    <string name="task_field_description">Mô tả</string>
+    <string name="task_field_priority">Ưu tiên</string>
+    <string name="task_field_due_date">Hạn chót</string>
+    <string name="task_field_location">Vị trí</string>
+    <string name="task_field_subtasks">Việc con</string>
+    <string name="task_due_date_not_set">Chưa đặt</string>
+    
+    <!-- Settings Module -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_section_appearance">Giao diện</string>
+    <string name="settings_section_language">Ngôn ngữ</string>
+    <string name="settings_section_notifications">Thông báo</string>
+    <string name="settings_section_sync">Đồng bộ</string>
+    <string name="settings_section_pomodoro">Pomodoro</string>
+    <string name="settings_section_metronome">Nhịp</string>
+    <string name="settings_section_about">Giới thiệu</string>
+    
+    <string name="settings_theme_title">Chủ đề</string>
+    <string name="settings_dark_mode_title">Chế độ tối</string>
+    <string name="settings_dark_mode_subtitle">Sử dụng chủ đề tối</string>
+    <string name="settings_bottom_nav_title">Thanh điều hướng</string>
+    <string name="settings_bottom_nav_subtitle">Tùy chỉnh các mục điều hướng</string>
+    <string name="settings_language_title">Ngôn ngữ ứng dụng</string>
+    
+    <string name="settings_notifications_enable_title">Bật thông báo</string>
+    <string name="settings_notifications_enable_subtitle">Nhận nhắc nhở về việc và khóa học</string>
+    <string name="settings_task_reminders_title">Nhắc nhở việc</string>
+    <string name="settings_task_reminders_subtitle">Nhận nhắc nhở hạn chót của việc</string>
+    <string name="settings_course_reminders_title">Nhắc nhở khóa học</string>
+    <string name="settings_course_reminders_subtitle">Nhận nhắc nhở bắt đầu khóa học</string>
+    <string name="settings_pomodoro_reminders_title">Nhắc nhở Pomodoro</string>
+    <string name="settings_pomodoro_reminders_subtitle">Nhận nhắc nhở hoàn thành Pomodoro</string>
+    
+    <string name="settings_auto_sync_title">Tự động đồng bộ</string>
+    <string name="settings_auto_sync_subtitle">Tự động đồng bộ với WebDAV</string>
+    <string name="settings_wifi_only_title">Chỉ đồng bộ qua WiFi</string>
+    <string name="settings_wifi_only_subtitle">Chỉ đồng bộ khi kết nối WiFi</string>
+    <string name="settings_webdav_title">Cấu hình WebDAV</string>
+    <string name="settings_webdav_subtitle">Cấu hình máy chủ WebDAV</string>
+    <string name="settings_sync_now_title">Đồng bộ ngay</string>
+    <string name="settings_sync_last_time">Đồng bộ lần cuối: %s</string>
+    <string name="settings_sync_not_yet">Chưa đồng bộ</string>
+    <string name="settings_sync_error">Lỗi: %s</string>
+    <string name="settings_sync_button">Đồng bộ</string>
+    
+    <string name="settings_pomodoro_duration_title">Thời lượng Pomodoro</string>
+    <string name="settings_pomodoro_duration_subtitle">Làm việc: %1$dph | Nghỉ ngắn: %2$dph | Nghỉ dài: %3$dph</string>
+    
+    <string name="settings_metronome_title">Cài đặt nhịp</string>
+    <string name="settings_metronome_subtitle">BPM mặc định: %d</string>
+    
+    <string name="settings_about_title">Về Saison</string>
+    <string name="settings_about_subtitle">Phiên bản 1.0.0</string>
+    <string name="settings_licenses_title">Giấy phép mã nguồn mở</string>
+    <string name="settings_licenses_subtitle">Xem giấy phép mã nguồn mở</string>
+    
+    <string name="settings_theme_dialog_title">Chọn chủ đề</string>
+    <string name="settings_language_dialog_title">Chọn ngôn ngữ</string>
+    <string name="settings_webdav_dialog_title">Cấu hình WebDAV</string>
+    <string name="settings_webdav_url_label">URL máy chủ</string>
+    <string name="settings_webdav_url_placeholder">https://example.com/webdav</string>
+    <string name="settings_webdav_url_error">Vui lòng nhập URL hợp lệ (http:// hoặc https://)</string>
+    <string name="settings_webdav_username_label">Tên người dùng</string>
+    <string name="settings_webdav_password_label">Mật khẩu</string>
+    <string name="settings_webdav_test_button">Kiểm tra kết nối</string>
+    <string name="settings_webdav_test_success">✓ Kết nối thành công</string>
+    <string name="settings_webdav_test_error">✗ %s</string>
+    
+    <string name="language_zh_cn">简体中文</string>
+    <string name="language_en">English</string>
+    <string name="language_ja">日本語</string>
+    <string name="language_vi">Tiếng Việt</string>
+    
+    <!-- Task Actions -->
+    <string name="task_mark_complete">Đánh dấu hoàn thành</string>
+    <string name="task_unmark_complete">Bỏ đánh dấu hoàn thành</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_back">Quay lại</string>
+    <string name="cd_search">Tìm kiếm</string>
+    <string name="cd_close_search">Đóng tìm kiếm</string>
+    <string name="cd_filter">Lọc</string>
+    <string name="cd_calendar">Lịch</string>
+    <string name="cd_sync_now">Đồng bộ ngay</string>
+    <string name="cd_delete">Xóa</string>
+    <string name="cd_task_completed">Đã hoàn thành</string>
+    <string name="cd_task_incomplete">Chưa hoàn thành</string>
+    <string name="cd_settings">Cài đặt</string>
+    <string name="cd_play">Phát</string>
+    <string name="cd_pause">Tạm dừng</string>
+    <string name="cd_hide_password">Ẩn mật khẩu</string>
+    <string name="cd_show_password">Hiện mật khẩu</string>
+    <string name="cd_previous">Trước</string>
+    <string name="cd_next">Sau</string>
+    <string name="cd_today">Hôm nay</string>
+    <string name="cd_ocr_import">Nhập OCR</string>
+    <string name="cd_week_pattern">Mẫu tuần</string>
+    
+    <!-- Common Actions -->
+    <string name="common_action_close">Đóng</string>
+    <string name="common_action_confirm">Xác nhận</string>
+    
+    <!-- Quick Actions -->
+    <string name="quick_actions_title">Hành động nhanh</string>
+    <string name="quick_action_create_task_desc">Tạo nhiệm vụ mới cho ngày này</string>
+    <string name="quick_action_create_event_desc">Tạo sự kiện mới cho ngày này</string>
+    <string name="quick_action_view_details_desc">Xem tất cả chi tiết cho ngày này</string>
+    
+
+    <!-- Metronome Module -->
+    <string name="metronome_decrease_1">Giảm 1</string>
+    <string name="metronome_decrease_5">Giảm 5</string>
+    <string name="metronome_decrease_10">Giảm 10</string>
+    <string name="metronome_increase_1">Tăng 1</string>
+    <string name="metronome_increase_5">Tăng 5</string>
+    <string name="metronome_increase_10">Tăng 10</string>
+    
+    <!-- Course Module -->
+    <string name="course_title">Lịch học</string>
+    <string name="course_action_add">Thêm khóa học</string>
+    <string name="course_week_format">Tuần %d</string>
+    <string name="course_pattern_all">Tất cả</string>
+    <string name="course_pattern_a">Tuần A</string>
+    <string name="course_pattern_b">Tuần B</string>
+    <string name="course_pattern_odd">Tuần lẻ</string>
+    <string name="course_pattern_even">Tuần chẵn</string>
+    <string name="course_count_format">%d lớp</string>
+    <string name="course_empty_no_courses">Chưa có khóa học</string>
+    <string name="course_empty_hint">Nhấn nút bên dưới để thêm khóa học</string>
+    
+    <!-- Calendar Module -->
+    <string name="calendar_view_month">Tháng</string>
+    <string name="calendar_view_week">Tuần</string>
+    <string name="calendar_view_day">Ngày</string>
+    <string name="calendar_view_list">Danh sách</string>
+    
+    <!-- Day Names -->
+    <string name="day_monday">Thứ hai</string>
+    <string name="day_tuesday">Thứ ba</string>
+    <string name="day_wednesday">Thứ tư</string>
+    <string name="day_thursday">Thứ năm</string>
+    <string name="day_friday">Thứ sáu</string>
+    <string name="day_saturday">Thứ bảy</string>
+    <string name="day_sunday">Chủ nhật</string>
+
+    <!-- Theme Mode -->
+    <string name="settings_theme_mode_title">Chế độ giao diện</string>
+    <string name="theme_mode_follow_system">Theo hệ thống</string>
+    <string name="theme_mode_follow_system_desc">Tự động chuyển đổi giữa giao diện sáng/tối dựa trên cài đặt hệ thống</string>
+    <string name="theme_mode_light">Chế độ sáng</string>
+    <string name="theme_mode_light_desc">Luôn sử dụng giao diện sáng</string>
+    <string name="theme_mode_dark">Chế độ tối</string>
+    <string name="theme_mode_dark_desc">Luôn sử dụng giao diện tối</string>
+    <string name="theme_mode_auto_time">Thời gian động</string>
+    <string name="theme_mode_auto_time_desc">Tự động chuyển đổi chủ đề và màu sắc theo thời gian trong ngày (Bình minh/Sáng/Trưa/Chiều/Hoàng hôn/Tối/Đêm)</string>
+    
+    <!-- Item Types -->
+    <string name="item_type_task">Nhiệm vụ</string>
+    <string name="item_type_schedule">Lịch trình</string>
+    <string name="item_type_event">Sự kiện</string>
+    <string name="item_type_selector_title">Chọn loại</string>
+    <string name="cd_item_type_selector">Bộ chọn loại mục</string>
+    <string name="cd_dropdown_icon">Biểu tượng thả xuống</string>
+    
+    <!-- Sự kiện -->
+    <string name="nav_events">Sự kiện</string>
+    <string name="nav_routine">Thói quen</string>
+    <string name="event_screen_title">Sự kiện</string>
+    <string name="event_create_title">Tạo sự kiện</string>
+    <string name="event_edit_title">Chỉnh sửa sự kiện</string>
+    <string name="event_detail_title">Chi tiết sự kiện</string>
+    <string name="event_title_label">Tiêu đề sự kiện</string>
+    <string name="event_description_label">Mô tả sự kiện</string>
+    <string name="event_category_label">Danh mục sự kiện</string>
+    <string name="event_select_date">Chọn ngày</string>
+    <string name="event_select_time">Chọn giờ</string>
+    <string name="event_created_at">Ngày tạo</string>
+    <string name="event_updated_at">Ngày cập nhật</string>
+    <string name="event_search_placeholder">Tìm kiếm sự kiện...</string>
+    
+    <!-- Danh mục sự kiện -->
+    <string name="event_category_all">Tất cả</string>
+    <string name="event_category_birthday">Sinh nhật</string>
+    <string name="event_category_anniversary">Kỷ niệm</string>
+    <string name="event_category_countdown">Đếm ngược</string>
+    
+    <!-- Hiển thị số ngày -->
+    <string name="event_today">Hôm nay</string>
+    <string name="event_days_remaining">Còn %d ngày</string>
+    <string name="event_days_passed">%d ngày trước</string>
+    
+    <!-- Trạng thái trống -->
+    <string name="event_empty_title">Không có sự kiện</string>
+    <string name="event_empty_message">Nhấn nút bên dưới để tạo sự kiện đầu tiên</string>
+    <string name="event_search_no_results">Không tìm thấy sự kiện</string>
+    <string name="event_search_no_results_message">Không tìm thấy sự kiện phù hợp với \"%s\"</string>
+    <string name="event_not_found">Sự kiện không tồn tại</string>
+    
+    <!-- Trạng thái lỗi -->
+    <string name="event_error_title">Tải thất bại</string>
+    
+    <!-- Hành động -->
+    <string name="action_create_event">Tạo sự kiện</string>
+    <string name="action_clear_search">Xóa tìm kiếm</string>
+    <string name="action_clear">Xóa</string>
+    <string name="action_confirm">Xác nhận</string>
+    
+    <!-- Xác nhận xóa -->
+    <string name="event_delete_confirm_title">Xóa sự kiện</string>
+    <string name="event_delete_confirm_message">Bạn có chắc chắn muốn xóa sự kiện này? Hành động này không thể hoàn tác.</string>
+    
+    <!-- Chọn thời lượng -->
+    <string name="duration_picker_title">Đặt thời lượng</string>
+    <string name="duration_label">Thời lượng hoạt động</string>
+    <string name="duration_not_set">Chưa đặt</string>
+    <string name="duration_hours">Giờ</string>
+    <string name="duration_minutes">Phút</string>
+    <string name="duration_quick_title">Thời lượng thường dùng</string>
+    <string name="duration_15min">15 phút</string>
+    <string name="duration_30min">30 phút</string>
+    <string name="duration_45min">45 phút</string>
+    <string name="duration_1hour">1 giờ</string>
+    <string name="duration_1_5hours">1.5 giờ</string>
+    <string name="duration_2hours">2 giờ</string>
+    <string name="duration_clear">Xóa</string>
+    <string name="duration_format_hours">%d giờ</string>
+    <string name="duration_format_minutes">%d phút</string>
+    <string name="duration_format_hours_minutes">%d giờ %d phút</string>
+    
+    <!-- Xem trước nhiệm vụ -->
+    <string name="task_preview_title">Chi tiết nhiệm vụ</string>
+    <string name="task_edit_title">Chỉnh sửa nhiệm vụ</string>
+    <string name="cd_edit_task">Chỉnh sửa nhiệm vụ</string>
+    <string name="cd_navigate_back">Quay lại</string>
+    <string name="cd_more_actions">Thêm thao tác</string>
+    <string name="action_mark_complete">Đánh dấu hoàn thành</string>
+    <string name="action_mark_incomplete">Đánh dấu chưa hoàn thành</string>
+    <string name="action_share">Chia sẻ</string>
+    <string name="action_go_back">Quay lại</string>
+    <string name="error_task_not_found">Không tìm thấy nhiệm vụ</string>
+    <string name="dialog_delete_task_title">Xóa nhiệm vụ</string>
+    <string name="dialog_delete_task_message">Bạn có chắc chắn muốn xóa nhiệm vụ này? Hành động này không thể hoàn tác.</string>
+    <string name="task_tags">Thẻ</string>
+    <string name="task_subtasks">Nhiệm vụ con</string>
+    <string name="task_attachments">Tệp đính kèm</string>
+    
+    <!-- Pomodoro -->
+    <string name="pomodoro_title">Đồng hồ Pomodoro</string>
+    <string name="pomodoro_select_task">Chọn nhiệm vụ</string>
+    <string name="pomodoro_no_task_selected">Chưa chọn nhiệm vụ</string>
+    <string name="pomodoro_task_duration_format">%s</string>
+    <string name="pomodoro_no_tasks_with_duration">Không có nhiệm vụ nào có thời lượng</string>
+    <string name="pomodoro_change_task">Đổi nhiệm vụ</string>
+    
+    <!-- Hành động Pomodoro -->
+    <string name="pomodoro_action_start">Bắt đầu</string>
+    <string name="pomodoro_action_pause">Tạm dừng</string>
+    <string name="pomodoro_action_resume">Tiếp tục</string>
+    <string name="pomodoro_action_stop">Dừng</string>
+    <string name="pomodoro_early_finish">Kết thúc sớm</string>
+    
+    <!-- Hộp thoại kết thúc sớm -->
+    <string name="pomodoro_early_finish_message">Bạn đã làm việc %d phút. Đánh dấu nhiệm vụ là hoàn thành?</string>
+    <string name="pomodoro_mark_complete">Đánh dấu hoàn thành</string>
+    <string name="pomodoro_just_stop">Chỉ dừng</string>
+    
+    <!-- Cài đặt Pomodoro -->
+    <string name="pomodoro_settings_dialog_title">Cài đặt Pomodoro</string>
+    <string name="pomodoro_work_duration_label">Thời gian làm việc</string>
+    <string name="pomodoro_short_break_label">Nghỉ ngắn</string>
+    <string name="pomodoro_long_break_label">Nghỉ dài</string>
+    <string name="pomodoro_settings_sound">Thông báo âm thanh</string>
+    <string name="pomodoro_settings_vibration">Rung</string>
+    <string name="pomodoro_work_duration_format">%d phút</string>
+    
+    <!-- Thống kê Pomodoro -->
+    <string name="pomodoro_stats_today">Thống kê hôm nay</string>
+    <string name="pomodoro_stats_completed">Đã hoàn thành</string>
+    <string name="pomodoro_stats_duration">Thời lượng</string>
+    <string name="pomodoro_stats_interruptions">Gián đoạn</string>
+    <string name="pomodoro_stats_minutes_format">%d phút</string>
+    <string name="pomodoro_count_format">Đã hoàn thành %d</string>
+    
+    <!-- Thông báo Pomodoro -->
+    <string name="pomodoro_complete_title">Pomodoro hoàn thành</string>
+    <string name="pomodoro_complete_message">Hết thời gian tập trung, hãy nghỉ ngơi!</string>
+    <string name="pomodoro_checkin_success">Tự động check-in thành công</string>
+    <string name="pomodoro_checkin_failed">Tự động check-in thất bại</string>
+    
+    <!-- Ghi chú check-in Pomodoro -->
+    <string name="pomodoro_checkin_note_complete">Hoàn thành qua Pomodoro</string>
+    <string name="pomodoro_checkin_note_early_finish">Kết thúc sớm (thời gian thực tế: %d phút)</string>
+    
+    <!-- Trạng thái bộ đếm thời gian Pomodoro -->
+    <string name="pomodoro_status_completed">Hoàn thành!</string>
+    <string name="pomodoro_status_focusing">Đang tập trung</string>
+    <string name="pomodoro_status_paused">Đã tạm dừng</string>
+    <string name="pomodoro_status_ready">Sẵn sàng bắt đầu</string>
+    
+    <!-- Thông điệp Pomodoro -->
+    <string name="pomodoro_message_marked_complete">Đã đánh dấu hoàn thành</string>
+    <string name="pomodoro_message_checkin_failed">Check-in thất bại: %s</string>
+    <string name="pomodoro_message_auto_checkin_success">Tự động check-in thành công</string>
+    <string name="pomodoro_message_auto_checkin_failed">Tự động check-in thất bại: %s</string>
+    
+    <!-- Bộ chọn tuần -->
+    <string name="week_selector_title">Chọn tuần</string>
+    <string name="week_selector_tab_week_number">Chế độ tuần</string>
+    <string name="week_selector_tab_date_range">Phạm vi ngày</string>
+    <string name="week_selector_quick_all">Tất cả tuần</string>
+    <string name="week_selector_quick_odd">Tuần lẻ</string>
+    <string name="week_selector_quick_even">Tuần chẵn</string>
+    <string name="week_selector_selected_count">Đã chọn %d tuần</string>
+    <string name="week_selector_no_selection">Chưa chọn tuần</string>
+    <string name="week_selector_error_no_weeks">Vui lòng chọn ít nhất một tuần</string>
+    <string name="week_selector_error_out_of_range">Tuần đã chọn vượt quá phạm vi học kỳ</string>
+    
+    <!-- Chế độ phạm vi ngày -->
+    <string name="date_range_start_date">Ngày bắt đầu</string>
+    <string name="date_range_end_date">Ngày kết thúc</string>
+    <string name="date_range_repeat_mode">Chế độ lặp lại</string>
+    <string name="date_range_repeat_every_week">Mỗi tuần</string>
+    <string name="date_range_repeat_odd_weeks">Tuần lẻ</string>
+    <string name="date_range_repeat_even_weeks">Tuần chẵn</string>
+    <string name="date_range_select_date">Chọn ngày</string>
+    <string name="date_range_not_set">Chưa đặt</string>
+    
+    <!-- Nhãn mẫu tuần -->
+    <string name="week_pattern_all">Tất cả tuần</string>
+    <string name="week_pattern_odd">Tuần lẻ</string>
+    <string name="week_pattern_even">Tuần chẵn</string>
+    <string name="week_pattern_a">Tuần A</string>
+    <string name="week_pattern_b">Tuần B</string>
+    <string name="week_pattern_custom">Tùy chỉnh</string>
+    <string name="week_pattern_custom_format">Tuần %s</string>
+    <string name="week_pattern_custom_count">Tùy chỉnh (%d tuần)</string>
+    
+    <!-- Chỉ báo tuần hiện tại -->
+    <string name="current_week_indicator_title">Tuần hiện tại</string>
+    <string name="current_week_format">Tuần %1$d / %2$d</string>
+    <string name="show_all_courses">Hiển thị tất cả khóa học</string>
+    <string name="show_current_week_only">Chỉ tuần này</string>
+    <string name="cd_toggle_show_mode">Chuyển đổi chế độ hiển thị</string>
+    
+    <!-- Cài đặt học kỳ -->
+    <string name="semester_settings_title">Cài đặt học kỳ</string>
+    <string name="semester_start_date">Ngày bắt đầu học kỳ</string>
+    <string name="semester_start_date_desc">Đặt ngày bắt đầu tuần đầu tiên để tính số tuần hiện tại</string>
+    <string name="semester_start_date_not_set">Chưa đặt</string>
+    <string name="semester_total_weeks">Tổng số tuần</string>
+    <string name="semester_total_weeks_desc">Đặt tổng số tuần trong học kỳ (16-24 tuần)</string>
+    <string name="semester_total_weeks_format">%d tuần</string>
+    <string name="semester_weeks_range_min">16 tuần</string>
+    <string name="semester_weeks_range_mid">20 tuần</string>
+    <string name="semester_weeks_range_max">24 tuần</string>
+    <string name="cd_semester_settings">Cài đặt học kỳ</string>
+    <string name="cd_select_date">Chọn ngày</string>
+    
+    <!-- Liên quan đến tuần khóa học -->
+    <string name="course_week_detail">Xem chi tiết</string>
+    <string name="course_this_week">Tuần này có</string>
+    <string name="course_not_this_week">Tuần này không có</string>
+    <string name="cd_back_to_current_week">Quay lại tuần hiện tại</string>
+    
+    <!-- Quản lý học kỳ -->
+    <string name="semester_management">Quản lý học kỳ</string>
+    <string name="semester_create">Tạo học kỳ</string>
+    <string name="semester_edit">Chỉnh sửa học kỳ</string>
+    <string name="semester_delete">Xóa học kỳ</string>
+    <string name="semester_copy">Sao chép học kỳ</string>
+    <string name="semester_archive">Lưu trữ</string>
+    <string name="semester_unarchive">Bỏ lưu trữ</string>
+    <string name="semester_archived">Đã lưu trữ</string>
+    <string name="semester_current">Hiện tại</string>
+    <string name="semester_name">Tên học kỳ</string>
+    <string name="semester_name_hint">Ví dụ: Học kỳ xuân 2025</string>
+    <string name="semester_start_date_label">Ngày bắt đầu</string>
+    <string name="semester_end_date">Ngày kết thúc</string>
+    <string name="semester_total_weeks_label">Tổng số tuần</string>
+    <string name="semester_weeks_format">%d tuần</string>
+    <string name="semester_view_all">Xem tất cả học kỳ</string>
+    <string name="semester_no_selection">Chưa chọn học kỳ</string>
+    <string name="semester_active">Học kỳ đang hoạt động</string>
+    <string name="semester_no_active">Không có học kỳ đang hoạt động</string>
+    <string name="semester_stats_courses">Khóa học</string>
+    <string name="semester_stats_courses_format">%d môn</string>
+    <string name="semester_stats_weeks">Tuần</string>
+    <string name="semester_stats_weeks_format">%d tuần</string>
+    <string name="semester_stats_hours">Tổng giờ</string>
+    <string name="semester_stats_hours_format">%d giờ</string>
+    <string name="semester_delete_confirm_title">Xóa học kỳ</string>
+    <string name="semester_delete_confirm_message">Bạn có chắc chắn muốn xóa học kỳ \"%s\" không?</string>
+    <string name="semester_delete_warning">Cảnh báo: Học kỳ này chứa %d khóa học. Xóa học kỳ cũng sẽ xóa tất cả các khóa học!</string>
+    <string name="semester_copy_dialog_title">Sao chép học kỳ</string>
+    <string name="semester_copy_dialog_message">Tất cả các khóa học từ học kỳ \"%s\" sẽ được sao chép sang học kỳ mới.</string>
+    <string name="semester_copy_new_name">Tên học kỳ mới</string>
+    <string name="semester_default_name">Học kỳ hiện tại</string>
+    <string name="semester_copy_suffix"> - Bản sao</string>
+    <string name="error_cannot_delete_current">Không thể xóa học kỳ hiện tại. Vui lòng chuyển sang học kỳ khác trước.</string>
+    <string name="error_cannot_delete_last">Không thể xóa học kỳ cuối cùng.</string>
+    <!-- ICS Import/Export -->
+    <string name="import_courses">Nhập thời khóa biểu</string>
+    <string name="export_courses">Xuất thời khóa biểu</string>
+    <string name="import_preview_title">Xem trước nhập</string>
+    <string name="import_success">Đã nhập thành công %d môn học</string>
+    <string name="import_error">Nhập thất bại: %s</string>
+    <string name="export_success">Đã xuất thời khóa biểu</string>
+    <string name="export_error">Xuất thất bại: %s</string>
+    <string name="select_all">Chọn tất cả</string>
+    <string name="deselect_all">Bỏ chọn tất cả</string>
+    <string name="duplicate_warning">Phát hiện môn học trùng lặp</string>
+    <string name="invalid_ics_format">Định dạng tệp ICS không hợp lệ</string>
+    <string name="empty_ics_file">Tệp không chứa dữ liệu môn học</string>
+    <string name="confirm_import">Xác nhận nhập</string>
+    <string name="import_selected_count">Đã chọn %1$d / %2$d môn học</string>
+    <string name="back">Quay lại</string>
+    <string name="file_name">Tên tệp</string>
+    <string name="file_name_hint">Tệp sẽ được lưu dưới định dạng .ics</string>
+    <string name="export">Xuất</string>
+    <string name="close">Đóng</string>
+    <string name="share">Chia sẻ</string>
+    <string name="share_course_schedule">Chia sẻ thời khóa biểu</string>
+    <string name="export_courses_description">Xuất tất cả môn học từ học kỳ hiện tại dưới dạng tệp ICS</string>
+    <string name="export_success_message">Xuất thời khóa biểu thành công. Bạn có thể chia sẻ hoặc lưu tệp.</string>
+    
+    <!-- Tối ưu giao diện thời khóa biểu -->
+    <string name="period_number_format">Tiết %d</string>
+    <string name="time_range_format">%s-%s</string>
+    <string name="week_number_format">Tuần %1$d / %2$d</string>
+    <string name="empty_timetable_message">Tuần này không có lớp học</string>
+    <string name="empty_timetable_action">Thêm khóa học</string>
+    <string name="back_to_current_week">Quay lại tuần hiện tại</string>
+
+    <!-- Cài đặt tiết học -->
+    <string name="course_settings_morning_periods">Tiết buổi sáng</string>
+    <string name="course_settings_afternoon_periods">Tiết buổi chiều</string>
+    <string name="course_settings_evening_periods">Tiết buổi tối</string>
+    <string name="course_settings_morning_periods_desc">Số tiết buổi sáng (1-6 tiết)</string>
+    <string name="course_settings_afternoon_periods_desc">Số tiết buổi chiều (1-6 tiết)</string>
+    <string name="course_settings_evening_periods_desc">Số tiết buổi tối (0-3 tiết)</string>
+    <string name="course_settings_dinner_break">Thời gian nghỉ tối</string>
+    <string name="course_settings_dinner_break_desc">Thời gian nghỉ trước lớp tối</string>
+    
+    <!-- Thời gian tiết học -->
+    <string name="period_time_morning">Buổi sáng</string>
+    <string name="period_time_afternoon">Buổi chiều</string>
+    <string name="period_time_evening">Buổi tối</string>
+    
+    <!-- Lỗi xác thực -->
+    <string name="error_morning_periods_range">Số tiết buổi sáng phải từ 1-6</string>
+    <string name="error_afternoon_periods_range">Số tiết buổi chiều phải từ 1-6</string>
+    <string name="error_evening_periods_range">Số tiết buổi tối phải từ 0-3</string>
+    <string name="error_total_periods_range">Tổng số tiết (%d) phải từ 1-12</string>
+    <string name="error_dinner_break_range">Thời gian nghỉ tối phải từ 30-120 phút và là bội số của 5</string>
+</resources>

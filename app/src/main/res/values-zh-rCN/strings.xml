@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Saison</string>
+    
+    <!-- Navigation -->
+    <string name="nav_calendar">日历</string>
+    <string name="nav_course">课程</string>
+    <string name="nav_tasks">任务</string>
+    <string name="nav_pomodoro">专注</string>
+    <string name="nav_metronome">节拍</string>
+    <string name="nav_subscription">订阅列表</string>
+    <string name="nav_settings">设置</string>
+    
+    <!-- Common Actions -->
+    <string name="action_add">添加</string>
+    <string name="action_edit">编辑</string>
+    <string name="action_delete">删除</string>
+    <string name="action_save">保存</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_search">搜索</string>
+    <string name="action_filter">筛选</string>
+    <string name="action_sync">同步</string>
+    
+    <!-- Task -->
+    <string name="task_title">标题</string>
+    <string name="task_description">描述</string>
+    <string name="task_due_date">截止日期</string>
+    <string name="task_reminder">提醒</string>
+    <string name="task_priority">优先级</string>
+    <string name="task_category">分类</string>
+    <string name="task_completed">已完成</string>
+    <string name="task_incomplete">未完成</string>
+    
+    <!-- Priority -->
+    <string name="priority_low">低</string>
+    <string name="priority_medium">中</string>
+    <string name="priority_high">高</string>
+    <string name="priority_urgent">紧急</string>
+    
+    <!-- Calendar -->
+    <string name="calendar_month">月</string>
+    <string name="calendar_week">周</string>
+    <string name="calendar_day">日</string>
+    <string name="calendar_list">列表</string>
+    <string name="calendar_today">今天</string>
+    
+    <!-- Pomodoro -->
+    <string name="pomodoro_start">开始专注</string>
+    <string name="pomodoro_pause">暂停</string>
+    <string name="pomodoro_resume">继续</string>
+    <string name="pomodoro_stop">停止</string>
+    <string name="pomodoro_work_duration">工作时长</string>
+    <string name="pomodoro_break_duration">休息时长</string>
+    <string name="pomodoro_long_break">长休息</string>
+    <string name="pomodoro_sessions_completed">已完成番茄钟</string>
+    
+    <!-- Metronome -->
+    <string name="metronome_title">节拍器</string>
+    <string name="metronome_presets">预设</string>
+    <string name="metronome_save_preset">保存预设</string>
+    <string name="metronome_bpm">节拍</string>
+    <string name="metronome_start">开始</string>
+    <string name="metronome_stop">停止</string>
+    <string name="metronome_sound">音效</string>
+    <string name="metronome_sound_woodblock">木鱼</string>
+    <string name="metronome_sound_click">咔嗒</string>
+    <string name="metronome_sound_beep">哔哔</string>
+    
+    <!-- Settings -->
+    <string name="settings_theme">主题</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_dark_mode">深色模式</string>
+    <string name="settings_dynamic_color">动态颜色</string>
+    <string name="settings_sync">同步设置</string>
+    <string name="settings_security">安全</string>
+    <string name="settings_about">关于</string>
+    
+    <!-- WebDAV Sync -->
+    <string name="sync_webdav">WebDAV 同步</string>
+    <string name="sync_url">服务器地址</string>
+    <string name="sync_username">用户名</string>
+    <string name="sync_password">密码</string>
+    <string name="sync_auto_sync">自动同步</string>
+    <string name="sync_last_sync">上次同步</string>
+    <string name="sync_now">立即同步</string>
+    <string name="sync_success">同步成功</string>
+    <string name="sync_error">同步失败</string>
+    
+    <!-- Themes -->
+    <string name="theme_dynamic">动态</string>
+    <string name="theme_sakura">樱花</string>
+    <string name="theme_mint">薄荷</string>
+    <string name="theme_amber">琥珀</string>
+    <string name="theme_snow">雪</string>
+    <string name="theme_rain">雨</string>
+    <string name="theme_maple">枫叶</string>
+    <string name="theme_ocean">海洋</string>
+    <string name="theme_sunset">日落</string>
+    <string name="theme_forest">森林</string>
+    <string name="theme_lavender">薰衣草</string>
+    <string name="theme_desert">沙漠</string>
+    <string name="theme_aurora">极光</string>
+    
+    <!-- Common Time -->
+    <string name="time_just_now">刚刚</string>
+    <string name="time_minutes_ago">%d 分钟前</string>
+    <string name="time_hours_ago">%d 小时前</string>
+    <string name="time_days_ago">%d 天前</string>
+    <string name="time_today_at">今天 %s</string>
+    <string name="time_tomorrow_at">明天 %s</string>
+    <string name="time_yesterday_at">昨天 %s</string>
+    
+    <!-- Task Module -->
+    <string name="task_action_quick_add">快速添加</string>
+    <string name="task_filter_all">全部</string>
+    <string name="task_filter_active">进行中</string>
+    <string name="task_filter_completed">已完成</string>
+    <string name="task_filter_favorite">已标星</string>
+    <string name="task_stats_incomplete">待完成</string>
+    <string name="task_stats_favorite">已标星</string>
+    <string name="task_stats_overdue">已逾期</string>
+    <string name="task_stats_today_completed">今日完成</string>
+    <string name="task_multi_select_title">已选择 %d 项</string>
+    <string name="task_search_placeholder">搜索任务...</string>
+    <string name="task_search_no_results">未找到相关任务</string>
+    <string name="task_search_query_format">搜索: \"%s\"</string>
+    <string name="task_empty_no_tasks">还没有任务</string>
+    <string name="task_empty_no_active">没有进行中的任务</string>
+    <string name="task_empty_no_completed">还没有完成的任务</string>
+    <string name="task_empty_no_favorite">还没有标星的任务</string>
+    <string name="task_empty_hint">点击右下角按钮添加新任务</string>
+    <string name="task_dialog_quick_add_title">快速添加任务</string>
+    <string name="task_dialog_description_label">任务描述</string>
+    <string name="task_dialog_example_hint">使用自然语言描述任务，例如：</string>
+    <string name="task_dialog_example_text">\"明天下午3点开会 #工作\"</string>
+    <string name="task_detail_title">任务详情</string>
+    <string name="task_error_not_found">任务不存在</string>
+    <string name="task_field_title">标题</string>
+    <string name="task_field_description">描述</string>
+    <string name="task_field_priority">优先级</string>
+    <string name="task_field_due_date">截止日期</string>
+    <string name="task_field_location">位置</string>
+    <string name="task_field_subtasks">子任务</string>
+    <string name="task_due_date_not_set">未设置</string>
+    
+    <!-- Settings Module -->
+    <string name="settings_title">设置</string>
+    <string name="settings_section_appearance">外观</string>
+    <string name="settings_section_language">语言</string>
+    <string name="settings_section_notifications">通知</string>
+    <string name="settings_section_sync">同步</string>
+    <string name="settings_section_pomodoro">番茄钟</string>
+    <string name="settings_section_metronome">节拍器</string>
+    <string name="settings_section_about">关于</string>
+    
+    <string name="settings_theme_title">主题</string>
+    <string name="settings_dark_mode_title">深色模式</string>
+    <string name="settings_dark_mode_subtitle">使用深色主题</string>
+    <string name="settings_bottom_nav_title">底部导航栏</string>
+    <string name="settings_bottom_nav_subtitle">自定义显示的导航项</string>
+    <string name="settings_language_title">应用语言</string>
+    
+    <string name="settings_notifications_enable_title">启用通知</string>
+    <string name="settings_notifications_enable_subtitle">接收任务和课程提醒</string>
+    <string name="settings_task_reminders_title">任务提醒</string>
+    <string name="settings_task_reminders_subtitle">接收任务截止日期提醒</string>
+    <string name="settings_course_reminders_title">课程提醒</string>
+    <string name="settings_course_reminders_subtitle">接收课程开始提醒</string>
+    <string name="settings_pomodoro_reminders_title">番茄钟提醒</string>
+    <string name="settings_pomodoro_reminders_subtitle">接收番茄钟完成提醒</string>
+    
+    <string name="settings_auto_sync_title">自动同步</string>
+    <string name="settings_auto_sync_subtitle">自动同步到 WebDAV</string>
+    <string name="settings_wifi_only_title">仅 WiFi 同步</string>
+    <string name="settings_wifi_only_subtitle">仅在 WiFi 网络下同步</string>
+    <string name="settings_webdav_title">WebDAV 配置</string>
+    <string name="settings_webdav_subtitle">配置 WebDAV 服务器</string>
+    <string name="settings_sync_now_title">立即同步</string>
+    <string name="settings_sync_last_time">上次同步: %s</string>
+    <string name="settings_sync_not_yet">尚未同步</string>
+    <string name="settings_sync_error">错误: %s</string>
+    <string name="settings_sync_button">同步</string>
+    
+    <string name="settings_pomodoro_duration_title">番茄钟时长</string>
+    <string name="settings_pomodoro_duration_subtitle">工作: %1$d分 | 短休息: %2$d分 | 长休息: %3$d分</string>
+    
+    <string name="settings_metronome_title">节拍器设置</string>
+    <string name="settings_metronome_subtitle">默认 BPM: %d</string>
+    
+    <string name="settings_about_title">关于 Saison</string>
+    <string name="settings_about_subtitle">版本 1.0.0</string>
+    <string name="settings_licenses_title">开源许可</string>
+    <string name="settings_licenses_subtitle">查看开源许可证</string>
+    
+    <string name="settings_theme_dialog_title">选择主题</string>
+    <string name="settings_language_dialog_title">选择语言</string>
+    <string name="settings_webdav_dialog_title">WebDAV 配置</string>
+    <string name="settings_webdav_url_label">服务器地址</string>
+    <string name="settings_webdav_url_placeholder">https://example.com/webdav</string>
+    <string name="settings_webdav_url_error">请输入有效的 URL（http:// 或 https://）</string>
+    <string name="settings_webdav_username_label">用户名</string>
+    <string name="settings_webdav_password_label">密码</string>
+    <string name="settings_webdav_test_button">测试连接</string>
+    <string name="settings_webdav_test_success">✓ 连接成功</string>
+    <string name="settings_webdav_test_error">✗ %s</string>
+    
+    <string name="language_zh_cn">简体中文</string>
+    <string name="language_en">English</string>
+    <string name="language_ja">日本語</string>
+    <string name="language_vi">Tiếng Việt</string>
+    
+    <!-- Task Actions -->
+    <string name="task_mark_complete">标记完成</string>
+    <string name="task_unmark_complete">取消完成</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_back">返回</string>
+    <string name="cd_search">搜索</string>
+    <string name="cd_close_search">关闭搜索</string>
+    <string name="cd_filter">筛选</string>
+    <string name="cd_calendar">日历</string>
+    <string name="cd_sync_now">立即同步</string>
+    <string name="cd_delete">删除</string>
+    <string name="cd_task_completed">已完成</string>
+    <string name="cd_task_incomplete">未完成</string>
+    <string name="cd_settings">设置</string>
+    <string name="cd_play">播放</string>
+    <string name="cd_pause">暂停</string>
+    <string name="cd_hide_password">隐藏密码</string>
+    <string name="cd_show_password">显示密码</string>
+    <string name="cd_previous">上一个</string>
+    <string name="cd_next">下一个</string>
+    <string name="cd_today">今天</string>
+    <string name="cd_ocr_import">OCR 导入</string>
+    <string name="cd_week_pattern">周模式</string>
+    
+    <!-- Common Actions -->
+    <string name="common_action_close">关闭</string>
+    <string name="common_action_confirm">确定</string>
+    
+    <!-- Quick Actions -->
+    <string name="quick_actions_title">快速操作</string>
+    <string name="quick_action_create_task_desc">为此日期创建新任务</string>
+    <string name="quick_action_create_event_desc">为此日期创建新事件</string>
+    <string name="quick_action_view_details_desc">查看此日期的所有详情</string>
+    
+
+    <!-- Metronome Module -->
+    <string name="metronome_decrease_1">减少 1</string>
+    <string name="metronome_decrease_5">减少 5</string>
+    <string name="metronome_decrease_10">减少 10</string>
+    <string name="metronome_increase_1">增加 1</string>
+    <string name="metronome_increase_5">增加 5</string>
+    <string name="metronome_increase_10">增加 10</string>
+    
+    <!-- Course Module -->
+    <string name="course_title">课程表</string>
+    <string name="course_action_add">添加课程</string>
+    <string name="course_week_format">第 %d 周</string>
+    <string name="course_pattern_all">全部</string>
+    <string name="course_pattern_a">A周</string>
+    <string name="course_pattern_b">B周</string>
+    <string name="course_pattern_odd">单周</string>
+    <string name="course_pattern_even">双周</string>
+    <string name="course_count_format">%d 节课</string>
+    <string name="course_empty_no_courses">还没有课程</string>
+    <string name="course_empty_hint">点击右下角按钮添加课程</string>
+    
+    <!-- Calendar Module -->
+    <string name="calendar_view_month">月</string>
+    <string name="calendar_view_week">周</string>
+    <string name="calendar_view_day">日</string>
+    <string name="calendar_view_list">列表</string>
+    
+    <!-- Day Names -->
+    <string name="day_monday">周一</string>
+    <string name="day_tuesday">周二</string>
+    <string name="day_wednesday">周三</string>
+    <string name="day_thursday">周四</string>
+    <string name="day_friday">周五</string>
+    <string name="day_saturday">周六</string>
+    <string name="day_sunday">周日</string>
+
+    <!-- Theme Mode -->
+    <string name="settings_theme_mode_title">主题模式</string>
+    <string name="theme_mode_follow_system">跟随系统</string>
+    <string name="theme_mode_follow_system_desc">根据系统设置自动切换深色/浅色模式</string>
+    <string name="theme_mode_light">白天模式</string>
+    <string name="theme_mode_light_desc">始终使用浅色主题</string>
+    <string name="theme_mode_dark">夜间模式</string>
+    <string name="theme_mode_dark_desc">始终使用深色主题</string>
+    <string name="theme_mode_auto_time">动态时间</string>
+    <string name="theme_mode_auto_time_desc">根据时间段自动切换主题和颜色（黎明/早晨/正午/下午/黄昏/傍晚/夜晚）</string>
+    
+    <!-- Item Types -->
+    <string name="item_type_task">任务</string>
+    <string name="item_type_schedule">日程</string>
+    <string name="item_type_event">事件</string>
+    <string name="item_type_selector_title">选择类型</string>
+    <string name="cd_item_type_selector">项目类型选择器</string>
+    <string name="cd_dropdown_icon">下拉图标</string>
+    
+    <!-- 事件相关 -->
+    <string name="nav_events">事件</string>
+    <string name="nav_routine">日程</string>
+    <string name="event_screen_title">事件</string>
+    <string name="event_create_title">创建事件</string>
+    <string name="event_edit_title">编辑事件</string>
+    <string name="event_detail_title">事件详情</string>
+    <string name="event_title_label">事件标题</string>
+    <string name="event_description_label">事件描述</string>
+    <string name="event_category_label">事件类别</string>
+    <string name="event_select_date">选择日期</string>
+    <string name="event_select_time">选择时间</string>
+    <string name="event_created_at">创建时间</string>
+    <string name="event_updated_at">更新时间</string>
+    <string name="event_search_placeholder">搜索事件...</string>
+    
+    <!-- 事件类别 -->
+    <string name="event_category_all">全部</string>
+    <string name="event_category_birthday">生日</string>
+    <string name="event_category_anniversary">纪念日</string>
+    <string name="event_category_countdown">倒数日</string>
+    
+    <!-- 天数显示 -->
+    <string name="event_today">今天</string>
+    <string name="event_days_remaining">还有 %d 天</string>
+    <string name="event_days_passed">已过去 %d 天</string>
+    
+    <!-- 空状态 -->
+    <string name="event_empty_title">暂无事件</string>
+    <string name="event_empty_message">点击右下角按钮创建第一个事件</string>
+    <string name="event_search_no_results">未找到事件</string>
+    <string name="event_search_no_results_message">没有找到与 "%s" 相关的事件</string>
+    <string name="event_not_found">事件不存在</string>
+    
+    <!-- 错误状态 -->
+    <string name="event_error_title">加载失败</string>
+    
+    <!-- 操作 -->
+    <string name="action_create_event">创建事件</string>
+    <string name="action_clear_search">清除搜索</string>
+    <string name="action_clear">清除</string>
+    <string name="action_confirm">确定</string>
+    
+    <!-- 删除确认 -->
+    <string name="event_delete_confirm_title">删除事件</string>
+    <string name="event_delete_confirm_message">确定要删除这个事件吗？此操作无法撤销。</string>
+    
+    <!-- 时长选择器 -->
+    <string name="duration_picker_title">设置时长</string>
+    <string name="duration_label">活动时长</string>
+    <string name="duration_not_set">未设置</string>
+    <string name="duration_hours">小时</string>
+    <string name="duration_minutes">分钟</string>
+    <string name="duration_quick_title">常用时长</string>
+    <string name="duration_15min">15分钟</string>
+    <string name="duration_30min">30分钟</string>
+    <string name="duration_45min">45分钟</string>
+    <string name="duration_1hour">1小时</string>
+    <string name="duration_1_5hours">1.5小时</string>
+    <string name="duration_2hours">2小时</string>
+    <string name="duration_clear">清除</string>
+    <string name="duration_format_hours">%d小时</string>
+    <string name="duration_format_minutes">%d分钟</string>
+    <string name="duration_format_hours_minutes">%d小时%d分钟</string>
+    
+    <!-- 任务预览 -->
+    <string name="task_preview_title">任务详情</string>
+    <string name="task_edit_title">任务编辑</string>
+    <string name="cd_edit_task">编辑任务</string>
+    <string name="cd_navigate_back">返回</string>
+    <string name="cd_more_actions">更多操作</string>
+    <string name="action_mark_complete">标记完成</string>
+    <string name="action_mark_incomplete">标记未完成</string>
+    <string name="action_share">分享</string>
+    <string name="action_go_back">返回</string>
+    <string name="error_task_not_found">任务不存在</string>
+    <string name="dialog_delete_task_title">删除任务</string>
+    <string name="dialog_delete_task_message">确定要删除这个任务吗？此操作无法撤销。</string>
+    <string name="task_tags">标签</string>
+    <string name="task_subtasks">子任务</string>
+    <string name="task_attachments">附件</string>
+    
+    <!-- 番茄钟 -->
+    <string name="pomodoro_title">番茄钟</string>
+    <string name="pomodoro_select_task">选择任务</string>
+    <string name="pomodoro_no_task_selected">未选择任务</string>
+    <string name="pomodoro_task_duration_format">%s</string>
+    <string name="pomodoro_no_tasks_with_duration">没有设置活动时长的任务</string>
+    <string name="pomodoro_change_task">更换任务</string>
+    
+    <!-- 番茄钟操作 -->
+    <string name="pomodoro_action_start">开始</string>
+    <string name="pomodoro_action_pause">暂停</string>
+    <string name="pomodoro_action_resume">继续</string>
+    <string name="pomodoro_action_stop">停止</string>
+    <string name="pomodoro_early_finish">提前结束</string>
+    
+    <!-- 提前结束对话框 -->
+    <string name="pomodoro_early_finish_message">已用时 %d 分钟，是否标记任务完成？</string>
+    <string name="pomodoro_mark_complete">标记完成</string>
+    <string name="pomodoro_just_stop">仅停止</string>
+    
+    <!-- 番茄钟设置 -->
+    <string name="pomodoro_settings_dialog_title">番茄钟设置</string>
+    <string name="pomodoro_work_duration_label">工作时长</string>
+    <string name="pomodoro_short_break_label">短休息</string>
+    <string name="pomodoro_long_break_label">长休息</string>
+    <string name="pomodoro_settings_sound">声音提醒</string>
+    <string name="pomodoro_settings_vibration">震动提醒</string>
+    <string name="pomodoro_work_duration_format">%d 分钟</string>
+    
+    <!-- 番茄钟统计 -->
+    <string name="pomodoro_stats_today">今日统计</string>
+    <string name="pomodoro_stats_completed">已完成</string>
+    <string name="pomodoro_stats_duration">时长</string>
+    <string name="pomodoro_stats_interruptions">中断次数</string>
+    <string name="pomodoro_stats_minutes_format">%d 分钟</string>
+    <string name="pomodoro_count_format">已完成 %d 个</string>
+    
+    <!-- 番茄钟通知 -->
+    <string name="pomodoro_complete_title">番茄钟完成</string>
+    <string name="pomodoro_complete_message">专注时间结束，休息一下吧！</string>
+    <string name="pomodoro_checkin_success">已自动打卡</string>
+    <string name="pomodoro_checkin_failed">自动打卡失败</string>
+    
+    <!-- 番茄钟打卡备注 -->
+    <string name="pomodoro_checkin_note_complete">通过番茄钟完成</string>
+    <string name="pomodoro_checkin_note_early_finish">提前结束（实际用时 %d 分钟）</string>
+    
+    <!-- 番茄钟计时器状态 -->
+    <string name="pomodoro_status_completed">完成！</string>
+    <string name="pomodoro_status_focusing">专注中</string>
+    <string name="pomodoro_status_paused">已暂停</string>
+    <string name="pomodoro_status_ready">准备开始</string>
+    
+    <!-- 番茄钟消息 -->
+    <string name="pomodoro_message_marked_complete">已标记完成</string>
+    <string name="pomodoro_message_checkin_failed">打卡失败：%s</string>
+    <string name="pomodoro_message_auto_checkin_success">已自动打卡</string>
+    <string name="pomodoro_message_auto_checkin_failed">自动打卡失败：%s</string>
+    
+    <!-- 周数选择器 -->
+    <string name="week_selector_title">选择周数</string>
+    <string name="week_selector_tab_week_number">周数模式</string>
+    <string name="week_selector_tab_date_range">日期模式</string>
+    <string name="week_selector_quick_all">全周</string>
+    <string name="week_selector_quick_odd">单周</string>
+    <string name="week_selector_quick_even">双周</string>
+    <string name="week_selector_selected_count">已选择 %d 周</string>
+    <string name="week_selector_no_selection">未选择周数</string>
+    <string name="week_selector_error_no_weeks">请至少选择一周</string>
+    <string name="week_selector_error_out_of_range">选择的周数超出学期范围</string>
+    
+    <!-- 日期模式 -->
+    <string name="date_range_start_date">开始日期</string>
+    <string name="date_range_end_date">结束日期</string>
+    <string name="date_range_repeat_mode">重复模式</string>
+    <string name="date_range_repeat_every_week">每周</string>
+    <string name="date_range_repeat_odd_weeks">单周</string>
+    <string name="date_range_repeat_even_weeks">双周</string>
+    <string name="date_range_select_date">选择日期</string>
+    <string name="date_range_not_set">未设置</string>
+    
+    <!-- 周数模式标签 -->
+    <string name="week_pattern_all">全周</string>
+    <string name="week_pattern_odd">单周</string>
+    <string name="week_pattern_even">双周</string>
+    <string name="week_pattern_a">A周</string>
+    <string name="week_pattern_b">B周</string>
+    <string name="week_pattern_custom">自定义</string>
+    <string name="week_pattern_custom_format">第%s周</string>
+    <string name="week_pattern_custom_count">自定义(%d周)</string>
+    
+    <!-- 当前周指示器 -->
+    <string name="current_week_indicator_title">当前周数</string>
+    <string name="current_week_format">第 %1$d / %2$d 周</string>
+    <string name="show_all_courses">显示所有课程</string>
+    <string name="show_current_week_only">仅显示本周课程</string>
+    <string name="cd_toggle_show_mode">切换显示模式</string>
+    
+    <!-- 学期设置 -->
+    <string name="semester_settings_title">学期设置</string>
+    <string name="semester_start_date">学期开始日期</string>
+    <string name="semester_start_date_desc">设置学期第一周的开始日期，用于计算当前周数</string>
+    <string name="semester_start_date_not_set">未设置</string>
+    <string name="semester_total_weeks">学期总周数</string>
+    <string name="semester_total_weeks_desc">设置一个学期的总周数（16-24周）</string>
+    <string name="semester_total_weeks_format">%d 周</string>
+    <string name="semester_weeks_range_min">16周</string>
+    <string name="semester_weeks_range_mid">20周</string>
+    <string name="semester_weeks_range_max">24周</string>
+    <string name="cd_semester_settings">学期设置</string>
+    <string name="cd_select_date">选择日期</string>
+    
+    <!-- 课程周数相关 -->
+    <string name="course_week_detail">查看详情</string>
+    <string name="course_this_week">本周有课</string>
+    <string name="course_not_this_week">本周无课</string>
+    <string name="cd_back_to_current_week">回到当前周</string>
+    
+    <!-- 学期管理 -->
+    <string name="semester_management">学期管理</string>
+    <string name="semester_create">创建学期</string>
+    <string name="semester_edit">编辑学期</string>
+    <string name="semester_delete">删除学期</string>
+    <string name="semester_copy">复制学期</string>
+    <string name="semester_archive">归档</string>
+    <string name="semester_unarchive">取消归档</string>
+    <string name="semester_archived">已归档</string>
+    <string name="semester_current">当前</string>
+    <string name="semester_name">学期名称</string>
+    <string name="semester_name_hint">如：2025春季学期</string>
+    <string name="semester_start_date_label">开始日期</string>
+    <string name="semester_end_date">结束日期</string>
+    <string name="semester_total_weeks_label">学期总周数</string>
+    <string name="semester_weeks_format">%d 周</string>
+    <string name="semester_view_all">查看所有学期</string>
+    <string name="semester_no_selection">未选择学期</string>
+    <string name="semester_active">活跃学期</string>
+    <string name="semester_no_active">暂无活跃学期</string>
+    <string name="semester_stats_courses">课程</string>
+    <string name="semester_stats_courses_format">%d 门</string>
+    <string name="semester_stats_weeks">周数</string>
+    <string name="semester_stats_weeks_format">%d 周</string>
+    <string name="semester_stats_hours">总学时</string>
+    <string name="semester_stats_hours_format">%d 小时</string>
+    <string name="semester_delete_confirm_title">删除学期</string>
+    <string name="semester_delete_confirm_message">确定要删除学期 \"%s\" 吗？</string>
+    <string name="semester_delete_warning">警告：该学期包含 %d 门课程，删除学期将同时删除所有课程！</string>
+    <string name="semester_copy_dialog_title">复制学期</string>
+    <string name="semester_copy_dialog_message">将复制学期 \"%s\" 的所有课程到新学期。</string>
+    <string name="semester_copy_new_name">新学期名称</string>
+    <string name="semester_default_name">当前学期</string>
+    <string name="semester_copy_suffix"> - 副本</string>
+    <string name="error_cannot_delete_current">无法删除当前学期。请先切换到其他学期。</string>
+    <string name="error_cannot_delete_last">无法删除最后一个学期。</string>
+    <!-- ICS Import/Export -->
+    <string name="import_courses">导入课程表</string>
+    <string name="export_courses">导出课程表</string>
+    <string name="import_preview_title">导入预览</string>
+    <string name="import_success">成功导入 %d 门课程</string>
+    <string name="import_error">导入失败: %s</string>
+    <string name="export_success">课程表已导出</string>
+    <string name="export_error">导出失败: %s</string>
+    <string name="select_all">全选</string>
+    <string name="deselect_all">取消全选</string>
+    <string name="duplicate_warning">检测到重复课程</string>
+    <string name="invalid_ics_format">ICS文件格式无效</string>
+    <string name="empty_ics_file">文件不包含课程数据</string>
+    <string name="confirm_import">确认导入</string>
+    <string name="import_selected_count">已选择 %1$d / %2$d 门课程</string>
+    <string name="back">返回</string>
+    <string name="file_name">文件名</string>
+    <string name="file_name_hint">文件将保存为 .ics 格式</string>
+    <string name="export">导出</string>
+    <string name="close">关闭</string>
+    <string name="share">分享</string>
+    <string name="share_course_schedule">分享课程表</string>
+    <string name="export_courses_description">导出当前学期的所有课程为ICS文件</string>
+    <string name="export_success_message">课程表已成功导出，您可以分享或保存该文件</string>
+    
+    <!-- 课程表UI优化 -->
+    <string name="period_number_format">第%d节</string>
+    <string name="time_range_format">%s-%s</string>
+    <string name="week_number_format">第 %1$d / %2$d 周</string>
+    <string name="empty_timetable_message">本周无课程</string>
+    <string name="empty_timetable_action">添加课程</string>
+    <string name="back_to_current_week">回到当前周</string>
+    
+    <!-- 时间匹配对话框 -->
+    <string name="time_matching_dialog_title">选择时间匹配方式</string>
+    <string name="time_matching_dialog_description">您希望如何匹配课程时间？</string>
+    <string name="time_matching_use_existing_title">使用当前课表时间</string>
+    <string name="time_matching_use_existing_description">将导入的课程匹配到现有的节次设置</string>
+    <string name="time_matching_auto_create_title">根据文件自动生成</string>
+    <string name="time_matching_auto_create_description">根据导入课程的时间自动创建节次设置</string>
+    <string name="cancel">取消</string>
+
+    <!-- 课程节次设置 -->
+    <string name="course_settings_morning_periods">上午节次</string>
+    <string name="course_settings_afternoon_periods">下午节次</string>
+    <string name="course_settings_evening_periods">晚上节次</string>
+    <string name="course_settings_morning_periods_desc">上午的节次数（1-6节）</string>
+    <string name="course_settings_afternoon_periods_desc">下午的节次数（1-6节）</string>
+    <string name="course_settings_evening_periods_desc">晚上的节次数（0-3节）</string>
+    <string name="course_settings_dinner_break">晚休时长</string>
+    <string name="course_settings_dinner_break_desc">晚课前的休息时长</string>
+    
+    <!-- 节次时段 -->
+    <string name="period_time_morning">上午</string>
+    <string name="period_time_afternoon">下午</string>
+    <string name="period_time_evening">晚上</string>
+    
+    <!-- 验证错误 -->
+    <string name="error_morning_periods_range">上午节次数必须在1-6之间</string>
+    <string name="error_afternoon_periods_range">下午节次数必须在1-6之间</string>
+    <string name="error_evening_periods_range">晚上节次数必须在0-3之间</string>
+    <string name="error_total_periods_range">总节次数（%d）必须在1-12之间</string>
+    <string name="error_dinner_break_range">晚休时长必须在30-120分钟之间，且为5的倍数</string>
+</resources>

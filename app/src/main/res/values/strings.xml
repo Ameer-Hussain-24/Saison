@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Saison</string>
+    
+    <!-- Navigation -->
+    <string name="nav_calendar">Calendar</string>
+    <string name="nav_course">Course</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_pomodoro">Timer</string>
+    <string name="nav_metronome">Beat</string>
+    <string name="nav_subscription">Subscription</string>
+    <string name="nav_settings">Settings</string>
+    
+    <!-- Common Actions -->
+    <string name="action_add">Add</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_search">Search</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_sync">Sync</string>
+    
+    <!-- Task -->
+    <string name="task_title">Title</string>
+    <string name="task_description">Description</string>
+    <string name="task_due_date">Due Date</string>
+    <string name="task_reminder">Reminder</string>
+    <string name="task_priority">Priority</string>
+    <string name="task_category">Category</string>
+    <string name="task_completed">Completed</string>
+    <string name="task_incomplete">Incomplete</string>
+    
+    <!-- Priority -->
+    <string name="priority_low">Low</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_high">High</string>
+    <string name="priority_urgent">Urgent</string>
+    
+    <!-- Calendar -->
+    <string name="calendar_month">Month</string>
+    <string name="calendar_week">Week</string>
+    <string name="calendar_day">Day</string>
+    <string name="calendar_list">List</string>
+    <string name="calendar_today">Today</string>
+    
+    <!-- Pomodoro -->
+    <string name="pomodoro_start">Start Focus</string>
+    <string name="pomodoro_pause">Pause</string>
+    <string name="pomodoro_resume">Resume</string>
+    <string name="pomodoro_stop">Stop</string>
+    <string name="pomodoro_work_duration">Work Duration</string>
+    <string name="pomodoro_break_duration">Break Duration</string>
+    <string name="pomodoro_long_break">Long Break</string>
+    <string name="pomodoro_sessions_completed">Sessions Completed</string>
+    
+    <!-- Metronome -->
+    <string name="metronome_title">Metronome</string>
+    <string name="metronome_presets">Presets</string>
+    <string name="metronome_save_preset">Save Preset</string>
+    <string name="metronome_bpm">BPM</string>
+    <string name="metronome_start">Start</string>
+    <string name="metronome_stop">Stop</string>
+    <string name="metronome_sound">Sound</string>
+    <string name="metronome_sound_woodblock">Woodblock</string>
+    <string name="metronome_sound_click">Click</string>
+    <string name="metronome_sound_beep">Beep</string>
+    
+    <!-- Settings -->
+    <string name="settings_theme">Theme</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_dark_mode">Dark Mode</string>
+    <string name="settings_dynamic_color">Dynamic Color</string>
+    <string name="settings_sync">Sync Settings</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_about">About</string>
+    
+    <!-- WebDAV Sync -->
+    <string name="sync_webdav">WebDAV Sync</string>
+    <string name="sync_url">Server URL</string>
+    <string name="sync_username">Username</string>
+    <string name="sync_password">Password</string>
+    <string name="sync_auto_sync">Auto Sync</string>
+    <string name="sync_last_sync">Last Sync</string>
+    <string name="sync_now">Sync Now</string>
+    <string name="sync_success">Sync successful</string>
+    <string name="sync_error">Sync failed</string>
+    
+    <!-- Themes -->
+    <string name="theme_dynamic">Dynamic</string>
+    <string name="theme_sakura">Sakura</string>
+    <string name="theme_mint">Mint</string>
+    <string name="theme_amber">Amber</string>
+    <string name="theme_snow">Snow</string>
+    <string name="theme_rain">Rain</string>
+    <string name="theme_maple">Maple</string>
+    <string name="theme_ocean">Ocean</string>
+    <string name="theme_sunset">Sunset</string>
+    <string name="theme_forest">Forest</string>
+    <string name="theme_lavender">Lavender</string>
+    <string name="theme_desert">Desert</string>
+    <string name="theme_aurora">Aurora</string>
+    
+    <!-- Common Time -->
+    <string name="time_just_now">Just now</string>
+    <string name="time_minutes_ago">%d minutes ago</string>
+    <string name="time_hours_ago">%d hours ago</string>
+    <string name="time_days_ago">%d days ago</string>
+    <string name="time_today_at">Today %s</string>
+    <string name="time_tomorrow_at">Tomorrow %s</string>
+    <string name="time_yesterday_at">Yesterday %s</string>
+    
+    <!-- Task Module -->
+    <string name="task_action_quick_add">Quick Add</string>
+    <string name="task_filter_all">All</string>
+    <string name="task_filter_active">Active</string>
+    <string name="task_filter_completed">Completed</string>
+    <string name="task_filter_favorite">Favorite</string>
+    <string name="task_stats_incomplete">Incomplete</string>
+    <string name="task_stats_favorite">Favorite</string>
+    <string name="task_stats_overdue">Overdue</string>
+    <string name="task_stats_today_completed">Today Completed</string>
+    <string name="task_multi_select_title">%d selected</string>
+    <string name="task_search_placeholder">Search tasks...</string>
+    <string name="task_search_no_results">No tasks found</string>
+    <string name="task_search_query_format">Search: \"%s\"</string>
+    <string name="task_empty_no_tasks">No tasks yet</string>
+    <string name="task_empty_no_active">No active tasks</string>
+    <string name="task_empty_no_completed">No completed tasks yet</string>
+    <string name="task_empty_no_favorite">No favorite tasks yet</string>
+    <string name="task_empty_hint">Tap the button below to add a new task</string>
+    <string name="task_dialog_quick_add_title">Quick Add Task</string>
+    <string name="task_dialog_description_label">Task description</string>
+    <string name="task_dialog_example_hint">Use natural language, e.g.:</string>
+    <string name="task_dialog_example_text">\"Meeting tomorrow at 3pm #work\"</string>
+    <string name="task_detail_title">Task Details</string>
+    <string name="task_error_not_found">Task not found</string>
+    <string name="task_field_title">Title</string>
+    <string name="task_field_description">Description</string>
+    <string name="task_field_priority">Priority</string>
+    <string name="task_field_due_date">Due Date</string>
+    <string name="task_field_location">Location</string>
+    <string name="task_field_subtasks">Subtasks</string>
+    <string name="task_due_date_not_set">Not set</string>
+    
+    <!-- Settings Module -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_language">Language</string>
+    <string name="settings_section_notifications">Notifications</string>
+    <string name="settings_section_sync">Sync</string>
+    <string name="settings_section_pomodoro">Pomodoro</string>
+    <string name="settings_section_metronome">Metronome</string>
+    <string name="settings_section_about">About</string>
+    
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_dark_mode_title">Dark Mode</string>
+    <string name="settings_dark_mode_subtitle">Use dark theme</string>
+    <string name="settings_bottom_nav_title">Bottom Navigation</string>
+    <string name="settings_bottom_nav_subtitle">Customize navigation items</string>
+    <string name="settings_language_title">App Language</string>
+    
+    <string name="settings_notifications_enable_title">Enable Notifications</string>
+    <string name="settings_notifications_enable_subtitle">Receive task and course reminders</string>
+    <string name="settings_task_reminders_title">Task Reminders</string>
+    <string name="settings_task_reminders_subtitle">Receive task due date reminders</string>
+    <string name="settings_course_reminders_title">Course Reminders</string>
+    <string name="settings_course_reminders_subtitle">Receive course start reminders</string>
+    <string name="settings_pomodoro_reminders_title">Pomodoro Reminders</string>
+    <string name="settings_pomodoro_reminders_subtitle">Receive pomodoro completion reminders</string>
+    
+    <string name="settings_auto_sync_title">Auto Sync</string>
+    <string name="settings_auto_sync_subtitle">Automatically sync to WebDAV</string>
+    <string name="settings_wifi_only_title">WiFi Only Sync</string>
+    <string name="settings_wifi_only_subtitle">Sync only on WiFi network</string>
+    <string name="settings_webdav_title">WebDAV Configuration</string>
+    <string name="settings_webdav_subtitle">Configure WebDAV server</string>
+    <string name="settings_sync_now_title">Sync Now</string>
+    <string name="settings_sync_last_time">Last sync: %s</string>
+    <string name="settings_sync_not_yet">Not synced yet</string>
+    <string name="settings_sync_error">Error: %s</string>
+    <string name="settings_sync_button">Sync</string>
+    
+    <string name="settings_pomodoro_duration_title">Pomodoro Duration</string>
+    <string name="settings_pomodoro_duration_subtitle">Work: %1$dmin | Short break: %2$dmin | Long break: %3$dmin</string>
+    
+    <string name="settings_metronome_title">Metronome Settings</string>
+    <string name="settings_metronome_subtitle">Default BPM: %d</string>
+    
+    <string name="settings_about_title">About Saison</string>
+    <string name="settings_about_subtitle">Version 1.0.0</string>
+    <string name="settings_licenses_title">Open Source Licenses</string>
+    <string name="settings_licenses_subtitle">View open source licenses</string>
+    
+    <string name="settings_theme_dialog_title">Select Theme</string>
+    <string name="settings_language_dialog_title">Select Language</string>
+    <string name="settings_webdav_dialog_title">WebDAV Configuration</string>
+    <string name="settings_webdav_url_label">Server URL</string>
+    <string name="settings_webdav_url_placeholder">https://example.com/webdav</string>
+    <string name="settings_webdav_url_error">Please enter a valid URL (http:// or https://)</string>
+    <string name="settings_webdav_username_label">Username</string>
+    <string name="settings_webdav_password_label">Password</string>
+    <string name="settings_webdav_test_button">Test Connection</string>
+    <string name="settings_webdav_test_success">✓ Connection successful</string>
+    <string name="settings_webdav_test_error">✗ %s</string>
+    
+    <string name="language_zh_cn">简体中文</string>
+    <string name="language_en">English</string>
+    <string name="language_ja">日本語</string>
+    <string name="language_vi">Tiếng Việt</string>
+    
+    <!-- Task Actions -->
+    <string name="task_mark_complete">Mark Complete</string>
+    <string name="task_unmark_complete">Unmark Complete</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_back">Back</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_close_search">Close search</string>
+    <string name="cd_filter">Filter</string>
+    <string name="cd_calendar">Calendar</string>
+    <string name="cd_sync_now">Sync now</string>
+    <string name="cd_delete">Delete</string>
+    <string name="cd_task_completed">Completed</string>
+    <string name="cd_task_incomplete">Incomplete</string>
+    <string name="cd_settings">Settings</string>
+    <string name="cd_play">Play</string>
+    <string name="cd_pause">Pause</string>
+    <string name="cd_hide_password">Hide password</string>
+    <string name="cd_show_password">Show password</string>
+    <string name="cd_previous">Previous</string>
+    <string name="cd_next">Next</string>
+    <string name="cd_today">Today</string>
+    <string name="cd_ocr_import">OCR import</string>
+    <string name="cd_week_pattern">Week pattern</string>
+    
+    <!-- Common Actions -->
+    <string name="common_action_close">Close</string>
+    <string name="common_action_confirm">Confirm</string>
+    
+    <!-- Quick Actions -->
+    <string name="quick_actions_title">Quick Actions</string>
+    <string name="quick_action_create_task_desc">Create a new task for this date</string>
+    <string name="quick_action_create_event_desc">Create a new event for this date</string>
+    <string name="quick_action_view_details_desc">View all details for this date</string>
+    
+
+    <!-- Metronome Module -->
+    <string name="metronome_decrease_1">Decrease 1</string>
+    <string name="metronome_decrease_5">Decrease 5</string>
+    <string name="metronome_decrease_10">Decrease 10</string>
+    <string name="metronome_increase_1">Increase 1</string>
+    <string name="metronome_increase_5">Increase 5</string>
+    <string name="metronome_increase_10">Increase 10</string>
+    
+    <!-- Course Module -->
+    <string name="course_title">Course Schedule</string>
+    <string name="course_action_add">Add Course</string>
+    <string name="course_week_format">Week %d</string>
+    <string name="course_pattern_all">All</string>
+    <string name="course_pattern_a">Week A</string>
+    <string name="course_pattern_b">Week B</string>
+    <string name="course_pattern_odd">Odd</string>
+    <string name="course_pattern_even">Even</string>
+    <string name="course_count_format">%d classes</string>
+    <string name="course_empty_no_courses">No courses yet</string>
+    <string name="course_empty_hint">Tap the button below to add a course</string>
+    
+    <!-- Calendar Module -->
+    <string name="calendar_view_month">Month</string>
+    <string name="calendar_view_week">Week</string>
+    <string name="calendar_view_day">Day</string>
+    <string name="calendar_view_list">List</string>
+    
+    <!-- Day Names -->
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_sunday">Sunday</string>
+
+    <!-- Theme Mode -->
+    <string name="settings_theme_mode_title">Theme Mode</string>
+    <string name="theme_mode_follow_system">Follow System</string>
+    <string name="theme_mode_follow_system_desc">Automatically switch between light and dark themes based on system settings</string>
+    <string name="theme_mode_light">Light Mode</string>
+    <string name="theme_mode_light_desc">Always use light theme</string>
+    <string name="theme_mode_dark">Dark Mode</string>
+    <string name="theme_mode_dark_desc">Always use dark theme</string>
+    <string name="theme_mode_auto_time">Auto Time</string>
+    <string name="theme_mode_auto_time_desc">Automatically switch theme and colors based on time of day (Dawn/Morning/Noon/Afternoon/Dusk/Evening/Night)</string>
+    
+    <!-- Item Types -->
+    <string name="item_type_task">Tasks</string>
+    <string name="item_type_schedule">Schedule</string>
+    <string name="item_type_event">Events</string>
+    <string name="item_type_selector_title">Select Type</string>
+    <string name="cd_item_type_selector">Item type selector</string>
+    <string name="cd_dropdown_icon">Dropdown icon</string>
+    
+    <!-- Events -->
+    <string name="nav_events">Events</string>
+    <string name="nav_routine">Routine</string>
+    <string name="event_screen_title">Events</string>
+    <string name="event_create_title">Create Event</string>
+    <string name="event_edit_title">Edit Event</string>
+    <string name="event_detail_title">Event Details</string>
+    <string name="event_title_label">Event Title</string>
+    <string name="event_description_label">Event Description</string>
+    <string name="event_category_label">Event Category</string>
+    <string name="event_select_date">Select Date</string>
+    <string name="event_select_time">Select Time</string>
+    <string name="event_created_at">Created At</string>
+    <string name="event_updated_at">Updated At</string>
+    <string name="event_search_placeholder">Search events...</string>
+    
+    <!-- Event Categories -->
+    <string name="event_category_all">All</string>
+    <string name="event_category_birthday">Birthday</string>
+    <string name="event_category_anniversary">Anniversary</string>
+    <string name="event_category_countdown">Countdown</string>
+    
+    <!-- Days Display -->
+    <string name="event_today">Today</string>
+    <string name="event_days_remaining">%d days left</string>
+    <string name="event_days_passed">%d days ago</string>
+    
+    <!-- Empty States -->
+    <string name="event_empty_title">No Events</string>
+    <string name="event_empty_message">Tap the button below to create your first event</string>
+    <string name="event_search_no_results">No Events Found</string>
+    <string name="event_search_no_results_message">No events found matching \"%s\"</string>
+    <string name="event_not_found">Event not found</string>
+    
+    <!-- Error States -->
+    <string name="event_error_title">Failed to Load</string>
+    
+    <!-- Actions -->
+    <string name="action_create_event">Create Event</string>
+    <string name="action_clear_search">Clear Search</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_confirm">Confirm</string>
+    
+    <!-- Delete Confirmation -->
+    <string name="event_delete_confirm_title">Delete Event</string>
+    <string name="event_delete_confirm_message">Are you sure you want to delete this event? This action cannot be undone.</string>
+    
+    <!-- Duration Picker -->
+    <string name="duration_picker_title">Set Duration</string>
+    <string name="duration_label">Activity Duration</string>
+    <string name="duration_not_set">Not Set</string>
+    <string name="duration_hours">Hours</string>
+    <string name="duration_minutes">Minutes</string>
+    <string name="duration_quick_title">Quick Duration</string>
+    <string name="duration_15min">15 min</string>
+    <string name="duration_30min">30 min</string>
+    <string name="duration_45min">45 min</string>
+    <string name="duration_1hour">1 hour</string>
+    <string name="duration_1_5hours">1.5 hours</string>
+    <string name="duration_2hours">2 hours</string>
+    <string name="duration_clear">Clear</string>
+    <string name="duration_format_hours">%d hour(s)</string>
+    <string name="duration_format_minutes">%d minute(s)</string>
+    <string name="duration_format_hours_minutes">%d hour(s) %d minute(s)</string>
+    
+    <!-- Task Preview -->
+    <string name="task_preview_title">Task Details</string>
+    <string name="task_edit_title">Edit Task</string>
+    <string name="cd_edit_task">Edit task</string>
+    <string name="cd_navigate_back">Navigate back</string>
+    <string name="cd_more_actions">More actions</string>
+    <string name="action_mark_complete">Mark Complete</string>
+    <string name="action_mark_incomplete">Mark Incomplete</string>
+    <string name="action_share">Share</string>
+    <string name="action_go_back">Go Back</string>
+    <string name="error_task_not_found">Task not found</string>
+    <string name="dialog_delete_task_title">Delete Task</string>
+    <string name="dialog_delete_task_message">Are you sure you want to delete this task? This action cannot be undone.</string>
+    <string name="task_tags">Tags</string>
+    <string name="task_subtasks">Subtasks</string>
+    <string name="task_attachments">Attachments</string>
+    
+    <!-- Pomodoro -->
+    <string name="pomodoro_title">Pomodoro Timer</string>
+    <string name="pomodoro_select_task">Select Task</string>
+    <string name="pomodoro_no_task_selected">No task selected</string>
+    <string name="pomodoro_task_duration_format">%s</string>
+    <string name="pomodoro_no_tasks_with_duration">No tasks with duration set</string>
+    <string name="pomodoro_change_task">Change task</string>
+    
+    <!-- Pomodoro Actions -->
+    <string name="pomodoro_action_start">Start</string>
+    <string name="pomodoro_action_pause">Pause</string>
+    <string name="pomodoro_action_resume">Resume</string>
+    <string name="pomodoro_action_stop">Stop</string>
+    
+    <!-- Pomodoro - Early Finish -->
+    <string name="pomodoro_early_finish">Early Finish</string>
+    <string name="pomodoro_early_finish_message">Used %d minutes. Mark task as complete?</string>
+    <string name="pomodoro_mark_complete">Mark Complete</string>
+    <string name="pomodoro_just_stop">Just Stop</string>
+    
+    <!-- Pomodoro - Settings -->
+    <string name="pomodoro_settings_dialog_title">Pomodoro Settings</string>
+    <string name="pomodoro_settings_sound">Sound Notification</string>
+    <string name="pomodoro_settings_vibration">Vibration</string>
+    <string name="pomodoro_work_duration_label">Work Duration</string>
+    <string name="pomodoro_work_duration_format">%d minutes</string>
+    <string name="pomodoro_short_break_label">Short Break</string>
+    <string name="pomodoro_long_break_label">Long Break</string>
+    
+    <!-- Pomodoro Stats -->
+    <string name="pomodoro_stats_today">Today\'s Stats</string>
+    <string name="pomodoro_stats_completed">Completed</string>
+    <string name="pomodoro_stats_duration">Duration</string>
+    <string name="pomodoro_stats_interruptions">Interruptions</string>
+    <string name="pomodoro_stats_minutes_format">%d min</string>
+    <string name="pomodoro_count_format">%d completed</string>
+    
+    <!-- Pomodoro - Notifications -->
+    <string name="pomodoro_complete_title">Pomodoro Complete</string>
+    <string name="pomodoro_complete_message">Focus time is over, take a break!</string>
+    <string name="pomodoro_checkin_success">Auto check-in successful</string>
+    <string name="pomodoro_checkin_failed">Auto check-in failed</string>
+    
+    <!-- Pomodoro - Check-in Notes -->
+    <string name="pomodoro_checkin_note_complete">Completed via Pomodoro</string>
+    <string name="pomodoro_checkin_note_early_finish">Early finish (actual time: %d minutes)</string>
+    
+    <!-- Pomodoro - Timer Status -->
+    <string name="pomodoro_status_completed">Completed!</string>
+    <string name="pomodoro_status_focusing">Focusing</string>
+    <string name="pomodoro_status_paused">Paused</string>
+    <string name="pomodoro_status_ready">Ready to start</string>
+    
+    <!-- Pomodoro - Messages -->
+    <string name="pomodoro_message_marked_complete">Marked as complete</string>
+    <string name="pomodoro_message_checkin_failed">Check-in failed: %s</string>
+    <string name="pomodoro_message_auto_checkin_success">Auto check-in successful</string>
+    <string name="pomodoro_message_auto_checkin_failed">Auto check-in failed: %s</string>
+    
+    <!-- Week Selector -->
+    <string name="week_selector_title">Select Weeks</string>
+    <string name="week_selector_tab_week_number">Week Number</string>
+    <string name="week_selector_tab_date_range">Date Range</string>
+    <string name="week_selector_quick_all">All Weeks</string>
+    <string name="week_selector_quick_odd">Odd Weeks</string>
+    <string name="week_selector_quick_even">Even Weeks</string>
+    <string name="week_selector_selected_count">%d weeks selected</string>
+    <string name="week_selector_no_selection">No weeks selected</string>
+    <string name="week_selector_error_no_weeks">Please select at least one week</string>
+    <string name="week_selector_error_out_of_range">Selected weeks exceed semester range</string>
+    
+    <!-- Date Range Mode -->
+    <string name="date_range_start_date">Start Date</string>
+    <string name="date_range_end_date">End Date</string>
+    <string name="date_range_repeat_mode">Repeat Mode</string>
+    <string name="date_range_repeat_every_week">Every Week</string>
+    <string name="date_range_repeat_odd_weeks">Odd Weeks</string>
+    <string name="date_range_repeat_even_weeks">Even Weeks</string>
+    <string name="date_range_select_date">Select Date</string>
+    <string name="date_range_not_set">Not Set</string>
+    
+    <!-- Week Pattern Labels -->
+    <string name="week_pattern_all">All Weeks</string>
+    <string name="week_pattern_odd">Odd Weeks</string>
+    <string name="week_pattern_even">Even Weeks</string>
+    <string name="week_pattern_a">Week A</string>
+    <string name="week_pattern_b">Week B</string>
+    <string name="week_pattern_custom">Custom</string>
+    <string name="week_pattern_custom_format">Week %s</string>
+    <string name="week_pattern_custom_count">Custom (%d weeks)</string>
+    
+    <!-- Current Week Indicator -->
+    <string name="current_week_indicator_title">Current Week</string>
+    <string name="current_week_format">Week %1$d / %2$d</string>
+    <string name="show_all_courses">Show All Courses</string>
+    <string name="show_current_week_only">Current Week Only</string>
+    <string name="cd_toggle_show_mode">Toggle display mode</string>
+    
+    <!-- Semester Settings -->
+    <string name="semester_settings_title">Semester Settings</string>
+    <string name="semester_start_date">Semester Start Date</string>
+    <string name="semester_start_date_desc">Set the start date of the first week for calculating current week number</string>
+    <string name="semester_start_date_not_set">Not Set</string>
+    <string name="semester_total_weeks">Total Weeks</string>
+    <string name="semester_total_weeks_desc">Set the total number of weeks in a semester (16-24 weeks)</string>
+    <string name="semester_total_weeks_format">%d weeks</string>
+    <string name="semester_weeks_range_min">16 weeks</string>
+    <string name="semester_weeks_range_mid">20 weeks</string>
+    <string name="semester_weeks_range_max">24 weeks</string>
+    <string name="cd_semester_settings">Semester settings</string>
+    <string name="cd_select_date">Select date</string>
+    
+    <!-- Course Week Related -->
+    <string name="course_week_detail">View Details</string>
+    <string name="course_this_week">This Week</string>
+    <string name="course_not_this_week">Not This Week</string>
+    <string name="cd_back_to_current_week">Back to current week</string>
+    
+    <!-- Semester Management -->
+    <string name="semester_management">Semester Management</string>
+    <string name="semester_create">Create Semester</string>
+    <string name="semester_edit">Edit Semester</string>
+    <string name="semester_delete">Delete Semester</string>
+    <string name="semester_copy">Copy Semester</string>
+    <string name="semester_archive">Archive</string>
+    <string name="semester_unarchive">Unarchive</string>
+    <string name="semester_archived">Archived</string>
+    <string name="semester_current">Current</string>
+    <string name="semester_name">Semester Name</string>
+    <string name="semester_name_hint">e.g., Spring 2025</string>
+    <string name="semester_start_date_label">Start Date</string>
+    <string name="semester_end_date">End Date</string>
+    <string name="semester_total_weeks_label">Total Weeks</string>
+    <string name="semester_weeks_format">%d weeks</string>
+    <string name="semester_view_all">View All Semesters</string>
+    <string name="semester_no_selection">No Semester Selected</string>
+    <string name="semester_active">Active Semesters</string>
+    <string name="semester_no_active">No active semesters</string>
+    <string name="semester_stats_courses">Courses</string>
+    <string name="semester_stats_courses_format">%d courses</string>
+    <string name="semester_stats_weeks">Weeks</string>
+    <string name="semester_stats_weeks_format">%d weeks</string>
+    <string name="semester_stats_hours">Total Hours</string>
+    <string name="semester_stats_hours_format">%d hours</string>
+    <string name="semester_delete_confirm_title">Delete Semester</string>
+    <string name="semester_delete_confirm_message">Are you sure you want to delete semester \"%s\"?</string>
+    <string name="semester_delete_warning">Warning: This semester contains %d courses. Deleting the semester will also delete all courses!</string>
+    <string name="semester_copy_dialog_title">Copy Semester</string>
+    <string name="semester_copy_dialog_message">All courses from semester \"%s\" will be copied to the new semester.</string>
+    <string name="semester_copy_new_name">New Semester Name</string>
+    <string name="semester_default_name">Current Semester</string>
+    <string name="semester_copy_suffix"> - Copy</string>
+    <string name="error_cannot_delete_current">Cannot delete current semester. Please switch to another semester first.</string>
+    <string name="error_cannot_delete_last">Cannot delete the last semester.</string>
+    <!-- ICS Import/Export -->
+    <string name="import_courses">Import Schedule</string>
+    <string name="export_courses">Export Schedule</string>
+    <string name="import_preview_title">Import Preview</string>
+    <string name="import_success">Successfully imported %d courses</string>
+    <string name="import_error">Import failed: %s</string>
+    <string name="export_success">Schedule exported</string>
+    <string name="export_error">Export failed: %s</string>
+    <string name="select_all">Select All</string>
+    <string name="deselect_all">Deselect All</string>
+    <string name="duplicate_warning">Duplicate courses detected</string>
+    <string name="invalid_ics_format">Invalid ICS file format</string>
+    <string name="empty_ics_file">File contains no course data</string>
+    <string name="confirm_import">Confirm Import</string>
+    <string name="import_selected_count">Selected %1$d / %2$d courses</string>
+    <string name="back">Back</string>
+    <string name="file_name">File Name</string>
+    <string name="file_name_hint">File will be saved as .ics format</string>
+    <string name="export">Export</string>
+    <string name="close">Close</string>
+    <string name="share">Share</string>
+    <string name="share_course_schedule">Share Course Schedule</string>
+    <string name="export_courses_description">Export all courses from current semester as ICS file</string>
+    <string name="export_success_message">Schedule exported successfully. You can share or save the file.</string>
+    
+    <!-- Course Timetable UI Enhancement -->
+    <string name="period_number_format">Period %d</string>
+    <string name="time_range_format">%s-%s</string>
+    <string name="week_number_format">Week %1$d / %2$d</string>
+    <string name="empty_timetable_message">No courses this week</string>
+    <string name="empty_timetable_action">Add Course</string>
+    <string name="back_to_current_week">Back to Current Week</string>
+    
+    <!-- Time Matching Dialog -->
+    <string name="time_matching_dialog_title">Choose Time Matching Method</string>
+    <string name="time_matching_dialog_description">How would you like to match course times?</string>
+    <string name="time_matching_use_existing_title">Use Current Schedule Times</string>
+    <string name="time_matching_use_existing_description">Match imported courses to your existing period settings</string>
+    <string name="time_matching_auto_create_title">Auto-Generate from File</string>
+    <string name="time_matching_auto_create_description">Automatically create period settings based on imported course times</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Course Period Settings -->
+    <string name="course_settings_morning_periods">Morning Periods</string>
+    <string name="course_settings_afternoon_periods">Afternoon Periods</string>
+    <string name="course_settings_evening_periods">Evening Periods</string>
+    <string name="course_settings_morning_periods_desc">Number of periods in the morning (1-6)</string>
+    <string name="course_settings_afternoon_periods_desc">Number of periods in the afternoon (1-6)</string>
+    <string name="course_settings_evening_periods_desc">Number of periods in the evening (0-3)</string>
+    <string name="course_settings_dinner_break">Dinner Break Duration</string>
+    <string name="course_settings_dinner_break_desc">Break duration before evening classes</string>
+    
+    <!-- Period Time of Day -->
+    <string name="period_time_morning">Morning</string>
+    <string name="period_time_afternoon">Afternoon</string>
+    <string name="period_time_evening">Evening</string>
+    
+    <!-- Validation Errors -->
+    <string name="error_morning_periods_range">Morning periods must be between 1-6</string>
+    <string name="error_afternoon_periods_range">Afternoon periods must be between 1-6</string>
+    <string name="error_evening_periods_range">Evening periods must be between 0-3</string>
+    <string name="error_total_periods_range">Total periods (%d) must be between 1-12</string>
+    <string name="error_dinner_break_range">Dinner break must be between 30-120 minutes and a multiple of 5</string>
+
+</resources>

@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Saison</string>
+    
+    <!-- Navigation -->
+    <string name="nav_calendar">カレンダー</string>
+    <string name="nav_course">授業</string>
+    <string name="nav_tasks">タスク</string>
+    <string name="nav_pomodoro">集中</string>
+    <string name="nav_metronome">拍子</string>
+    <string name="nav_settings">設定</string>
+    
+    <!-- Common Actions -->
+    <string name="action_add">追加</string>
+    <string name="action_edit">編集</string>
+    <string name="action_delete">削除</string>
+    <string name="action_save">保存</string>
+    <string name="action_cancel">キャンセル</string>
+    <string name="action_search">検索</string>
+    <string name="action_filter">フィルター</string>
+    <string name="action_sync">同期</string>
+    
+    <!-- Task -->
+    <string name="task_title">タイトル</string>
+    <string name="task_description">説明</string>
+    <string name="task_due_date">期限</string>
+    <string name="task_reminder">リマインダー</string>
+    <string name="task_priority">優先度</string>
+    <string name="task_category">カテゴリー</string>
+    <string name="task_completed">完了</string>
+    <string name="task_incomplete">未完了</string>
+    
+    <!-- Priority -->
+    <string name="priority_low">低</string>
+    <string name="priority_medium">中</string>
+    <string name="priority_high">高</string>
+    <string name="priority_urgent">緊急</string>
+    
+    <!-- Calendar -->
+    <string name="calendar_month">月</string>
+    <string name="calendar_week">週</string>
+    <string name="calendar_day">日</string>
+    <string name="calendar_list">リスト</string>
+    <string name="calendar_today">今日</string>
+    
+    <!-- Pomodoro -->
+    <string name="pomodoro_start">集中開始</string>
+    <string name="pomodoro_pause">一時停止</string>
+    <string name="pomodoro_resume">再開</string>
+    <string name="pomodoro_stop">停止</string>
+    <string name="pomodoro_work_duration">作業時間</string>
+    <string name="pomodoro_break_duration">休憩時間</string>
+    <string name="pomodoro_long_break">長い休憩</string>
+    <string name="pomodoro_sessions_completed">完了セッション</string>
+    
+    <!-- Metronome -->
+    <string name="metronome_title">メトロノーム</string>
+    <string name="metronome_presets">プリセット</string>
+    <string name="metronome_save_preset">プリセット保存</string>
+    <string name="metronome_bpm">BPM</string>
+    <string name="metronome_start">開始</string>
+    <string name="metronome_stop">停止</string>
+    <string name="metronome_sound">音</string>
+    <string name="metronome_sound_woodblock">木魚</string>
+    <string name="metronome_sound_click">クリック</string>
+    <string name="metronome_sound_beep">ビープ</string>
+    
+    <!-- Settings -->
+    <string name="settings_theme">テーマ</string>
+    <string name="settings_language">言語</string>
+    <string name="settings_dark_mode">ダークモード</string>
+    <string name="settings_dynamic_color">ダイナミックカラー</string>
+    <string name="settings_sync">同期設定</string>
+    <string name="settings_security">セキュリティ</string>
+    <string name="settings_about">について</string>
+    
+    <!-- WebDAV Sync -->
+    <string name="sync_webdav">WebDAV同期</string>
+    <string name="sync_url">サーバーURL</string>
+    <string name="sync_username">ユーザー名</string>
+    <string name="sync_password">パスワード</string>
+    <string name="sync_auto_sync">自動同期</string>
+    <string name="sync_last_sync">最終同期</string>
+    <string name="sync_now">今すぐ同期</string>
+    <string name="sync_success">同期成功</string>
+    <string name="sync_error">同期失敗</string>
+    
+    <!-- Themes -->
+    <string name="theme_dynamic">ダイナミック</string>
+    <string name="theme_sakura">桜</string>
+    <string name="theme_mint">ミント</string>
+    <string name="theme_amber">琥珀</string>
+    <string name="theme_snow">雪</string>
+    <string name="theme_rain">雨</string>
+    <string name="theme_maple">紅葉</string>
+    <string name="theme_ocean">海</string>
+    <string name="theme_sunset">夕焼け</string>
+    <string name="theme_forest">森</string>
+    <string name="theme_lavender">ラベンダー</string>
+    <string name="theme_desert">砂漠</string>
+    <string name="theme_aurora">オーロラ</string>
+    
+    <!-- Common Time -->
+    <string name="time_just_now">たった今</string>
+    <string name="time_minutes_ago">%d 分前</string>
+    <string name="time_hours_ago">%d 時間前</string>
+    <string name="time_days_ago">%d 日前</string>
+    <string name="time_today_at">今日 %s</string>
+    <string name="time_tomorrow_at">明日 %s</string>
+    <string name="time_yesterday_at">昨日 %s</string>
+    
+    <!-- Task Module -->
+    <string name="task_action_quick_add">クイック追加</string>
+    <string name="task_filter_all">すべて</string>
+    <string name="task_filter_active">進行中</string>
+    <string name="task_filter_completed">完了</string>
+    <string name="task_stats_incomplete">未完了</string>
+    <string name="task_stats_overdue">期限切れ</string>
+    <string name="task_search_placeholder">タスクを検索...</string>
+    <string name="task_search_no_results">タスクが見つかりません</string>
+    <string name="task_search_query_format">検索: \"%s\"</string>
+    <string name="task_empty_no_tasks">まだタスクがありません</string>
+    <string name="task_empty_no_active">進行中のタスクがありません</string>
+    <string name="task_empty_no_completed">完了したタスクがありません</string>
+    <string name="task_empty_hint">下のボタンをタップして新しいタスクを追加</string>
+    <string name="task_dialog_quick_add_title">クイック追加</string>
+    <string name="task_dialog_description_label">タスクの説明</string>
+    <string name="task_dialog_example_hint">自然言語で入力できます。例：</string>
+    <string name="task_dialog_example_text">\"明日午後3時に会議 #仕事\"</string>
+    <string name="task_detail_title">タスク詳細</string>
+    <string name="task_error_not_found">タスクが見つかりません</string>
+    <string name="task_field_title">タイトル</string>
+    <string name="task_field_description">説明</string>
+    <string name="task_field_priority">優先度</string>
+    <string name="task_field_due_date">期限</string>
+    <string name="task_field_location">場所</string>
+    <string name="task_field_subtasks">サブタスク</string>
+    <string name="task_due_date_not_set">未設定</string>
+    
+    <!-- Settings Module -->
+    <string name="settings_title">設定</string>
+    <string name="settings_section_appearance">外観</string>
+    <string name="settings_section_language">言語</string>
+    <string name="settings_section_notifications">通知</string>
+    <string name="settings_section_sync">同期</string>
+    <string name="settings_section_pomodoro">ポモドーロ</string>
+    <string name="settings_section_metronome">メトロノーム</string>
+    <string name="settings_section_about">について</string>
+    
+    <string name="settings_theme_title">テーマ</string>
+    <string name="settings_dark_mode_title">ダークモード</string>
+    <string name="settings_dark_mode_subtitle">ダークテーマを使用</string>
+    <string name="settings_bottom_nav_title">ボトムナビゲーション</string>
+    <string name="settings_bottom_nav_subtitle">ナビゲーション項目をカスタマイズ</string>
+    <string name="settings_language_title">アプリの言語</string>
+    
+    <string name="settings_notifications_enable_title">通知を有効にする</string>
+    <string name="settings_notifications_enable_subtitle">タスクと授業のリマインダーを受け取る</string>
+    <string name="settings_task_reminders_title">タスクリマインダー</string>
+    <string name="settings_task_reminders_subtitle">タスクの期限リマインダーを受け取る</string>
+    <string name="settings_course_reminders_title">授業リマインダー</string>
+    <string name="settings_course_reminders_subtitle">授業開始のリマインダーを受け取る</string>
+    <string name="settings_pomodoro_reminders_title">ポモドーロリマインダー</string>
+    <string name="settings_pomodoro_reminders_subtitle">ポモドーロ完了のリマインダーを受け取る</string>
+    
+    <string name="settings_auto_sync_title">自動同期</string>
+    <string name="settings_auto_sync_subtitle">WebDAVに自動同期</string>
+    <string name="settings_wifi_only_title">WiFiのみ同期</string>
+    <string name="settings_wifi_only_subtitle">WiFiネットワークでのみ同期</string>
+    <string name="settings_webdav_title">WebDAV設定</string>
+    <string name="settings_webdav_subtitle">WebDAVサーバーを設定</string>
+    <string name="settings_sync_now_title">今すぐ同期</string>
+    <string name="settings_sync_last_time">最終同期: %s</string>
+    <string name="settings_sync_not_yet">まだ同期していません</string>
+    <string name="settings_sync_error">エラー: %s</string>
+    <string name="settings_sync_button">同期</string>
+    
+    <string name="settings_pomodoro_duration_title">ポモドーロ時間</string>
+    <string name="settings_pomodoro_duration_subtitle">作業: %1$d分 | 短い休憩: %2$d分 | 長い休憩: %3$d分</string>
+    
+    <string name="settings_metronome_title">メトロノーム設定</string>
+    <string name="settings_metronome_subtitle">デフォルトBPM: %d</string>
+    
+    <string name="settings_about_title">Saisonについて</string>
+    <string name="settings_about_subtitle">バージョン 1.0.0</string>
+    <string name="settings_licenses_title">オープンソースライセンス</string>
+    <string name="settings_licenses_subtitle">オープンソースライセンスを表示</string>
+    
+    <string name="settings_theme_dialog_title">テーマを選択</string>
+    <string name="settings_language_dialog_title">言語を選択</string>
+    <string name="settings_webdav_dialog_title">WebDAV設定</string>
+    <string name="settings_webdav_url_label">サーバーURL</string>
+    <string name="settings_webdav_url_placeholder">https://example.com/webdav</string>
+    <string name="settings_webdav_url_error">有効なURLを入力してください（http:// または https://）</string>
+    <string name="settings_webdav_username_label">ユーザー名</string>
+    <string name="settings_webdav_password_label">パスワード</string>
+    <string name="settings_webdav_test_button">接続テスト</string>
+    <string name="settings_webdav_test_success">✓ 接続成功</string>
+    <string name="settings_webdav_test_error">✗ %s</string>
+    
+    <string name="language_zh_cn">简体中文</string>
+    <string name="language_en">English</string>
+    <string name="language_ja">日本語</string>
+    <string name="language_vi">Tiếng Việt</string>
+    
+    <!-- Task Actions -->
+    <string name="task_mark_complete">完了にする</string>
+    <string name="task_unmark_complete">未完了に戻す</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_back">戻る</string>
+    <string name="cd_search">検索</string>
+    <string name="cd_close_search">検索を閉じる</string>
+    <string name="cd_filter">フィルター</string>
+    <string name="cd_calendar">カレンダー</string>
+    <string name="cd_sync_now">今すぐ同期</string>
+    <string name="cd_delete">削除</string>
+    <string name="cd_task_completed">完了</string>
+    <string name="cd_task_incomplete">未完了</string>
+    <string name="cd_settings">設定</string>
+    <string name="cd_play">再生</string>
+    <string name="cd_pause">一時停止</string>
+    <string name="cd_hide_password">パスワードを隠す</string>
+    <string name="cd_show_password">パスワードを表示</string>
+    <string name="cd_previous">前へ</string>
+    <string name="cd_next">次へ</string>
+    <string name="cd_today">今日</string>
+    <string name="cd_ocr_import">OCR インポート</string>
+    <string name="cd_week_pattern">週パターン</string>
+    
+    <!-- Common Actions -->
+    <string name="common_action_close">閉じる</string>
+    <string name="common_action_confirm">確認</string>
+    
+    <!-- Quick Actions -->
+    <string name="quick_actions_title">クイックアクション</string>
+    <string name="quick_action_create_task_desc">この日付の新しいタスクを作成</string>
+    <string name="quick_action_create_event_desc">この日付の新しいイベントを作成</string>
+    <string name="quick_action_view_details_desc">この日付のすべての詳細を表示</string>
+    
+
+    <!-- Metronome Module -->
+    <string name="metronome_decrease_1">1減らす</string>
+    <string name="metronome_decrease_5">5減らす</string>
+    <string name="metronome_decrease_10">10減らす</string>
+    <string name="metronome_increase_1">1増やす</string>
+    <string name="metronome_increase_5">5増やす</string>
+    <string name="metronome_increase_10">10増やす</string>
+    
+    <!-- Course Module -->
+    <string name="course_title">授業スケジュール</string>
+    <string name="course_action_add">授業を追加</string>
+    <string name="course_week_format">第 %d 週</string>
+    <string name="course_pattern_all">すべて</string>
+    <string name="course_pattern_a">A週</string>
+    <string name="course_pattern_b">B週</string>
+    <string name="course_pattern_odd">奇数週</string>
+    <string name="course_pattern_even">偶数週</string>
+    <string name="course_count_format">%d コマ</string>
+    <string name="course_empty_no_courses">まだ授業がありません</string>
+    <string name="course_empty_hint">下のボタンをタップして授業を追加</string>
+    
+    <!-- Calendar Module -->
+    <string name="calendar_view_month">月</string>
+    <string name="calendar_view_week">週</string>
+    <string name="calendar_view_day">日</string>
+    <string name="calendar_view_list">リスト</string>
+    
+    <!-- Day Names -->
+    <string name="day_monday">月曜日</string>
+    <string name="day_tuesday">火曜日</string>
+    <string name="day_wednesday">水曜日</string>
+    <string name="day_thursday">木曜日</string>
+    <string name="day_friday">金曜日</string>
+    <string name="day_saturday">土曜日</string>
+    <string name="day_sunday">日曜日</string>
+
+    <!-- Theme Mode -->
+    <string name="settings_theme_mode_title">テーマモード</string>
+    <string name="theme_mode_follow_system">システムに従う</string>
+    <string name="theme_mode_follow_system_desc">システム設定に基づいてライト/ダークテーマを自動切り替え</string>
+    <string name="theme_mode_light">ライトモード</string>
+    <string name="theme_mode_light_desc">常にライトテーマを使用</string>
+    <string name="theme_mode_dark">ダークモード</string>
+    <string name="theme_mode_dark_desc">常にダークテーマを使用</string>
+    <string name="theme_mode_auto_time">ダイナミックタイム</string>
+    <string name="theme_mode_auto_time_desc">時間帯に応じてテーマと色を自動切り替え（夜明け/朝/正午/午後/夕暮れ/夕方/夜）</string>
+    
+    <!-- Item Types -->
+    <string name="item_type_task">タスク</string>
+    <string name="item_type_schedule">スケジュール</string>
+    <string name="item_type_event">イベント</string>
+    <string name="item_type_selector_title">タイプを選択</string>
+    <string name="cd_item_type_selector">アイテムタイプセレクター</string>
+    <string name="cd_dropdown_icon">ドロップダウンアイコン</string>
+    
+    <!-- イベント関連 -->
+    <string name="nav_events">イベント</string>
+    <string name="nav_routine">ルーチン</string>
+    <string name="event_screen_title">イベント</string>
+    <string name="event_create_title">イベントを作成</string>
+    <string name="event_edit_title">イベントを編集</string>
+    <string name="event_detail_title">イベント詳細</string>
+    <string name="event_title_label">イベントタイトル</string>
+    <string name="event_description_label">イベント説明</string>
+    <string name="event_category_label">イベントカテゴリー</string>
+    <string name="event_select_date">日付を選択</string>
+    <string name="event_select_time">時刻を選択</string>
+    <string name="event_created_at">作成日時</string>
+    <string name="event_updated_at">更新日時</string>
+    <string name="event_search_placeholder">イベントを検索...</string>
+    
+    <!-- イベントカテゴリー -->
+    <string name="event_category_all">すべて</string>
+    <string name="event_category_birthday">誕生日</string>
+    <string name="event_category_anniversary">記念日</string>
+    <string name="event_category_countdown">カウントダウン</string>
+    
+    <!-- 日数表示 -->
+    <string name="event_today">今日</string>
+    <string name="event_days_remaining">あと %d 日</string>
+    <string name="event_days_passed">%d 日前</string>
+    
+    <!-- 空の状態 -->
+    <string name="event_empty_title">イベントがありません</string>
+    <string name="event_empty_message">右下のボタンをタップして最初のイベントを作成</string>
+    <string name="event_search_no_results">イベントが見つかりません</string>
+    <string name="event_search_no_results_message">「%s」に一致するイベントが見つかりません</string>
+    <string name="event_not_found">イベントが存在しません</string>
+    
+    <!-- エラー状態 -->
+    <string name="event_error_title">読み込みに失敗しました</string>
+    
+    <!-- アクション -->
+    <string name="action_create_event">イベントを作成</string>
+    <string name="action_clear_search">検索をクリア</string>
+    <string name="action_clear">クリア</string>
+    <string name="action_confirm">確認</string>
+    
+    <!-- 削除確認 -->
+    <string name="event_delete_confirm_title">イベントを削除</string>
+    <string name="event_delete_confirm_message">このイベントを削除してもよろしいですか？この操作は元に戻せません。</string>
+    
+    <!-- 時間選択 -->
+    <string name="duration_picker_title">時間を設定</string>
+    <string name="duration_label">活動時間</string>
+    <string name="duration_not_set">未設定</string>
+    <string name="duration_hours">時間</string>
+    <string name="duration_minutes">分</string>
+    <string name="duration_quick_title">よく使う時間</string>
+    <string name="duration_15min">15分</string>
+    <string name="duration_30min">30分</string>
+    <string name="duration_45min">45分</string>
+    <string name="duration_1hour">1時間</string>
+    <string name="duration_1_5hours">1.5時間</string>
+    <string name="duration_2hours">2時間</string>
+    <string name="duration_clear">クリア</string>
+    <string name="duration_format_hours">%d時間</string>
+    <string name="duration_format_minutes">%d分</string>
+    <string name="duration_format_hours_minutes">%d時間%d分</string>
+    
+    <!-- タスクプレビュー -->
+    <string name="task_preview_title">タスク詳細</string>
+    <string name="task_edit_title">タスク編集</string>
+    <string name="cd_edit_task">タスクを編集</string>
+    <string name="cd_navigate_back">戻る</string>
+    <string name="cd_more_actions">その他の操作</string>
+    <string name="action_mark_complete">完了にする</string>
+    <string name="action_mark_incomplete">未完了にする</string>
+    <string name="action_share">共有</string>
+    <string name="action_go_back">戻る</string>
+    <string name="error_task_not_found">タスクが見つかりません</string>
+    <string name="dialog_delete_task_title">タスクを削除</string>
+    <string name="dialog_delete_task_message">このタスクを削除してもよろしいですか？この操作は元に戻せません。</string>
+    <string name="task_tags">タグ</string>
+    <string name="task_subtasks">サブタスク</string>
+    <string name="task_attachments">添付ファイル</string>
+    
+    <!-- ポモドーロ -->
+    <string name="pomodoro_title">ポモドーロタイマー</string>
+    <string name="pomodoro_select_task">タスクを選択</string>
+    <string name="pomodoro_no_task_selected">タスクが選択されていません</string>
+    <string name="pomodoro_task_duration_format">%s</string>
+    <string name="pomodoro_no_tasks_with_duration">活動時間が設定されたタスクがありません</string>
+    <string name="pomodoro_change_task">タスクを変更</string>
+    
+    <!-- ポモドーロアクション -->
+    <string name="pomodoro_action_start">開始</string>
+    <string name="pomodoro_action_pause">一時停止</string>
+    <string name="pomodoro_action_resume">再開</string>
+    <string name="pomodoro_action_stop">停止</string>
+    <string name="pomodoro_early_finish">早期終了</string>
+    
+    <!-- 早期終了ダイアログ -->
+    <string name="pomodoro_early_finish_message">%d 分間作業しました。タスクを完了としてマークしますか？</string>
+    <string name="pomodoro_mark_complete">完了としてマーク</string>
+    <string name="pomodoro_just_stop">停止のみ</string>
+    
+    <!-- ポモドーロ設定 -->
+    <string name="pomodoro_settings_dialog_title">ポモドーロ設定</string>
+    <string name="pomodoro_work_duration_label">作業時間</string>
+    <string name="pomodoro_short_break_label">短い休憩</string>
+    <string name="pomodoro_long_break_label">長い休憩</string>
+    <string name="pomodoro_settings_sound">サウンド通知</string>
+    <string name="pomodoro_settings_vibration">バイブレーション</string>
+    <string name="pomodoro_work_duration_format">%d 分</string>
+    
+    <!-- ポモドーロ統計 -->
+    <string name="pomodoro_stats_today">今日の統計</string>
+    <string name="pomodoro_stats_completed">完了</string>
+    <string name="pomodoro_stats_duration">時間</string>
+    <string name="pomodoro_stats_interruptions">中断</string>
+    <string name="pomodoro_stats_minutes_format">%d 分</string>
+    <string name="pomodoro_count_format">%d 個完了</string>
+    
+    <!-- ポモドーロ通知 -->
+    <string name="pomodoro_complete_title">ポモドーロ完了</string>
+    <string name="pomodoro_complete_message">集中時間が終了しました。休憩しましょう！</string>
+    <string name="pomodoro_checkin_success">自動チェックイン成功</string>
+    <string name="pomodoro_checkin_failed">自動チェックイン失敗</string>
+    
+    <!-- ポモドーロチェックインメモ -->
+    <string name="pomodoro_checkin_note_complete">ポモドーロで完了</string>
+    <string name="pomodoro_checkin_note_early_finish">早期終了（実際の時間：%d 分）</string>
+    
+    <!-- ポモドーロタイマーステータス -->
+    <string name="pomodoro_status_completed">完了！</string>
+    <string name="pomodoro_status_focusing">集中中</string>
+    <string name="pomodoro_status_paused">一時停止中</string>
+    <string name="pomodoro_status_ready">開始準備完了</string>
+    
+    <!-- ポモドーロメッセージ -->
+    <string name="pomodoro_message_marked_complete">完了としてマークしました</string>
+    <string name="pomodoro_message_checkin_failed">チェックイン失敗：%s</string>
+    <string name="pomodoro_message_auto_checkin_success">自動チェックイン成功</string>
+    <string name="pomodoro_message_auto_checkin_failed">自動チェックイン失敗：%s</string>
+    
+    <!-- 週数選択 -->
+    <string name="week_selector_title">週数を選択</string>
+    <string name="week_selector_tab_week_number">週数モード</string>
+    <string name="week_selector_tab_date_range">日付範囲</string>
+    <string name="week_selector_quick_all">全週</string>
+    <string name="week_selector_quick_odd">奇数週</string>
+    <string name="week_selector_quick_even">偶数週</string>
+    <string name="week_selector_selected_count">%d週選択済み</string>
+    <string name="week_selector_no_selection">週数未選択</string>
+    <string name="week_selector_error_no_weeks">少なくとも1週間を選択してください</string>
+    <string name="week_selector_error_out_of_range">選択した週数が学期範囲を超えています</string>
+    
+    <!-- 日付範囲モード -->
+    <string name="date_range_start_date">開始日</string>
+    <string name="date_range_end_date">終了日</string>
+    <string name="date_range_repeat_mode">繰り返しモード</string>
+    <string name="date_range_repeat_every_week">毎週</string>
+    <string name="date_range_repeat_odd_weeks">奇数週</string>
+    <string name="date_range_repeat_even_weeks">偶数週</string>
+    <string name="date_range_select_date">日付を選択</string>
+    <string name="date_range_not_set">未設定</string>
+    
+    <!-- 週数パターンラベル -->
+    <string name="week_pattern_all">全週</string>
+    <string name="week_pattern_odd">奇数週</string>
+    <string name="week_pattern_even">偶数週</string>
+    <string name="week_pattern_a">A週</string>
+    <string name="week_pattern_b">B週</string>
+    <string name="week_pattern_custom">カスタム</string>
+    <string name="week_pattern_custom_format">第%s週</string>
+    <string name="week_pattern_custom_count">カスタム（%d週）</string>
+    
+    <!-- 現在週インジケーター -->
+    <string name="current_week_indicator_title">現在の週</string>
+    <string name="current_week_format">第%1$d / %2$d週</string>
+    <string name="show_all_courses">すべての授業を表示</string>
+    <string name="show_current_week_only">今週のみ表示</string>
+    <string name="cd_toggle_show_mode">表示モードを切り替え</string>
+    
+    <!-- 学期設定 -->
+    <string name="semester_settings_title">学期設定</string>
+    <string name="semester_start_date">学期開始日</string>
+    <string name="semester_start_date_desc">現在の週数を計算するために第1週の開始日を設定</string>
+    <string name="semester_start_date_not_set">未設定</string>
+    <string name="semester_total_weeks">学期総週数</string>
+    <string name="semester_total_weeks_desc">学期の総週数を設定（16-24週）</string>
+    <string name="semester_total_weeks_format">%d週</string>
+    <string name="semester_weeks_range_min">16週</string>
+    <string name="semester_weeks_range_mid">20週</string>
+    <string name="semester_weeks_range_max">24週</string>
+    <string name="cd_semester_settings">学期設定</string>
+    <string name="cd_select_date">日付を選択</string>
+    
+    <!-- 授業週関連 -->
+    <string name="course_week_detail">詳細を表示</string>
+    <string name="course_this_week">今週あり</string>
+    <string name="course_not_this_week">今週なし</string>
+    <string name="cd_back_to_current_week">現在の週に戻る</string>
+    
+    <!-- 学期管理 -->
+    <string name="semester_management">学期管理</string>
+    <string name="semester_create">学期を作成</string>
+    <string name="semester_edit">学期を編集</string>
+    <string name="semester_delete">学期を削除</string>
+    <string name="semester_copy">学期をコピー</string>
+    <string name="semester_archive">アーカイブ</string>
+    <string name="semester_unarchive">アーカイブ解除</string>
+    <string name="semester_archived">アーカイブ済み</string>
+    <string name="semester_current">現在</string>
+    <string name="semester_name">学期名</string>
+    <string name="semester_name_hint">例：2025年春学期</string>
+    <string name="semester_start_date_label">開始日</string>
+    <string name="semester_end_date">終了日</string>
+    <string name="semester_total_weeks_label">学期総週数</string>
+    <string name="semester_weeks_format">%d週</string>
+    <string name="semester_view_all">すべての学期を表示</string>
+    <string name="semester_no_selection">学期が選択されていません</string>
+    <string name="semester_active">アクティブな学期</string>
+    <string name="semester_no_active">アクティブな学期がありません</string>
+    <string name="semester_stats_courses">授業</string>
+    <string name="semester_stats_courses_format">%d科目</string>
+    <string name="semester_stats_weeks">週数</string>
+    <string name="semester_stats_weeks_format">%d週</string>
+    <string name="semester_stats_hours">総時間</string>
+    <string name="semester_stats_hours_format">%d時間</string>
+    <string name="semester_delete_confirm_title">学期を削除</string>
+    <string name="semester_delete_confirm_message">学期「%s」を削除してもよろしいですか？</string>
+    <string name="semester_delete_warning">警告：この学期には%d科目の授業が含まれています。学期を削除すると、すべての授業も削除されます！</string>
+    <string name="semester_copy_dialog_title">学期をコピー</string>
+    <string name="semester_copy_dialog_message">学期「%s」のすべての授業を新しい学期にコピーします。</string>
+    <string name="semester_copy_new_name">新しい学期名</string>
+    <string name="semester_default_name">現在の学期</string>
+    <string name="semester_copy_suffix"> - コピー</string>
+    <string name="error_cannot_delete_current">現在の学期は削除できません。まず別の学期に切り替えてください。</string>
+    <string name="error_cannot_delete_last">最後の学期は削除できません。</string>
+
+    <!-- ICS Import/Export -->
+    <string name="import_courses">時間割をインポート</string>
+    <string name="export_courses">時間割をエクスポート</string>
+    <string name="import_preview_title">インポートプレビュー</string>
+    <string name="import_success">%d件の授業をインポートしました</string>
+    <string name="import_error">インポート失敗: %s</string>
+    <string name="export_success">時間割をエクスポートしました</string>
+    <string name="export_error">エクスポート失敗: %s</string>
+    <string name="select_all">すべて選択</string>
+    <string name="deselect_all">選択解除</string>
+    <string name="duplicate_warning">重複する授業が検出されました</string>
+    <string name="invalid_ics_format">無効なICSファイル形式</string>
+    <string name="empty_ics_file">ファイルに授業データが含まれていません</string>
+    <string name="confirm_import">インポート確認</string>
+    <string name="import_selected_count">%1$d / %2$d件の授業を選択</string>
+    <string name="back">戻る</string>
+    <string name="file_name">ファイル名</string>
+    <string name="file_name_hint">ファイルは.ics形式で保存されます</string>
+    <string name="export">エクスポート</string>
+    <string name="close">閉じる</string>
+    <string name="share">共有</string>
+    <string name="share_course_schedule">時間割を共有</string>
+    <string name="export_courses_description">現在の学期のすべての授業をICSファイルとしてエクスポート</string>
+    <string name="export_success_message">時間割のエクスポートに成功しました。ファイルを共有または保存できます。</string>
+    
+    <!-- 時間割UI最適化 -->
+    <string name="period_number_format">第%d時限</string>
+    <string name="time_range_format">%s-%s</string>
+    <string name="week_number_format">第%1$d / %2$d週</string>
+    <string name="empty_timetable_message">今週は授業がありません</string>
+    <string name="empty_timetable_action">授業を追加</string>
+    <string name="back_to_current_week">今週に戻る</string>
+
+    <!-- 授業時限設定 -->
+    <string name="course_settings_morning_periods">午前の時限</string>
+    <string name="course_settings_afternoon_periods">午後の時限</string>
+    <string name="course_settings_evening_periods">夜間の時限</string>
+    <string name="course_settings_morning_periods_desc">午前の時限数（1-6時限）</string>
+    <string name="course_settings_afternoon_periods_desc">午後の時限数（1-6時限）</string>
+    <string name="course_settings_evening_periods_desc">夜間の時限数（0-3時限）</string>
+    <string name="course_settings_dinner_break">夕食休憩時間</string>
+    <string name="course_settings_dinner_break_desc">夜間授業前の休憩時間</string>
+    
+    <!-- 時限の時間帯 -->
+    <string name="period_time_morning">午前</string>
+    <string name="period_time_afternoon">午後</string>
+    <string name="period_time_evening">夜間</string>
+    
+    <!-- 検証エラー -->
+    <string name="error_morning_periods_range">午前の時限数は1-6の間である必要があります</string>
+    <string name="error_afternoon_periods_range">午後の時限数は1-6の間である必要があります</string>
+    <string name="error_evening_periods_range">夜間の時限数は0-3の間である必要があります</string>
+    <string name="error_total_periods_range">総時限数（%d）は1-12の間である必要があります</string>
+    <string name="error_dinner_break_range">夕食休憩時間は30-120分の間で、5の倍数である必要があります</string>
+</resources>
