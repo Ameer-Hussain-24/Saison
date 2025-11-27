@@ -75,7 +75,7 @@
 ### 下载安装
 
 #### 方式一: 从 Release 下载
-1. 前往 [Releases](https://github.com/yourusername/saison/releases) 页面
+1. 前往 [Releases](https://github.com/JoyinJoester/saison/releases) 页面
 2. 下载最新版本的 APK 文件
 3. 在 Android 设备上安装 APK
 
@@ -320,7 +320,7 @@ app/src/main/java/takagi/ru/saison/
 ### 报告问题
 
 如果您发现 Bug 或有功能建议：
-1. 前往 [Issues](https://github.com/yourusername/saison/issues) 页面
+1. 前往 [Issues](https://github.com/JoyinJoester/saison/issues) 页面
 2. 搜索是否已有相关问题
 3. 创建新 Issue 并详细描述
 

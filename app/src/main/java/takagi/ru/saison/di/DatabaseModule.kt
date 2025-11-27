@@ -37,7 +37,8 @@ object DatabaseModule {
                 SaisonDatabase.MIGRATION_9_10,
                 SaisonDatabase.MIGRATION_10_11,
                 SaisonDatabase.MIGRATION_11_12,
-                SaisonDatabase.MIGRATION_12_13
+                SaisonDatabase.MIGRATION_12_13,
+                SaisonDatabase.MIGRATION_13_14
             )
             .fallbackToDestructiveMigration()
             .build()
@@ -91,5 +92,10 @@ object DatabaseModule {
     @Provides
     fun provideSubscriptionDao(database: SaisonDatabase): SubscriptionDao {
         return database.subscriptionDao()
+    }
+    
+    @Provides
+    fun provideSubscriptionHistoryDao(database: SaisonDatabase): SubscriptionHistoryDao {
+        return database.subscriptionHistoryDao()
     }
 }

@@ -163,8 +163,8 @@ fun SubscriptionScreen(
                 showAddSheet = false
                 subscriptionToEdit = null
             },
-            onSave = { id, name, category, price, cycleType, duration, startDate, note, autoRenewal, reminderEnabled, reminderDaysBefore ->
-                viewModel.saveSubscription(id, name, category, price, cycleType, duration, startDate, note, autoRenewal, reminderEnabled, reminderDaysBefore)
+            onSave = { id, name, category, price, cycleType, duration, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysBefore ->
+                viewModel.saveSubscription(id, name, category, price, cycleType, duration, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysBefore)
             }
         )
     }

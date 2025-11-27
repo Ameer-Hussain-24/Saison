@@ -7,6 +7,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -36,6 +39,8 @@ fun SubscriptionDetailScreen(
     
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showRenewalDialog by remember { mutableStateOf(false) }
+    var showPauseDialog by remember { mutableStateOf(false) }
+    var showSkipDialog by remember { mutableStateOf(false) }
     
     Scaffold(
         topBar = {
@@ -93,6 +98,20 @@ fun SubscriptionDetailScreen(
                                 DetailHeader(subscription = sub)
                             }
                             
+                            // 操作按钮
+                            item {
+                                ActionButtonsRow(
+                                    subscription = sub,
+                                    onPauseClick = { showPauseDialog = true },
+                                    onResumeClick = { 
+                                        viewModel.resumeSubscription {
+                                            // 成功恢复
+                                        }
+                                    },
+                                    onSkipClick = { showSkipDialog = true }
+                                )
+                            }
+                            
                             // Auto-renewal toggle
                             item {
                                 AutoRenewalCard(
@@ -121,6 +140,12 @@ fun SubscriptionDetailScreen(
                             // Subscription info
                             item {
                                 SubscriptionInfoCard(subscription = sub)
+                            }
+                            
+                            // 历史记录
+                            item {
+                                val history by viewModel.history.collectAsState()
+                                SubscriptionHistoryList(history = history)
                             }
                         }
                     }
@@ -170,6 +195,109 @@ fun SubscriptionDetailScreen(
                 showRenewalDialog = false
             }
         )
+    }
+    
+    // Pause confirmation dialog
+    if (showPauseDialog) {
+        AlertDialog(
+            onDismissRequest = { showPauseDialog = false },
+            title = { Text(stringResource(R.string.subscription_pause_confirm_title)) },
+            text = { Text(stringResource(R.string.subscription_pause_confirm_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.pauseSubscription {
+                            showPauseDialog = false
+                        }
+                    }
+                ) {
+                    Text(stringResource(R.string.subscription_action_pause))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showPauseDialog = false }) {
+                    Text(stringResource(R.string.subscription_cancel_button))
+                }
+            }
+        )
+    }
+    
+    // Skip dialog
+    if (showSkipDialog) {
+        SkipSubscriptionDialog(
+            subscription = subscription,
+            onDismiss = { showSkipDialog = false },
+            onConfirm = { skipDuration ->
+                viewModel.skipSubscription(skipDuration) {
+                    // 成功跳过
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun ActionButtonsRow(
+    subscription: SubscriptionEntity,
+    onPauseClick: () -> Unit,
+    onResumeClick: () -> Unit,
+    onSkipClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            if (subscription.isPaused) {
+                // 显示恢复按钮
+                Button(
+                    onClick = onResumeClick,
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(stringResource(R.string.subscription_action_resume))
+                }
+            } else {
+                // 显示中断和跳过按钮
+                OutlinedButton(
+                    onClick = onPauseClick,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Pause,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(stringResource(R.string.subscription_action_pause))
+                }
+                
+                OutlinedButton(
+                    onClick = onSkipClick,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.SkipNext,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(stringResource(R.string.subscription_action_skip))
+                }
+            }
+        }
     }
 }
 

@@ -753,6 +753,43 @@
     <string name="subscription_confirm_renewal">Xác nhận gia hạn</string>
     <string name="subscription_expires_on">Hết hạn: %1$s</string>
     
+    <!-- Hành động đăng ký -->
+    <string name="subscription_action_pause">Tạm dừng</string>
+    <string name="subscription_action_resume">Tiếp tục</string>
+    <string name="subscription_action_skip">Bỏ qua</string>
+    
+    <!-- Trường đăng ký -->
+    <string name="subscription_field_end_date">Ngày kết thúc</string>
+    <string name="subscription_field_end_date_optional">Ngày kết thúc (Tùy chọn)</string>
+    <string name="subscription_end_date_error">Ngày kết thúc phải sau ngày bắt đầu</string>
+    
+    <!-- Bỏ qua đăng ký -->
+    <string name="subscription_skip_description">Bỏ qua lần gia hạn tiếp theo</string>
+    <string name="subscription_skip_presets">Bỏ qua nhanh</string>
+    <string name="subscription_skip_custom">Bỏ qua tùy chỉnh</string>
+    <string name="subscription_skip_amount">Số lượng</string>
+    <string name="subscription_skip_unit">Đơn vị</string>
+    <string name="subscription_skip_days">Ngày</string>
+    <string name="subscription_skip_months">Tháng</string>
+    <string name="subscription_skip_years">Năm</string>
+    <string name="subscription_skip_preview_title">Xem trước</string>
+    
+    <!-- Tạm dừng đăng ký -->
+    <string name="subscription_pause_confirm_title">Tạm dừng đăng ký</string>
+    <string name="subscription_pause_confirm_message">Bạn có chắc chắn muốn tạm dừng đăng ký này không?</string>
+    
+    <!-- Lịch sử đăng ký -->
+    <string name="subscription_history_title">Lịch sử</string>
+    <string name="subscription_history_empty">Chưa có lịch sử</string>
+    <string name="subscription_history_created">Đã tạo</string>
+    <string name="subscription_history_modified">Đã sửa đổi</string>
+    <string name="subscription_history_deleted">Đã xóa</string>
+    <string name="subscription_history_renewed_auto">Tự động gia hạn</string>
+    <string name="subscription_history_renewed_manual">Gia hạn thủ công</string>
+    <string name="subscription_history_skipped">Đã bỏ qua</string>
+    <string name="subscription_history_paused">Đã tạm dừng</string>
+    <string name="subscription_history_resumed">Đã tiếp tục</string>
+    
     <!-- Cải tiến chu kỳ Pomodoro -->
     <string name="pomodoro_task_settings_title">Cài đặt nhiệm vụ</string>
     <string name="pomodoro_task_duration_label">Thời gian nhiệm vụ</string>
@@ -776,6 +813,19 @@
     <string name="settings_notifications_disabled">Đã tắt</string>
     <string name="settings_notifications_general">Thông báo chung</string>
     <string name="settings_notifications_types">Loại thông báo</string>
+    
+    <!-- Quick Input -->
+    <string name="settings_quick_input_section">Nhập nhanh</string>
+    <string name="settings_quick_input_title">Nhập nhanh từ thanh thông báo</string>
+    <string name="settings_quick_input_subtitle">Hiển thị ô nhập nhiệm vụ cố định trong thanh thông báo</string>
+    <string name="quick_input_notification_title">Thêm nhiệm vụ nhanh</string>
+    <string name="quick_input_notification_content">Nhấn để tạo nhanh mục việc cần làm</string>
+    <string name="quick_input_action_label">Thêm nhiệm vụ</string>
+    <string name="quick_input_hint">Nhập tiêu đề nhiệm vụ...</string>
+    <string name="quick_input_success">Đã thêm nhiệm vụ: %s</string>
+    <string name="quick_input_error_empty">Tiêu đề nhiệm vụ không được để trống</string>
+    <string name="quick_input_error_too_long">Tiêu đề nhiệm vụ quá dài (tối đa 500 ký tự)</string>
+    <string name="quick_input_error_generic">Không thể tạo nhiệm vụ, vui lòng thử lại</string>
     
     <!-- Saison Plus -->
     <string name="plus_title">Saison Plus</string>
@@ -812,4 +862,6 @@
     <string name="plus_feature_webdav_desc">Đồng bộ dữ liệu giữa các thiết bị với sao lưu tự động và khôi phục thủ công</string>
     <string name="plus_feature_themes_title">Chủ đề cao cấp</string>
     <string name="plus_feature_themes_desc">8 chủ đề đẹp: Sakura, Mint, Amber, Ocean, Sunset, Forest, Aurora, Rain</string>
+    
+    <string name="subscription_skip_no_charge_hint">💡 Các khoảng thời gian bỏ qua sẽ không được tính vào thống kê chi phí</string>
 </resources>

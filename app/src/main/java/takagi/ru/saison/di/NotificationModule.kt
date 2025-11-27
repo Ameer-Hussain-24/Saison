@@ -76,4 +76,36 @@ object NotificationModule {
     ): NotificationNavigationHandler {
         return NotificationNavigationHandler(context)
     }
+    
+    @Provides
+    @Singleton
+    fun provideQuickInputNotificationManager(
+        @ApplicationContext context: Context,
+        notificationManager: androidx.core.app.NotificationManagerCompat,
+        channelManager: NotificationChannelManager,
+        permissionManager: NotificationPermissionManager
+    ): QuickInputNotificationManager {
+        return QuickInputNotificationManager(
+            context,
+            notificationManager,
+            channelManager,
+            permissionManager
+        )
+    }
+    
+    @Provides
+    @Singleton
+    fun provideNotificationManagerCompat(
+        @ApplicationContext context: Context
+    ): androidx.core.app.NotificationManagerCompat {
+        return androidx.core.app.NotificationManagerCompat.from(context)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideCreateQuickTaskUseCase(
+        taskRepository: takagi.ru.saison.data.repository.TaskRepository
+    ): takagi.ru.saison.domain.usecase.CreateQuickTaskUseCase {
+        return takagi.ru.saison.domain.usecase.CreateQuickTaskUseCase(taskRepository)
+    }
 }

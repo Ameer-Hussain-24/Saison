@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Saison</string>
+    
+    <!-- Navigation -->
+    <string name="nav_calendar">Calendar</string>
+    <string name="nav_course">Course</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_pomodoro">Timer</string>
+    <string name="nav_metronome">Beat</string>
+    <string name="nav_subscription">Subscription</string>
+    <string name="nav_settings">Settings</string>
+    
+    <!-- Navigation - Abbreviated -->
+    <string name="nav_calendar_short">Cal</string>
+    <string name="nav_course_short">Crs</string>
+    <string name="nav_tasks_short">Task</string>
+    <string name="nav_pomodoro_short">Time</string>
+    <string name="nav_subscription_short">Sub</string>
+    <string name="nav_settings_short">Set</string>
+    
+    <!-- Common Actions -->
+    <string name="action_add">Add</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_search">Search</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_sync">Sync</string>
+    
+    <!-- Common Units -->
+    <string name="common_unit_minutes">minutes</string>
+    
+    <!-- Task -->
+    <string name="task_title">Title</string>
+    <string name="task_description">Description</string>
+    <string name="task_due_date">Due Date</string>
+    <string name="task_reminder">Reminder</string>
+    <string name="task_priority">Priority</string>
+    <string name="task_category">Category</string>
+    <string name="task_completed">Completed</string>
+    <string name="task_incomplete">Incomplete</string>
+    
+    <!-- Priority -->
+    <string name="priority_low">Low</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_high">High</string>
+    <string name="priority_urgent">Urgent</string>
+    
+    <!-- Calendar -->
+    <string name="calendar_month">Month</string>
+    
+    <string name="widget_today">Today</string>
+    <string name="widget_tomorrow">Tomorrow</string>
+    <string name="widget_no_courses">No classes</string>
+    <string name="widget_no_semester">Please create a semester first</string>
+    <string name="widget_description">Display today and tomorrow\'s courses</string>
+    <string name="widget_date_format">%1$d.%2$d Week %3$d %4$s</string>
+    <string name="single_day_widget_description">Display single day courses with navigation</string>
+    <string name="calendar_week">Week</string>
+    <string name="calendar_day">Day</string>
+    <string name="calendar_list">List</string>
+    <string name="calendar_today">Today</string>
+    
+    <!-- Pomodoro -->
+    <string name="pomodoro_start">Start Focus</string>
+    <string name="pomodoro_pause">Pause</string>
+    <string name="pomodoro_resume">Resume</string>
+    <string name="pomodoro_stop">Stop</string>
+    <string name="pomodoro_work_duration">Work Duration</string>
+    <string name="pomodoro_break_duration">Break Duration</string>
+    <string name="pomodoro_long_break">Long Break</string>
+    <string name="pomodoro_sessions_completed">Sessions Completed</string>
+    
+    <!-- Metronome -->
+    <string name="metronome_title">Metronome</string>
+    <string name="metronome_presets">Presets</string>
+    <string name="metronome_save_preset">Save Preset</string>
+    <string name="metronome_bpm">BPM</string>
+    <string name="metronome_start">Start</string>
+    <string name="metronome_stop">Stop</string>
+    <string name="metronome_sound">Sound</string>
+    <string name="metronome_sound_woodblock">Woodblock</string>
+    <string name="metronome_sound_click">Click</string>
+    <string name="metronome_sound_beep">Beep</string>
+    
+    <!-- Settings -->
+    <string name="settings_theme">Theme</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_dark_mode">Dark Mode</string>
+    <string name="settings_dynamic_color">Dynamic Color</string>
+    <string name="settings_sync">Sync Settings</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_about">About</string>
+    
+    <!-- WebDAV Sync -->
+    <string name="sync_webdav">WebDAV Sync</string>
+    <string name="sync_url">Server URL</string>
+    <string name="sync_username">Username</string>
+    <string name="sync_password">Password</string>
+    <string name="sync_auto_sync">Auto Sync</string>
+    <string name="sync_last_sync">Last Sync</string>
+    <string name="sync_now">Sync Now</string>
+    <string name="sync_success">Sync successful</string>
+    <string name="sync_error">Sync failed</string>
+    
+    <!-- Themes -->
+    <string name="theme_dynamic">Dynamic</string>
+    <string name="theme_auto_seasonal">Saison</string>
+    <string name="theme_sakura">Sakura</string>
+    <string name="theme_mint">Mint</string>
+    <string name="theme_amber">Amber</string>
+    <string name="theme_snow">Snow</string>
+    <string name="theme_rain">Rain</string>
+    <string name="theme_maple">Maple</string>
+    <string name="theme_ocean">Ocean</string>
+    <string name="theme_sunset">Sunset</string>
+    <string name="theme_forest">Forest</string>
+    <string name="theme_lavender">Lavender</string>
+    <string name="theme_desert">Desert</string>
+    <string name="theme_aurora">Aurora</string>
+    
+    <!-- Common Time -->
+    <string name="time_just_now">Just now</string>
+    <string name="time_minutes_ago">%d minutes ago</string>
+    <string name="time_hours_ago">%d hours ago</string>
+    <string name="time_days_ago">%d days ago</string>
+    <string name="time_today_at">Today %s</string>
+    <string name="time_tomorrow_at">Tomorrow %s</string>
+    <string name="time_yesterday_at">Yesterday %s</string>
+    
+    <!-- Task Module -->
+    <string name="task_action_quick_add">Quick Add</string>
+    <string name="task_filter_all">All</string>
+    <string name="task_filter_active">Active</string>
+    <string name="task_filter_completed">Completed</string>
+    <string name="task_filter_favorite">Favorite</string>
+    <string name="task_stats_incomplete">Incomplete</string>
+    <string name="task_stats_favorite">Favorite</string>
+    <string name="task_stats_overdue">Overdue</string>
+    <string name="task_stats_today_completed">Today Completed</string>
+    <string name="task_multi_select_title">%d selected</string>
+    <string name="task_search_placeholder">Search tasks...</string>
+    <string name="task_search_no_results">No tasks found</string>
+    <string name="task_search_query_format">Search: \"%s\"</string>
+    <string name="task_empty_no_tasks">No tasks yet</string>
+    <string name="task_empty_no_active">No active tasks</string>
+    <string name="task_empty_no_completed">No completed tasks yet</string>
+    <string name="task_empty_no_favorite">No favorite tasks yet</string>
+    <string name="task_empty_hint">Tap the button below to add a new task</string>
+    <string name="task_dialog_quick_add_title">Quick Add Task</string>
+    <string name="task_dialog_description_label">Task description</string>
+    <string name="task_dialog_example_hint">Use natural language, e.g.:</string>
+    <string name="task_dialog_example_text">\"Meeting tomorrow at 3pm #work\"</string>
+    <string name="task_detail_title">Task Details</string>
+    <string name="task_error_not_found">Task not found</string>
+    <string name="task_field_title">Title</string>
+    <string name="task_field_description">Description</string>
+    <string name="task_field_priority">Priority</string>
+    <string name="task_field_due_date">Due Date</string>
+    <string name="task_field_location">Location</string>
+    <string name="task_field_subtasks">Subtasks</string>
+    <string name="task_due_date_not_set">Not set</string>
+    
+    <!-- Settings Module -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_language">Language</string>
+    <string name="settings_section_notifications">Notifications</string>
+    <string name="settings_section_sync">Sync</string>
+    <string name="settings_section_pomodoro">Pomodoro</string>
+    <string name="settings_section_metronome">Metronome</string>
+    <string name="settings_section_about">About</string>
+    
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_dark_mode_title">Dark Mode</string>
+    <string name="settings_dark_mode_subtitle">Dark theme</string>
+    <string name="settings_bottom_nav_title">Bottom Navigation</string>
+    <string name="settings_bottom_nav_subtitle">Customize nav items</string>
+    <string name="settings_language_title">App Language</string>
+    
+    <string name="settings_notifications_enable_title">Enable Notifications</string>
+    <string name="settings_notifications_enable_subtitle">Task and course reminders</string>
+    <string name="settings_task_reminders_title">Task Reminders</string>
+    <string name="settings_task_reminders_subtitle">Due date reminders</string>
+    <string name="settings_course_reminders_title">Course Reminders</string>
+    <string name="settings_course_reminders_subtitle">Start time reminders</string>
+    <string name="settings_pomodoro_reminders_title">Pomodoro Reminders</string>
+    <string name="settings_pomodoro_reminders_subtitle">Completion reminders</string>
+    
+    <string name="settings_auto_sync_title">Auto Sync</string>
+    <string name="settings_auto_sync_subtitle">Auto sync to WebDAV</string>
+    <string name="settings_wifi_only_title">WiFi Only Sync</string>
+    <string name="settings_wifi_only_subtitle">WiFi only</string>
+    <string name="settings_webdav_title">WebDAV Configuration</string>
+    <string name="settings_webdav_subtitle">Config WebDAV server</string>
+    <string name="settings_sync_now_title">Sync Now</string>
+    <string name="settings_sync_last_time">Last sync: %s</string>
+    <string

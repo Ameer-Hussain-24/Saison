@@ -22,6 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SubscriptionDetailViewModel @Inject constructor(
     private val repository: SubscriptionRepository,
+    private val historyRepository: takagi.ru.saison.data.repository.SubscriptionHistoryRepository,
+    private val historyManager: takagi.ru.saison.util.SubscriptionHistoryManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     
@@ -38,6 +40,11 @@ class SubscriptionDetailViewModel @Inject constructor(
     // 续订选项
     private val _renewalOptions = MutableStateFlow<List<RenewalOption>>(emptyList())
     val renewalOptions: StateFlow<List<RenewalOption>> = _renewalOptions.asStateFlow()
+    
+    // 历史记录
+    val history: StateFlow<List<takagi.ru.saison.data.local.database.entities.SubscriptionHistoryEntity>> = 
+        historyRepository.getHistoryForSubscription(subscriptionId)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     
     // UI状态
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
@@ -76,52 +83,127 @@ class SubscriptionDetailViewModel @Inject constructor(
      * 计算统计信息
      */
     private fun calculateStatistics(subscription: SubscriptionEntity) {
-        val startDate = Instant.ofEpochMilli(subscription.startDate)
-            .atZone(ZoneId.systemDefault()).toLocalDate()
-        val currentDate = LocalDate.now()
-        val nextRenewalDate = Instant.ofEpochMilli(subscription.nextRenewalDate)
-            .atZone(ZoneId.systemDefault()).toLocalDate()
-        
-        val accumulatedDuration = SubscriptionStatisticsCalculator.calculateAccumulatedDuration(
-            startDate, currentDate
-        )
-        
-        val accumulatedCost = SubscriptionStatisticsCalculator.calculateAccumulatedCost(
-            startDate, currentDate,
-            subscription.price,
-            subscription.cycleType,
-            subscription.cycleDuration
-        )
-        
-        val totalMonths = SubscriptionStatisticsCalculator.calculateTotalMonths(startDate, currentDate)
-        val totalDays = SubscriptionStatisticsCalculator.calculateTotalDays(startDate, currentDate)
-        
-        val averageMonthlyCost = SubscriptionStatisticsCalculator.calculateAverageMonthlyCost(
-            accumulatedCost, totalMonths
-        )
-        
-        val averageDailyCost = SubscriptionStatisticsCalculator.calculateAverageDailyCost(
-            accumulatedCost, totalDays
-        )
-        
-        val renewalCyclesCompleted = SubscriptionStatisticsCalculator.calculateRenewalCyclesCompleted(
-            startDate, currentDate,
-            subscription.cycleType,
-            subscription.cycleDuration
-        )
-        
-        val daysUntilRenewal = ChronoUnit.DAYS.between(currentDate, nextRenewalDate)
-        val isOverdue = daysUntilRenewal < 0
-        
-        _statistics.value = SubscriptionStatistics(
-            accumulatedCost = accumulatedCost,
-            accumulatedDuration = accumulatedDuration,
-            averageMonthlyCost = averageMonthlyCost,
-            averageDailyCost = averageDailyCost,
-            renewalCyclesCompleted = renewalCyclesCompleted,
-            daysUntilRenewal = daysUntilRenewal,
-            isOverdue = isOverdue
-        )
+        viewModelScope.launch {
+            val startDate = Instant.ofEpochMilli(subscription.startDate)
+                .atZone(ZoneId.systemDefault()).toLocalDate()
+            val currentDate = LocalDate.now()
+            val nextRenewalDate = Instant.ofEpochMilli(subscription.nextRenewalDate)
+                .atZone(ZoneId.systemDefault()).toLocalDate()
+            
+            val accumulatedDuration = SubscriptionStatisticsCalculator.calculateAccumulatedDuration(
+                startDate, currentDate
+            )
+            
+            // 从历史记录中计算跳过的周期数
+            val skippedPeriods = calculateSkippedPeriodsFromHistory()
+            
+            // 使用考虑跳过周期的费用计算方法
+            val accumulatedCost = SubscriptionStatisticsCalculator.calculateAccumulatedCostWithSkips(
+                startDate, currentDate,
+                subscription.price,
+                subscription.cycleType,
+                subscription.cycleDuration,
+                skippedPeriods
+            )
+            
+            val totalMonths = SubscriptionStatisticsCalculator.calculateTotalMonths(startDate, currentDate)
+            val totalDays = SubscriptionStatisticsCalculator.calculateTotalDays(startDate, currentDate)
+            
+            val averageMonthlyCost = SubscriptionStatisticsCalculator.calculateAverageMonthlyCost(
+                accumulatedCost, totalMonths
+            )
+            
+            val averageDailyCost = SubscriptionStatisticsCalculator.calculateAverageDailyCost(
+                accumulatedCost, totalDays
+            )
+            
+            val renewalCyclesCompleted = SubscriptionStatisticsCalculator.calculateRenewalCyclesCompleted(
+                startDate, currentDate,
+                subscription.cycleType,
+                subscription.cycleDuration
+            )
+            
+            val daysUntilRenewal = ChronoUnit.DAYS.between(currentDate, nextRenewalDate)
+            val isOverdue = daysUntilRenewal < 0
+            
+            _statistics.value = SubscriptionStatistics(
+                accumulatedCost = accumulatedCost,
+                accumulatedDuration = accumulatedDuration,
+                averageMonthlyCost = averageMonthlyCost,
+                averageDailyCost = averageDailyCost,
+                renewalCyclesCompleted = renewalCyclesCompleted,
+                daysUntilRenewal = daysUntilRenewal,
+                isOverdue = isOverdue
+            )
+        }
+    }
+    
+    /**
+     * 从历史记录中计算跳过的周期数
+     * 根据跳过的实际时长和订阅周期类型计算等效的周期数
+     */
+    private suspend fun calculateSkippedPeriodsFromHistory(): Int {
+        return try {
+            val sub = _subscription.value ?: return 0
+            val historyList = history.value
+            
+            // 筛选所有SKIPPED类型的历史记录
+            val skippedRecords = historyList.filter { 
+                it.operationType == takagi.ru.saison.data.local.database.entities.HistoryOperationType.SKIPPED.name 
+            }
+            
+            var totalSkippedPeriods = 0
+            
+            // 解析每条跳过记录的metadata，计算等效周期数
+            skippedRecords.forEach { record ->
+                try {
+                    val metadata = record.metadata
+                    if (!metadata.isNullOrBlank()) {
+                        // 解析JSON metadata获取跳过的时长
+                        val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+                        val skipMetadata = json.decodeFromString<takagi.ru.saison.util.SkipMetadata>(metadata)
+                        
+                        // 根据跳过的单位和订阅周期类型计算等效周期数
+                        val equivalentPeriods = when (skipMetadata.skipUnit) {
+                            "DAYS" -> {
+                                when (sub.cycleType) {
+                                    "MONTHLY" -> skipMetadata.skipAmount / 30
+                                    "QUARTERLY" -> skipMetadata.skipAmount / 90
+                                    "YEARLY" -> skipMetadata.skipAmount / 365
+                                    else -> 0
+                                }
+                            }
+                            "MONTHS" -> {
+                                when (sub.cycleType) {
+                                    "MONTHLY" -> skipMetadata.skipAmount
+                                    "QUARTERLY" -> skipMetadata.skipAmount / 3
+                                    "YEARLY" -> skipMetadata.skipAmount / 12
+                                    else -> 0
+                                }
+                            }
+                            "YEARS" -> {
+                                when (sub.cycleType) {
+                                    "MONTHLY" -> skipMetadata.skipAmount * 12
+                                    "QUARTERLY" -> skipMetadata.skipAmount * 4
+                                    "YEARLY" -> skipMetadata.skipAmount
+                                    else -> 0
+                                }
+                            }
+                            else -> 0
+                        }
+                        
+                        totalSkippedPeriods += equivalentPeriods
+                    }
+                } catch (e: Exception) {
+                    // 如果解析失败，按1个周期计算
+                    totalSkippedPeriods += 1
+                }
+            }
+            
+            totalSkippedPeriods
+        } catch (e: Exception) {
+            0
+        }
     }
     
     /**
@@ -232,6 +314,87 @@ class SubscriptionDetailViewModel @Inject constructor(
      */
     fun refresh() {
         loadSubscription()
+    }
+    
+    /**
+     * 中断订阅
+     */
+    fun pauseSubscription(reason: String? = null, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val sub = _subscription.value ?: return@launch
+                repository.pauseSubscription(sub.id, reason)
+                historyManager.recordPaused(sub, reason)
+                loadSubscription()
+                onSuccess()
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error("中断失败: ${e.message}")
+            }
+        }
+    }
+    
+    /**
+     * 恢复订阅
+     */
+    fun resumeSubscription(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val sub = _subscription.value ?: return@launch
+                val currentDate = LocalDate.now()
+                val newRenewalDate = takagi.ru.saison.util.SubscriptionDateCalculator.calculateNextRenewalDate(
+                    currentDate,
+                    sub.cycleType,
+                    sub.cycleDuration
+                )
+                val newRenewalTimestamp = newRenewalDate
+                    .atStartOfDay(ZoneId.systemDefault())
+                    .toInstant()
+                    .toEpochMilli()
+                
+                repository.resumeSubscription(sub.id, newRenewalTimestamp)
+                
+                // 重新加载以获取更新后的订阅
+                val updatedSub = repository.getSubscriptionById(sub.id)
+                if (updatedSub != null) {
+                    historyManager.recordResumed(updatedSub)
+                }
+                
+                loadSubscription()
+                onSuccess()
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error("恢复失败: ${e.message}")
+            }
+        }
+    }
+    
+    /**
+     * 跳过订阅周期
+     */
+    fun skipSubscription(skipDuration: takagi.ru.saison.domain.model.SkipDuration, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val sub = _subscription.value ?: return@launch
+                val oldRenewalDate = sub.nextRenewalDate
+                
+                repository.skipSubscription(sub.id, skipDuration)
+                
+                // 重新加载以获取更新后的订阅
+                val updatedSub = repository.getSubscriptionById(sub.id)
+                if (updatedSub != null) {
+                    historyManager.recordSkipped(
+                        updatedSub,
+                        skipDuration,
+                        oldRenewalDate,
+                        updatedSub.nextRenewalDate
+                    )
+                }
+                
+                loadSubscription()
+                onSuccess()
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error("跳过失败: ${e.message}")
+            }
+        }
     }
 }
 

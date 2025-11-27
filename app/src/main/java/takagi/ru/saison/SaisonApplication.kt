@@ -32,6 +32,12 @@ class SaisonApplication : Application() {
     @Inject
     lateinit var preferencesManager: takagi.ru.saison.data.local.datastore.PreferencesManager
     
+    @Inject
+    lateinit var quickInputManager: takagi.ru.saison.notification.QuickInputNotificationManager
+    
+    @Inject
+    lateinit var permissionManager: takagi.ru.saison.notification.NotificationPermissionManager
+    
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     
     companion object {
@@ -68,6 +74,32 @@ class SaisonApplication : Application() {
         
         // 监听通知设置变化
         setupNotificationSettingsObservers()
+        
+        // 恢复快捷输入通知
+        restoreQuickInputNotification()
+    }
+    
+    /**
+     * 恢复快捷输入通知
+     */
+    private fun restoreQuickInputNotification() {
+        applicationScope.launch {
+            // 同时监听快捷输入开关和 Plus 状态
+            kotlinx.coroutines.flow.combine(
+                preferencesManager.quickInputEnabled,
+                preferencesManager.isPlusActivated
+            ) { quickInputEnabled, isPlusActivated ->
+                quickInputEnabled && isPlusActivated
+            }.collect { shouldShow ->
+                if (shouldShow && permissionManager.checkNotificationPermission()) {
+                    Log.d(TAG, "Restoring quick input notification")
+                    quickInputManager.showQuickInputNotification()
+                } else {
+                    Log.d(TAG, "Quick input disabled, Plus not activated, or permission not granted")
+                    quickInputManager.dismissQuickInputNotification()
+                }
+            }
+        }
     }
     
     /**

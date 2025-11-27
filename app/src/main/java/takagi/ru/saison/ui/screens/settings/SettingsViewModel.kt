@@ -93,6 +93,9 @@ class SettingsViewModel @Inject constructor(
     val pomodoroRemindersEnabled = preferencesManager.pomodoroRemindersEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     
+    val quickInputEnabled = preferencesManager.quickInputEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+    
     val notificationSettings = combine(
         notificationsEnabled,
         taskRemindersEnabled,
@@ -230,6 +233,27 @@ class SettingsViewModel @Inject constructor(
             try {
                 preferencesManager.setPomodoroRemindersEnabled(enabled)
                 _uiEvent.emit(SettingsUiEvent.ShowSnackbar(if (enabled) "已启用番茄钟提醒" else "已禁用番茄钟提醒"))
+            } catch (e: Exception) {
+                handleError(e)
+            }
+        }
+    }
+    
+    fun setQuickInputEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            try {
+                // 检查 Plus 状态
+                if (enabled && !isPlusActivated.value) {
+                    _uiEvent.emit(SettingsUiEvent.ShowError("快捷输入是 Saison Plus 专属功能"))
+                    return@launch
+                }
+                
+                preferencesManager.setQuickInputEnabled(enabled)
+                if (enabled) {
+                    _uiEvent.emit(SettingsUiEvent.ShowSnackbar("已启用快捷输入"))
+                } else {
+                    _uiEvent.emit(SettingsUiEvent.ShowSnackbar("已禁用快捷输入"))
+                }
             } catch (e: Exception) {
                 handleError(e)
             }

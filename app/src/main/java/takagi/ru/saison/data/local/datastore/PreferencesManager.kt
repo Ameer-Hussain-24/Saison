@@ -40,6 +40,7 @@ class PreferencesManager @Inject constructor(
         val TASK_REMINDERS_ENABLED = booleanPreferencesKey("task_reminders_enabled")
         val COURSE_REMINDERS_ENABLED = booleanPreferencesKey("course_reminders_enabled")
         val POMODORO_REMINDERS_ENABLED = booleanPreferencesKey("pomodoro_reminders_enabled")
+        val QUICK_INPUT_ENABLED = booleanPreferencesKey("quick_input_enabled")
         val BIOMETRIC_ENABLED = booleanPreferencesKey("biometric_enabled")
         val PIN_CODE = stringPreferencesKey("pin_code")
         val AUTO_LOCK_MINUTES = intPreferencesKey("auto_lock_minutes")
@@ -287,6 +288,17 @@ class PreferencesManager @Inject constructor(
     suspend fun setPomodoroRemindersEnabled(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.POMODORO_REMINDERS_ENABLED] = enabled
+        }
+    }
+    
+    val quickInputEnabled: Flow<Boolean> = dataStore.data
+        .map { preferences ->
+            preferences[PreferencesKeys.QUICK_INPUT_ENABLED] ?: false
+        }
+    
+    suspend fun setQuickInputEnabled(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.QUICK_INPUT_ENABLED] = enabled
         }
     }
     

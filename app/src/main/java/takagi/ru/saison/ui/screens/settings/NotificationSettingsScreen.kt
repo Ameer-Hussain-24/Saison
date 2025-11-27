@@ -25,6 +25,14 @@ fun NotificationSettingsScreen(
         val context = LocalContext.current
         remember { NotificationPermissionManager(context) }
     },
+    quickInputManager: takagi.ru.saison.notification.QuickInputNotificationManager = androidx.hilt.navigation.compose.hiltViewModel<SettingsViewModel>().run {
+        // 获取 QuickInputNotificationManager 实例
+        val context = LocalContext.current
+        val notificationManager = androidx.core.app.NotificationManagerCompat.from(context)
+        val channelManager = remember { takagi.ru.saison.notification.NotificationChannelManager(context) }
+        val permManager = remember { NotificationPermissionManager(context) }
+        remember { takagi.ru.saison.notification.QuickInputNotificationManager(context, notificationManager, channelManager, permManager) }
+    },
     onNavigateBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -33,6 +41,11 @@ fun NotificationSettingsScreen(
     val taskRemindersEnabled by viewModel.taskRemindersEnabled.collectAsState()
     val courseRemindersEnabled by viewModel.courseRemindersEnabled.collectAsState()
     val pomodoroRemindersEnabled by viewModel.pomodoroRemindersEnabled.collectAsState()
+    val quickInputEnabled by viewModel.quickInputEnabled.collectAsState()
+    val isPlusActivated by viewModel.isPlusActivated.collectAsState()
+    
+    // Plus 限制对话框状态
+    var showPlusRequiredDialog by remember { mutableStateOf(false) }
     
     // 检查系统通知权限
     var hasNotificationPermission by remember { 
@@ -159,6 +172,45 @@ fun NotificationSettingsScreen(
                     onCheckedChange = { viewModel.setPomodoroRemindersEnabled(it) }
                 )
             }
+            
+            // 快捷输入 (Plus 功能)
+            NotificationSettingsSection(title = stringResource(R.string.settings_quick_input_section)) {
+                NotificationSettingsSwitchItemWithPlus(
+                    icon = Icons.Default.Edit,
+                    title = stringResource(R.string.settings_quick_input_title),
+                    subtitle = stringResource(R.string.settings_quick_input_subtitle),
+                    checked = quickInputEnabled,
+                    enabled = notificationsEnabled && hasNotificationPermission && isPlusActivated,
+                    isPlusFeature = true,
+                    isPlusActivated = isPlusActivated,
+                    onCheckedChange = { enabled ->
+                        if (isPlusActivated) {
+                            viewModel.setQuickInputEnabled(enabled)
+                            // 根据开关状态显示或关闭通知
+                            if (enabled) {
+                                quickInputManager.showQuickInputNotification()
+                            } else {
+                                quickInputManager.dismissQuickInputNotification()
+                            }
+                        } else {
+                            showPlusRequiredDialog = true
+                        }
+                    },
+                    onPlusClick = { showPlusRequiredDialog = true }
+                )
+            }
+            
+            // Plus 限制对话框
+            if (showPlusRequiredDialog) {
+                takagi.ru.saison.ui.components.PlusRequiredDialog(
+                    themeName = stringResource(R.string.settings_quick_input_title),
+                    onDismiss = { showPlusRequiredDialog = false },
+                    onNavigateToPlus = {
+                        showPlusRequiredDialog = false
+                        // 导航到 Plus 页面由外部处理
+                    }
+                )
+            }
         }
     }
 }
@@ -204,6 +256,64 @@ private fun NotificationSettingsSwitchItem(
     ) {
         ListItem(
             headlineContent = { Text(title) },
+            supportingContent = { Text(subtitle) },
+            leadingContent = {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = title
+                )
+            },
+            trailingContent = {
+                Switch(
+                    checked = checked,
+                    onCheckedChange = onCheckedChange,
+                    enabled = enabled
+                )
+            },
+            modifier = Modifier.heightIn(min = 56.dp)
+        )
+    }
+}
+
+@Composable
+private fun NotificationSettingsSwitchItemWithPlus(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    title: String,
+    subtitle: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    enabled: Boolean = true,
+    isPlusFeature: Boolean = false,
+    isPlusActivated: Boolean = false,
+    onPlusClick: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        onClick = if (!isPlusActivated && isPlusFeature) {
+            { onPlusClick() }
+        } else {
+            {}
+        }
+    ) {
+        ListItem(
+            headlineContent = {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                ) {
+                    Text(title)
+                    if (isPlusFeature) {
+                        takagi.ru.saison.ui.components.PlusBadge()
+                    }
+                }
+            },
             supportingContent = { Text(subtitle) },
             leadingContent = {
                 Icon(

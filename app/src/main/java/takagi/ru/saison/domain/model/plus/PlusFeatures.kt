@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.*
 object PlusFeatures {
     /**
      * 获取所有Plus功能列表
-     * 仅包含已实现的功能：WebDAV 备份和会员专属主题
+     * 仅包含已实现的功能：WebDAV 备份、会员专属主题和快捷输入
      */
     fun getPlaceholderFeatures(): List<PlusFeature> = listOf(
         PlusFeature(
@@ -24,6 +24,13 @@ object PlusFeatures {
             icon = Icons.Default.Palette,
             title = "会员专属主题",
             description = "9 个精美主题：樱花、薄荷、琥珀、海洋、日落、森林、极光、雨季(Saison)、雪",
+            isAvailable = true
+        ),
+        PlusFeature(
+            id = "quick_input",
+            icon = Icons.Default.Edit,
+            title = "通知栏快捷输入",
+            description = "在通知栏显示常驻的任务输入框，随时快速添加待办事项",
             isAvailable = true
         )
     )

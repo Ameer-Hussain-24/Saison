@@ -749,6 +749,43 @@
     <string name="subscription_confirm_renewal">更新を確認</string>
     <string name="subscription_expires_on">有効期限：%1$s</string>
     
+    <!-- サブスクリプションアクション -->
+    <string name="subscription_action_pause">一時停止</string>
+    <string name="subscription_action_resume">再開</string>
+    <string name="subscription_action_skip">スキップ</string>
+    
+    <!-- サブスクリプションフィールド -->
+    <string name="subscription_field_end_date">終了日</string>
+    <string name="subscription_field_end_date_optional">終了日（オプション）</string>
+    <string name="subscription_end_date_error">終了日は開始日より後である必要があります</string>
+    
+    <!-- サブスクリプションスキップ -->
+    <string name="subscription_skip_description">次回の更新をスキップ</string>
+    <string name="subscription_skip_presets">クイックスキップ</string>
+    <string name="subscription_skip_custom">カスタムスキップ</string>
+    <string name="subscription_skip_amount">数量</string>
+    <string name="subscription_skip_unit">単位</string>
+    <string name="subscription_skip_days">日</string>
+    <string name="subscription_skip_months">月</string>
+    <string name="subscription_skip_years">年</string>
+    <string name="subscription_skip_preview_title">プレビュー</string>
+    
+    <!-- サブスクリプション一時停止 -->
+    <string name="subscription_pause_confirm_title">サブスクリプションを一時停止</string>
+    <string name="subscription_pause_confirm_message">このサブスクリプションを一時停止してもよろしいですか？</string>
+    
+    <!-- サブスクリプション履歴 -->
+    <string name="subscription_history_title">履歴</string>
+    <string name="subscription_history_empty">履歴はまだありません</string>
+    <string name="subscription_history_created">作成済み</string>
+    <string name="subscription_history_modified">変更済み</string>
+    <string name="subscription_history_deleted">削除済み</string>
+    <string name="subscription_history_renewed_auto">自動更新</string>
+    <string name="subscription_history_renewed_manual">手動更新</string>
+    <string name="subscription_history_skipped">スキップ済み</string>
+    <string name="subscription_history_paused">一時停止済み</string>
+    <string name="subscription_history_resumed">再開済み</string>
+    
     <!-- ポモドーロサイクル強化 -->
     <string name="pomodoro_task_settings_title">タスク設定</string>
     <string name="pomodoro_task_duration_label">タスク時間</string>
@@ -772,6 +809,19 @@
     <string name="settings_notifications_disabled">無効</string>
     <string name="settings_notifications_general">一般通知</string>
     <string name="settings_notifications_types">通知タイプ</string>
+    
+    <!-- Quick Input -->
+    <string name="settings_quick_input_section">クイック入力</string>
+    <string name="settings_quick_input_title">通知バークイック入力</string>
+    <string name="settings_quick_input_subtitle">通知バーに常駐のタスク入力欄を表示</string>
+    <string name="quick_input_notification_title">タスクをすばやく追加</string>
+    <string name="quick_input_notification_content">タップしてToDoアイテムをすばやく作成</string>
+    <string name="quick_input_action_label">タスクを追加</string>
+    <string name="quick_input_hint">タスクのタイトルを入力...</string>
+    <string name="quick_input_success">タスクを追加しました：%s</string>
+    <string name="quick_input_error_empty">タスクのタイトルを入力してください</string>
+    <string name="quick_input_error_too_long">タスクのタイトルが長すぎます（最大500文字）</string>
+    <string name="quick_input_error_generic">タスクの作成に失敗しました。もう一度お試しください</string>
     
     <!-- Saison Plus -->
     <string name="plus_title">Saison Plus</string>
@@ -808,4 +858,6 @@
     <string name="plus_feature_webdav_desc">デバイス間でデータを同期、自動バックアップと手動復元をサポート</string>
     <string name="plus_feature_themes_title">プレミアムテーマ</string>
     <string name="plus_feature_themes_desc">8つの美しいテーマ：桜、ミント、アンバー、オーシャン、サンセット、フォレスト、オーロラ、レイン</string>
+    
+    <string name="subscription_skip_no_charge_hint">💡 スキップした期間は費用統計に含まれません</string>
 </resources>

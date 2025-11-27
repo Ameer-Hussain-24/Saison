@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,7 +22,7 @@ import java.time.format.DateTimeFormatter
 fun AddSubscriptionSheet(
     existingSubscription: takagi.ru.saison.data.local.database.entities.SubscriptionEntity? = null,
     onDismiss: () -> Unit,
-    onSave: (Long?, String, String, Double, String, Int, LocalDate, String?, Boolean, Boolean, Int) -> Unit
+    onSave: (Long?, String, String, Double, String, Int, LocalDate, LocalDate?, String?, Boolean, Boolean, Int) -> Unit
 ) {
     val isEditMode = existingSubscription != null
     val defaultCategory = stringResource(R.string.subscription_default_category)
@@ -40,13 +41,26 @@ fun AddSubscriptionSheet(
             } ?: LocalDate.now()
         ) 
     }
+    var endDate by remember {
+        mutableStateOf<LocalDate?>(
+            existingSubscription?.endDate?.let {
+                java.time.Instant.ofEpochMilli(it)
+                    .atZone(java.time.ZoneId.systemDefault())
+                    .toLocalDate()
+            }
+        )
+    }
     var note by remember { mutableStateOf(existingSubscription?.note ?: "") }
     var autoRenewal by remember { mutableStateOf(existingSubscription?.autoRenewal ?: true) }
     var reminderEnabled by remember { mutableStateOf(existingSubscription?.reminderEnabled ?: false) }
     var reminderDaysBefore by remember { mutableStateOf(existingSubscription?.reminderDaysBefore?.toString() ?: "1") }
     
-    var showDatePicker by remember { mutableStateOf(false) }
+    var showStartDatePicker by remember { mutableStateOf(false) }
+    var showEndDatePicker by remember { mutableStateOf(false) }
     var showCycleTypeDropdown by remember { mutableStateOf(false) }
+    var dateValidationError by remember { mutableStateOf<String?>(null) }
+    
+    val endDateErrorMessage = stringResource(R.string.subscription_end_date_error)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss
@@ -130,22 +144,52 @@ fun AddSubscriptionSheet(
                 }
             }
             
-            // Date Picker Trigger
+            // Start Date Picker
             OutlinedTextField(
                 value = startDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
                 onValueChange = {},
                 readOnly = true,
                 label = { Text(stringResource(R.string.subscription_field_start_date)) },
                 trailingIcon = {
-                    IconButton(onClick = { showDatePicker = true }) {
+                    IconButton(onClick = { showStartDatePicker = true }) {
                         Icon(Icons.Default.ArrowDropDown, contentDescription = null)
                     }
                 },
-                modifier = Modifier.fillMaxWidth().clickable { showDatePicker = true },
-                enabled = false, // Disable text input, handle click on container or icon
+                modifier = Modifier.fillMaxWidth().clickable { showStartDatePicker = true },
+                enabled = false,
                 colors = OutlinedTextFieldDefaults.colors(
                     disabledTextColor = MaterialTheme.colorScheme.onSurface,
                     disabledBorderColor = MaterialTheme.colorScheme.outline,
+                    disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
+            
+            // End Date Picker (Optional)
+            OutlinedTextField(
+                value = endDate?.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: stringResource(R.string.subscription_field_end_date_optional),
+                onValueChange = {},
+                readOnly = true,
+                label = { Text(stringResource(R.string.subscription_field_end_date)) },
+                trailingIcon = {
+                    Row {
+                        if (endDate != null) {
+                            IconButton(onClick = { endDate = null; dateValidationError = null }) {
+                                Icon(Icons.Default.Clear, contentDescription = "清除")
+                            }
+                        }
+                        IconButton(onClick = { showEndDatePicker = true }) {
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+                        }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth().clickable { showEndDatePicker = true },
+                enabled = false,
+                isError = dateValidationError != null,
+                supportingText = dateValidationError?.let { { Text(it, color = MaterialTheme.colorScheme.error) } },
+                colors = OutlinedTextFieldDefaults.colors(
+                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                    disabledBorderColor = if (dateValidationError != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline,
                     disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -203,14 +247,20 @@ fun AddSubscriptionSheet(
 
             Button(
                 onClick = {
+                    // 验证日期
+                    if (endDate != null && !endDate!!.isAfter(startDate)) {
+                        dateValidationError = endDateErrorMessage
+                        return@Button
+                    }
+                    
                     val priceVal = price.toDoubleOrNull() ?: 0.0
                     val durationVal = cycleDuration.toIntOrNull() ?: 1
                     val reminderDaysVal = reminderDaysBefore.toIntOrNull() ?: 1
-                    onSave(existingSubscription?.id, name, category, priceVal, cycleType, durationVal, startDate, note, autoRenewal, reminderEnabled, reminderDaysVal)
+                    onSave(existingSubscription?.id, name, category, priceVal, cycleType, durationVal, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysVal)
                     onDismiss()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = name.isNotBlank() && price.isNotBlank()
+                enabled = name.isNotBlank() && price.isNotBlank() && dateValidationError == null
             ) {
                 Text(if (isEditMode) 
                     stringResource(R.string.subscription_save_button) 
@@ -220,24 +270,67 @@ fun AddSubscriptionSheet(
         }
     }
 
-    if (showDatePicker) {
+    // Start Date Picker Dialog
+    if (showStartDatePicker) {
         val datePickerState = rememberDatePickerState(
             initialSelectedDateMillis = startDate.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
         )
         DatePickerDialog(
-            onDismissRequest = { showDatePicker = false },
+            onDismissRequest = { showStartDatePicker = false },
             confirmButton = {
                 TextButton(onClick = {
                     datePickerState.selectedDateMillis?.let { millis ->
                         startDate = java.time.Instant.ofEpochMilli(millis).atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+                        // 重新验证结束日期
+                        if (endDate != null && !endDate!!.isAfter(startDate)) {
+                            dateValidationError = "结束日期必须晚于开始日期"
+                        } else {
+                            dateValidationError = null
+                        }
                     }
-                    showDatePicker = false
+                    showStartDatePicker = false
                 }) {
                     Text(stringResource(R.string.subscription_confirm_button))
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDatePicker = false }) {
+                TextButton(onClick = { showStartDatePicker = false }) {
+                    Text(stringResource(R.string.subscription_cancel_button))
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
+    
+    // End Date Picker Dialog
+    if (showEndDatePicker) {
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = (endDate ?: startDate.plusMonths(1))
+                .atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
+        )
+        DatePickerDialog(
+            onDismissRequest = { showEndDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let { millis ->
+                        val selectedDate = java.time.Instant.ofEpochMilli(millis)
+                            .atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+                        
+                        if (selectedDate.isAfter(startDate)) {
+                            endDate = selectedDate
+                            dateValidationError = null
+                        } else {
+                            dateValidationError = "结束日期必须晚于开始日期"
+                        }
+                    }
+                    showEndDatePicker = false
+                }) {
+                    Text(stringResource(R.string.subscription_confirm_button))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showEndDatePicker = false }) {
                     Text(stringResource(R.string.subscription_cancel_button))
                 }
             }

@@ -66,6 +66,38 @@ object SubscriptionStatisticsCalculator {
     }
     
     /**
+     * 计算累计费用（考虑跳过的周期）
+     * @param startDate 开始日期
+     * @param currentDate 当前日期
+     * @param price 单价
+     * @param cycleType 周期类型
+     * @param cycleDuration 周期时长
+     * @param skippedPeriods 跳过的周期数（从历史记录中计算）
+     * @return 累计费用
+     */
+    fun calculateAccumulatedCostWithSkips(
+        startDate: LocalDate,
+        currentDate: LocalDate,
+        price: Double,
+        cycleType: String,
+        cycleDuration: Int,
+        skippedPeriods: Int
+    ): Double {
+        if (currentDate.isBefore(startDate)) {
+            return 0.0
+        }
+        
+        val totalCycles = calculateRenewalCyclesCompleted(
+            startDate, currentDate, cycleType, cycleDuration
+        )
+        
+        // 实际付费周期 = 总周期 - 跳过的周期
+        val paidCycles = max(0, totalCycles - skippedPeriods)
+        
+        return price * paidCycles
+    }
+    
+    /**
      * 计算平均月费用
      * @param totalCost 总费用
      * @param totalMonths 总月数

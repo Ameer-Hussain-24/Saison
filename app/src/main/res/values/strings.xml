@@ -828,6 +828,43 @@
     <string name="subscription_new_expiration_date">New Expiration Date</string>
     <string name="subscription_confirm_renewal">Confirm Renewal</string>
     <string name="subscription_expires_on">Expires: %1$s</string>
+    
+    <!-- Subscription Actions -->
+    <string name="subscription_action_pause">Pause</string>
+    <string name="subscription_action_resume">Resume</string>
+    <string name="subscription_action_skip">Skip</string>
+    
+    <!-- Subscription Fields -->
+    <string name="subscription_field_end_date">End Date</string>
+    <string name="subscription_field_end_date_optional">End Date (Optional)</string>
+    <string name="subscription_end_date_error">End date must be after start date</string>
+    
+    <!-- Subscription Skip -->
+    <string name="subscription_skip_description">Skip the next renewal</string>
+    <string name="subscription_skip_presets">Quick Skip</string>
+    <string name="subscription_skip_custom">Custom Skip</string>
+    <string name="subscription_skip_amount">Amount</string>
+    <string name="subscription_skip_unit">Unit</string>
+    <string name="subscription_skip_days">Days</string>
+    <string name="subscription_skip_months">Months</string>
+    <string name="subscription_skip_years">Years</string>
+    <string name="subscription_skip_preview_title">Preview</string>
+    
+    <!-- Subscription Pause -->
+    <string name="subscription_pause_confirm_title">Pause Subscription</string>
+    <string name="subscription_pause_confirm_message">Are you sure you want to pause this subscription?</string>
+    
+    <!-- Subscription History -->
+    <string name="subscription_history_title">History</string>
+    <string name="subscription_history_empty">No history yet</string>
+    <string name="subscription_history_created">Created</string>
+    <string name="subscription_history_modified">Modified</string>
+    <string name="subscription_history_deleted">Deleted</string>
+    <string name="subscription_history_renewed_auto">Auto Renewed</string>
+    <string name="subscription_history_renewed_manual">Manual Renewed</string>
+    <string name="subscription_history_skipped">Skipped</string>
+    <string name="subscription_history_paused">Paused</string>
+    <string name="subscription_history_resumed">Resumed</string>
 
     <!-- Task Widget -->
     <string name="task_widget_description">View and manage your tasks</string>
@@ -844,6 +881,19 @@
     <string name="settings_notifications_disabled">Disabled</string>
     <string name="settings_notifications_general">General Notifications</string>
     <string name="settings_notifications_types">Notification Types</string>
+    
+    <!-- Quick Input -->
+    <string name="settings_quick_input_section">Quick Input</string>
+    <string name="settings_quick_input_title">Notification Quick Input</string>
+    <string name="settings_quick_input_subtitle">Show persistent task input in notification bar</string>
+    <string name="quick_input_notification_title">Quick Add Task</string>
+    <string name="quick_input_notification_content">Tap to quickly create a todo item</string>
+    <string name="quick_input_action_label">Add Task</string>
+    <string name="quick_input_hint">Enter task title...</string>
+    <string name="quick_input_success">Task added: %s</string>
+    <string name="quick_input_error_empty">Task title cannot be empty</string>
+    <string name="quick_input_error_too_long">Task title too long (max 500 characters)</string>
+    <string name="quick_input_error_generic">Failed to create task, please try again</string>
     
     <!-- Pomodoro Cycle Enhancement -->
     <string name="pomodoro_break_mode">Break Mode</string>
@@ -895,4 +945,6 @@
     <string name="plus_feature_webdav_desc">Sync your data across devices with automatic backup and manual restore</string>
     <string name="plus_feature_themes_title">Premium Themes</string>
     <string name="plus_feature_themes_desc">8 beautiful themes: Sakura, Mint, Amber, Ocean, Sunset, Forest, Aurora, Rain</string>
+    
+    <string name="subscription_skip_no_charge_hint">💡 Skipped periods will not be counted in cost statistics</string>
 </resources>

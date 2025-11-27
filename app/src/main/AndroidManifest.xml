@@ -111,6 +111,15 @@
             </intent-filter>
         </receiver>
         
+        <!-- Quick Input Action Receiver -->
+        <receiver
+            android:name=".notification.QuickInputActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="takagi.ru.saison.ACTION_QUICK_INPUT" />
+            </intent-filter>
+        </receiver>
+        
         <!-- Boot Completed Receiver -->
         <receiver
             android:name=".notification.BootCompletedReceiver"

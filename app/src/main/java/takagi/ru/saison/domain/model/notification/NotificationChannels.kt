@@ -16,6 +16,9 @@ object NotificationChannels {
     /** 番茄钟提醒渠道ID */
     const val POMODORO_REMINDERS = "pomodoro_reminders"
     
+    /** 快捷输入渠道ID */
+    const val QUICK_INPUT = "quick_input"
+    
     /**
      * 通知渠道配置数据类
      * 
@@ -62,6 +65,14 @@ object NotificationChannels {
             importance = NotificationManager.IMPORTANCE_MAX,
             enableVibration = true,
             enableSound = true
+        ),
+        ChannelConfig(
+            id = QUICK_INPUT,
+            name = "快捷输入",
+            description = "通知栏快速添加任务",
+            importance = NotificationManager.IMPORTANCE_LOW,
+            enableVibration = false,
+            enableSound = false
         )
     )
 }

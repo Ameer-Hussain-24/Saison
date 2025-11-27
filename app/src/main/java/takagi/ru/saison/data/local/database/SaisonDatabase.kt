@@ -20,9 +20,10 @@ import takagi.ru.saison.data.local.database.entity.CheckInRecordEntity
         RoutineTaskEntity::class,
         CheckInRecordEntity::class,
         SemesterEntity::class,
-        SubscriptionEntity::class
+        SubscriptionEntity::class,
+        SubscriptionHistoryEntity::class
     ],
-    version = 13,
+    version = 14,
     exportSchema = true
 )
 abstract class SaisonDatabase : RoomDatabase() {
@@ -36,6 +37,7 @@ abstract class SaisonDatabase : RoomDatabase() {
     abstract fun checkInRecordDao(): CheckInRecordDao
     abstract fun semesterDao(): SemesterDao
     abstract fun subscriptionDao(): SubscriptionDao
+    abstract fun subscriptionHistoryDao(): SubscriptionHistoryDao
     
     companion object {
         const val DATABASE_NAME = "saison_database"
@@ -286,6 +288,42 @@ abstract class SaisonDatabase : RoomDatabase() {
                 db.execSQL("ALTER TABLE pomodoro_sessions ADD COLUMN sessionType TEXT NOT NULL DEFAULT 'WORK'")
                 db.execSQL("ALTER TABLE pomodoro_sessions ADD COLUMN cycleIndex INTEGER DEFAULT NULL")
                 db.execSQL("ALTER TABLE pomodoro_sessions ADD COLUMN sessionIndexInCycle INTEGER DEFAULT NULL")
+            }
+        }
+        
+        val MIGRATION_13_14 = object : Migration(13, 14) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // 订阅管理增强功能
+                // Requirements: 1.1, 1.2, 2.2, 4.1, 5.1, 5.2, 5.3, 5.4, 5.5
+                
+                // 1. 添加新字段到subscriptions表
+                db.execSQL("ALTER TABLE subscriptions ADD COLUMN endDate INTEGER DEFAULT NULL")
+                db.execSQL("ALTER TABLE subscriptions ADD COLUMN isPaused INTEGER NOT NULL DEFAULT 0")
+                
+                // 2. 创建subscription_history表
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS subscription_history (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        subscriptionId INTEGER NOT NULL,
+                        operationType TEXT NOT NULL,
+                        timestamp INTEGER NOT NULL,
+                        oldValue TEXT,
+                        newValue TEXT,
+                        description TEXT,
+                        metadata TEXT,
+                        FOREIGN KEY(subscriptionId) REFERENCES subscriptions(id) ON DELETE CASCADE
+                    )
+                """)
+                
+                // 3. 创建索引
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_subscription_history_subscriptionId ON subscription_history(subscriptionId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_subscription_history_timestamp ON subscription_history(timestamp)")
+                
+                // 4. 为现有订阅创建初始历史记录
+                db.execSQL("""
+                    INSERT INTO subscription_history (subscriptionId, operationType, timestamp, description)
+                    SELECT id, 'CREATED', createdAt, '订阅创建' FROM subscriptions
+                """)
             }
         }
     }

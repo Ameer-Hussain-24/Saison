@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SubscriptionViewModel @Inject constructor(
-    private val repository: SubscriptionRepository
+    private val repository: SubscriptionRepository,
+    private val historyManager: takagi.ru.saison.util.SubscriptionHistoryManager
 ) : ViewModel() {
 
     val subscriptions = repository.getAllSubscriptions()
@@ -58,6 +59,7 @@ class SubscriptionViewModel @Inject constructor(
         cycleType: String,
         cycleDuration: Int,
         startDate: LocalDate,
+        endDate: LocalDate?,
         note: String?,
         autoRenewal: Boolean,
         reminderEnabled: Boolean,
@@ -65,12 +67,14 @@ class SubscriptionViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             val startTimestamp = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-            val nextRenewal = calculateNextRenewalDate(startDate, cycleType, cycleDuration)
+            val endTimestamp = endDate?.atStartOfDay(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
+            
+            // 如果设置了结束日期，使用结束日期作为下次续订日期
+            val nextRenewal = endDate ?: calculateNextRenewalDate(startDate, cycleType, cycleDuration)
             val nextRenewalTimestamp = nextRenewal.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
             if (id != null) {
                 // Update existing subscription
-                // Get the original subscription to preserve createdAt
                 val originalSubscription = subscriptions.value.find { it.id == id }
                 val entity = SubscriptionEntity(
                     id = id,
@@ -80,15 +84,21 @@ class SubscriptionViewModel @Inject constructor(
                     cycleType = cycleType,
                     cycleDuration = cycleDuration,
                     startDate = startTimestamp,
+                    endDate = endTimestamp,
                     nextRenewalDate = nextRenewalTimestamp,
                     autoRenewal = autoRenewal,
                     reminderEnabled = reminderEnabled,
                     reminderDaysBefore = reminderDaysBefore,
                     note = note,
                     isActive = true,
+                    isPaused = originalSubscription?.isPaused ?: false,
                     createdAt = originalSubscription?.createdAt ?: System.currentTimeMillis(),
                     updatedAt = System.currentTimeMillis()
                 )
+                
+                if (originalSubscription != null) {
+                    historyManager.recordModified(originalSubscription, entity)
+                }
                 repository.updateSubscription(entity)
             } else {
                 // Create new subscription
@@ -99,6 +109,7 @@ class SubscriptionViewModel @Inject constructor(
                     cycleType = cycleType,
                     cycleDuration = cycleDuration,
                     startDate = startTimestamp,
+                    endDate = endTimestamp,
                     nextRenewalDate = nextRenewalTimestamp,
                     autoRenewal = autoRenewal,
                     reminderEnabled = reminderEnabled,
@@ -106,7 +117,11 @@ class SubscriptionViewModel @Inject constructor(
                     note = note,
                     isActive = true
                 )
-                repository.insertSubscription(entity)
+                val newId = repository.insertSubscription(entity)
+                
+                // 记录创建历史
+                val createdEntity = entity.copy(id = newId)
+                historyManager.recordCreated(createdEntity)
             }
         }
     }
