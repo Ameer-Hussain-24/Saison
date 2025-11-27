@@ -82,7 +82,7 @@
 #### 方式二: 从源码编译
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/saison.git
+git clone https://github.com/JoyinJoester/saison.git
 cd saison
 
 # 使用 Gradle 构建
@@ -361,7 +361,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ## 👨‍💻 作者
 
 **Saison Team**
-- GitHub: [@yourusername](https://github.com/yourusername)
+- GitHub: [@JoyinJoester](https://github.com/JoyinJoester)
 
 ---
 
@@ -382,8 +382,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 如果您觉得这个项目有帮助，请给一个 ⭐️ Star！
 
 有问题或建议？
-- 💬 Issues: [GitHub Issues](https://github.com/yourusername/saison/issues)
-- 📧 Email: your.email@example.com
+- 💬 Issues: [GitHub Issues](https://github.com/JoyinJoester/saison/issues)
+- 📧 Email: Joyin8888@foxmail.com
 
 ---
 
@@ -414,10 +414,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ---
 
 <div align="center">
-
-**Saison** - 优雅的任务管理，从此开始
-
-用 ❤️ 和 Kotlin 打造
 
 [回到顶部](#-saison-任务管理应用)
 

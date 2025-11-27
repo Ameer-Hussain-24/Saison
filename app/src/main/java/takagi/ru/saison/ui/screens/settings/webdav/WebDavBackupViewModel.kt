@@ -23,6 +23,7 @@ import javax.inject.Inject
 data class WebDavBackupUiState(
     val isConfigured: Boolean = false,
     val config: WebDavConfig? = null,
+    val isEditingConfig: Boolean = false,
     val isTestingConnection: Boolean = false,
     val connectionTestResult: ConnectionTestResult? = null,
     val backupList: List<BackupFile> = emptyList(),
@@ -90,6 +91,7 @@ class WebDavBackupViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isConfigured = true,
+                        isEditingConfig = false,
                         config = WebDavConfig(url, username),
                         successMessage = "配置已保存"
                     )
@@ -258,6 +260,14 @@ class WebDavBackupViewModel @Inject constructor(
             backupRepository.saveBackupPreferences(preferences)
             _uiState.update { it.copy(backupPreferences = preferences) }
         }
+    }
+    
+    fun editConfig() {
+        _uiState.update { it.copy(isEditingConfig = true) }
+    }
+    
+    fun cancelEditConfig() {
+        _uiState.update { it.copy(isEditingConfig = false) }
     }
     
     fun clearConfig() {

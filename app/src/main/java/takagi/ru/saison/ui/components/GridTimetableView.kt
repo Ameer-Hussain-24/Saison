@@ -7,12 +7,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -20,13 +23,14 @@ import takagi.ru.saison.domain.model.BreakPeriod
 import takagi.ru.saison.domain.model.Course
 import takagi.ru.saison.domain.model.CoursePeriod
 import takagi.ru.saison.domain.model.GridLayoutConfig
+import takagi.ru.saison.ui.theme.rememberThemeAwareCourseColor
 import takagi.ru.saison.util.buildGridRows
 import java.time.DayOfWeek
 import java.time.LocalDate
 
 /**
- * 网格课程表视图（重构版）
- * 以网格形式显示课程表,支持垂直滚动,全周可见,集成休息时段分隔
+ * 网格课程表视图（重构版 - 基于时间轴）
+ * 以网格形式显示课程表,支持垂直滚动,全周可见,课程卡片根据实际时间长度显示
  * 
  * @param coursesByDay 按星期分组的课程列表
  * @param periods 节次列表
@@ -62,14 +66,32 @@ fun GridTimetableView(
 ) {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+    val density = LocalDensity.current
     
-    // 自动滚动到当前节次
+    // 计算时间轴范围：从最早的课程到最晚的课程
+    val (startTime, endTime) = remember(periods) {
+        if (periods.isEmpty()) {
+            java.time.LocalTime.of(8, 0) to java.time.LocalTime.of(18, 0)
+        } else {
+            val earliest = periods.minByOrNull { it.startTime }?.startTime ?: java.time.LocalTime.of(8, 0)
+            val latest = periods.maxByOrNull { it.endTime }?.endTime ?: java.time.LocalTime.of(18, 0)
+            earliest to latest
+        }
+    }
+    
+    // 每分钟对应的像素高度（增加到3dp以获得更好的视觉效果）
+    val pixelsPerMinute = 3.dp
+    
+    // 自动滚动到当前时间
     LaunchedEffect(currentPeriod, autoScrollToCurrentTime) {
         if (autoScrollToCurrentTime && currentPeriod != null && currentPeriod > 0) {
-            val targetIndex = (currentPeriod - 1).coerceAtLeast(0)
-            val targetOffset = targetIndex * (config.cellHeight.value + 8f)
-            coroutineScope.launch {
-                scrollState.animateScrollTo(targetOffset.toInt())
+            val currentPeriodInfo = periods.find { it.periodNumber == currentPeriod }
+            if (currentPeriodInfo != null) {
+                val minutesFromStart = java.time.temporal.ChronoUnit.MINUTES.between(startTime, currentPeriodInfo.startTime)
+                val targetOffset = with(density) { (minutesFromStart * pixelsPerMinute.toPx()).toInt() }
+                coroutineScope.launch {
+                    scrollState.animateScrollTo(targetOffset)
+                }
             }
         }
     }
@@ -117,44 +139,30 @@ fun GridTimetableView(
                     .fillMaxSize()
                     .verticalScroll(scrollState)
             ) {
-                // 左侧: 时间列（固定）
-                PeriodTimeColumn(
-                    periods = periods,
-                    breakPeriods = emptyList(), // 不再使用breakPeriods，改用timeOfDay自动检测
-                    currentPeriod = currentPeriod,
-                    cellHeight = config.cellHeight,
-                    showBreakIndicators = config.showBreakSeparators,
+                // 左侧: 时间轴列（固定）
+                TimeAxisColumn(
+                    startTime = startTime,
+                    endTime = endTime,
+                    pixelsPerMinute = pixelsPerMinute,
                     modifier = Modifier.width(60.dp)
                 )
                 
-                // 右侧: 使用Box实现网格背景+绝对定位课程卡片
+                // 右侧: 使用Box实现时间轴背景+绝对定位课程卡片
+                // 先计算总高度
+                val totalMinutes = java.time.temporal.ChronoUnit.MINUTES.between(startTime, endTime)
+                val totalHeight = pixelsPerMinute * totalMinutes.toInt()
+                
                 BoxWithConstraints(
                     modifier = Modifier
                         .weight(1f)
+                        .height(totalHeight)  // 明确设置高度
                         .padding(start = 4.dp)
                 ) {
-                    val density = LocalDensity.current
                     val gridLineColor = MaterialTheme.colorScheme.outlineVariant
-                    val cellHeightPx = with(density) { config.cellHeight.toPx() }
                     val cellSpacingPx = with(density) { 4.dp.toPx() }
                     val dayColumnWidth = (maxWidth - 4.dp * (weekDays.size - 1)) / weekDays.size
                     
-                    // 计算总高度(包含休息分隔行)
-                    val totalHeight = remember(periods, breakPeriods) {
-                        var height = 0.dp
-                        periods.forEach { period ->
-                            val breakBefore = if (config.showBreakSeparators) {
-                                breakPeriods.find { it.afterPeriod == period.periodNumber - 1 }
-                            } else null
-                            if (breakBefore != null) {
-                                height += 32.dp
-                            }
-                            height += config.cellHeight + 4.dp
-                        }
-                        height
-                    }
-                    
-                    // 绘制网格背景
+                    // 绘制时间轴背景网格
                     val cellBackgroundColor = MaterialTheme.colorScheme.surfaceContainerLow
                     Canvas(
                         modifier = Modifier
@@ -162,19 +170,14 @@ fun GridTimetableView(
                             .height(totalHeight)
                     ) {
                         val dayColumnWidthPx = (size.width - (weekDays.size - 1) * cellSpacingPx) / weekDays.size
+                        val hourHeightPx = with(density) { (pixelsPerMinute * 60).toPx() }
+                        
+                        // 绘制每个小时的网格
+                        var currentTime = startTime
                         var currentY = 0f
                         
-                        periods.forEach { period ->
-                            // 检查是否需要绘制休息分隔
-                            val breakBefore = if (config.showBreakSeparators) {
-                                breakPeriods.find { it.afterPeriod == period.periodNumber - 1 }
-                            } else null
-                            
-                            if (breakBefore != null) {
-                                currentY += with(density) { 32.dp.toPx() }
-                            }
-                            
-                            // 绘制每一行的网格单元格
+                        while (currentTime.isBefore(endTime)) {
+                            // 绘制每一列（每天）
                             weekDays.forEachIndexed { index, _ ->
                                 val x = index * (dayColumnWidthPx + cellSpacingPx)
                                 
@@ -182,132 +185,121 @@ fun GridTimetableView(
                                 drawRect(
                                     color = cellBackgroundColor,
                                     topLeft = Offset(x, currentY),
-                                    size = androidx.compose.ui.geometry.Size(dayColumnWidthPx, cellHeightPx)
+                                    size = androidx.compose.ui.geometry.Size(dayColumnWidthPx, hourHeightPx)
                                 )
                                 
-                                // 绘制单元格边框
+                                // 绘制单元格边框（淡色）
                                 drawRect(
-                                    color = gridLineColor,
+                                    color = gridLineColor.copy(alpha = 0.3f),
                                     topLeft = Offset(x, currentY),
-                                    size = androidx.compose.ui.geometry.Size(dayColumnWidthPx, cellHeightPx),
+                                    size = androidx.compose.ui.geometry.Size(dayColumnWidthPx, hourHeightPx),
                                     style = androidx.compose.ui.graphics.drawscope.Stroke(width = 1f)
                                 )
                             }
                             
-                            currentY += cellHeightPx + cellSpacingPx
+                            currentY += hourHeightPx
+                            currentTime = currentTime.plusHours(1)
                         }
                     }
                     
-                    // 绘制休息分隔行
-                    var offsetY = 0.dp
-                    periods.forEach { period ->
-                        val breakBefore = if (config.showBreakSeparators) {
-                            breakPeriods.find { it.afterPeriod == period.periodNumber - 1 }
-                        } else null
-                        
-                        if (breakBefore != null) {
-                            BreakSeparatorRow(
-                                breakName = breakBefore.name,
-                                weekDays = weekDays,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .offset(y = offsetY)
-                            )
-                            offsetY += 32.dp
-                        }
-                        offsetY += config.cellHeight + 4.dp
-                    }
-                    
-                    // 绘制空白单元格点击区域
-                    var clickOffsetY = 0.dp
-                    periods.forEach { period ->
-                        val breakBefore = if (config.showBreakSeparators) {
-                            breakPeriods.find { it.afterPeriod == period.periodNumber - 1 }
-                        } else null
-                        
-                        if (breakBefore != null) {
-                            clickOffsetY += 32.dp
-                        }
-                        
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .offset(y = clickOffsetY)
-                                .height(config.cellHeight),
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            weekDays.forEach { day ->
-                                Box(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .fillMaxHeight()
-                                        .clickable {
-                                            onEmptyCellClick(day, period.periodNumber)
-                                        }
-                                )
-                            }
-                        }
-                        
-                        clickOffsetY += config.cellHeight + 4.dp
-                    }
-                    
-                    // 绘制课程卡片(使用绝对定位)
+                    // 绘制课程卡片(基于实际时间定位)
                     weekDays.forEachIndexed { dayIndex, day ->
                         val coursesForDay = coursesByDay[day] ?: emptyList()
                         
                         coursesForDay.forEach { course ->
-                            if (course.periodStart != null) {
-                                // 计算课程卡片的位置
-                                var cardOffsetY = 0.dp
-                                var periodIndex = 0
-                                
-                                periods.forEach { period ->
-                                    if (period.periodNumber < course.periodStart) {
-                                        val breakBefore = if (config.showBreakSeparators) {
-                                            breakPeriods.find { it.afterPeriod == period.periodNumber - 1 }
-                                        } else null
-                                        if (breakBefore != null) {
-                                            cardOffsetY += 32.dp
-                                        }
-                                        cardOffsetY += config.cellHeight + 4.dp
-                                        periodIndex++
-                                    }
-                                }
-                                
-                                // 检查课程开始节次前是否有休息分隔
-                                val breakBeforeStart = if (config.showBreakSeparators) {
-                                    breakPeriods.find { it.afterPeriod == course.periodStart - 1 }
-                                } else null
-                                if (breakBeforeStart != null) {
-                                    cardOffsetY += 32.dp
-                                }
-                                
-                                // 计算跨越的节次数
-                                val periodSpan = if (course.periodEnd != null && course.periodStart != null) {
-                                    (course.periodEnd - course.periodStart + 1).coerceAtLeast(1)
-                                } else {
-                                    1
-                                }
-                                
-                                val cardOffsetX = (dayColumnWidth + 4.dp) * dayIndex
-                                
-                                Box(
+                            // 计算课程卡片的Y位置：从startTime到课程开始时间的分钟数
+                            val minutesFromStart = java.time.temporal.ChronoUnit.MINUTES.between(startTime, course.startTime)
+                            val cardOffsetY = pixelsPerMinute * minutesFromStart.toInt()
+                            
+                            // 计算课程卡片的高度：课程持续时间
+                            val courseDurationMinutes = java.time.temporal.ChronoUnit.MINUTES.between(course.startTime, course.endTime)
+                            val cardHeight = (pixelsPerMinute * courseDurationMinutes.toInt()).coerceAtLeast(40.dp) // 最小高度40dp
+                            
+                            // 调试日志
+                            android.util.Log.d("GridTimetable", "Course: ${course.name}, Start: ${course.startTime}, End: ${course.endTime}, Duration: ${courseDurationMinutes}min, Height: $cardHeight")
+                            
+                            // 计算X位置
+                            val cardOffsetX = (dayColumnWidth + 4.dp) * dayIndex
+                            
+                            // 使用Surface直接绘制课程卡片，避免高度计算问题
+                            Surface(
+                                modifier = Modifier
+                                    .offset(x = cardOffsetX, y = cardOffsetY)
+                                    .width(dayColumnWidth)
+                                    .height(cardHeight)
+                                    .clickable { onCourseClick(course.id) },
+                                color = rememberThemeAwareCourseColor(course.color).copy(alpha = 0.9f),
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Column(
                                     modifier = Modifier
-                                        .offset(x = cardOffsetX, y = cardOffsetY)
-                                        .width(dayColumnWidth)
+                                        .fillMaxSize()
+                                        .padding(6.dp),
+                                    verticalArrangement = Arrangement.Center
                                 ) {
-                                    CourseCardCompact(
-                                        course = course,
-                                        cellHeight = config.cellHeight,
-                                        periodSpan = periodSpan,
-                                        onClick = { onCourseClick(course.id) }
+                                    Text(
+                                        text = course.name,
+                                        style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        color = Color.White,
+                                        maxLines = 3,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                                     )
+                                    if (!course.location.isNullOrBlank()) {
+                                        Text(
+                                            text = course.location,
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = Color.White.copy(alpha = 0.9f),
+                                            maxLines = 1,
+                                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+
+/**
+ * 时间轴列组件
+ * 显示时间刻度（使用Box+绝对定位，不限制高度）
+ */
+@Composable
+private fun TimeAxisColumn(
+    startTime: java.time.LocalTime,
+    endTime: java.time.LocalTime,
+    pixelsPerMinute: Dp,
+    modifier: Modifier = Modifier
+) {
+    val timeFormatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm")
+    val hourHeight = pixelsPerMinute * 60
+    
+    // 计算总高度
+    val totalMinutes = java.time.temporal.ChronoUnit.MINUTES.between(startTime, endTime)
+    val totalHeight = pixelsPerMinute * totalMinutes.toInt()
+    
+    Box(modifier = modifier.height(totalHeight)) {
+        var currentTime = startTime
+        var offsetY = 0.dp
+        
+        while (currentTime.isBefore(endTime) || currentTime == endTime) {
+            androidx.compose.material3.Text(
+                text = currentTime.format(timeFormatter),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .offset(y = offsetY)
+                    .fillMaxWidth()
+                    .wrapContentHeight(Alignment.Top)
+            )
+            
+            offsetY += hourHeight
+            currentTime = currentTime.plusHours(1)
         }
     }
 }

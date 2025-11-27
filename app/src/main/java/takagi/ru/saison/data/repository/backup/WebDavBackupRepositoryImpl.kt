@@ -53,7 +53,10 @@ class WebDavBackupRepositoryImpl @Inject constructor(
         prefs.edit().apply {
             putString(KEY_SERVER_URL, url.trimEnd('/'))
             putString(KEY_USERNAME, username)
-            putString(KEY_PASSWORD, password)
+            // 只有当密码不为空时才更新密码，这样编辑时可以保持原密码
+            if (password.isNotBlank()) {
+                putString(KEY_PASSWORD, password)
+            }
             apply()
         }
     }

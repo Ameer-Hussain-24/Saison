@@ -74,19 +74,24 @@ fun WebDavBackupSettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            if (!uiState.isConfigured) {
+            if (!uiState.isConfigured || uiState.isEditingConfig) {
                 WebDavConfigurationCard(
+                    initialUrl = uiState.config?.serverUrl ?: "",
+                    initialUsername = uiState.config?.username ?: "",
                     onConfigure = { url, username, password ->
                         viewModel.configure(url, username, password)
                     },
                     onTestConnection = { viewModel.testConnection() },
+                    onCancel = if (uiState.isEditingConfig) {
+                        { viewModel.cancelEditConfig() }
+                    } else null,
                     isTestingConnection = uiState.isTestingConnection,
                     connectionTestResult = uiState.connectionTestResult
                 )
             } else {
                 WebDavConfigSummaryCard(
                     config = uiState.config,
-                    onEdit = { viewModel.clearConfig() },
+                    onEdit = { viewModel.editConfig() },
                     onClear = { viewModel.clearConfig() }
                 )
                 
@@ -121,13 +126,16 @@ fun WebDavBackupSettingsScreen(
 
 @Composable
 fun WebDavConfigurationCard(
+    initialUrl: String = "",
+    initialUsername: String = "",
     onConfigure: (String, String, String) -> Unit,
     onTestConnection: () -> Unit,
+    onCancel: (() -> Unit)? = null,
     isTestingConnection: Boolean,
     connectionTestResult: ConnectionTestResult?
 ) {
-    var url by remember { mutableStateOf("") }
-    var username by remember { mutableStateOf("") }
+    var url by remember(initialUrl) { mutableStateOf(initialUrl) }
+    var username by remember(initialUsername) { mutableStateOf(initialUsername) }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     
@@ -157,6 +165,7 @@ fun WebDavConfigurationCard(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("密码") },
+                placeholder = { Text(if (initialUrl.isNotEmpty()) "留空则保持原密码不变" else "") },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -184,6 +193,15 @@ fun WebDavConfigurationCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                if (onCancel != null) {
+                    OutlinedButton(
+                        onClick = onCancel,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("取消")
+                    }
+                }
+                
                 OutlinedButton(
                     onClick = onTestConnection,
                     enabled = !isTestingConnection && url.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
@@ -198,7 +216,7 @@ fun WebDavConfigurationCard(
                 
                 Button(
                     onClick = { onConfigure(url, username, password) },
-                    enabled = url.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
+                    enabled = url.isNotBlank() && username.isNotBlank() && (password.isNotBlank() || initialUrl.isNotEmpty()),
                     modifier = Modifier.weight(1f)
                 ) {
                     Text("保存配置")

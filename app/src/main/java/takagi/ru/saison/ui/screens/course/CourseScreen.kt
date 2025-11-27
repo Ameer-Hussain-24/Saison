@@ -526,20 +526,44 @@ fun TimetableGrid(
                 }
             }
 
-            // Courses
+            // Courses - 根据实际时间定位和调整高度
             coursesByDay.forEach { (day, courses) ->
                 val dayIndex = day.value - 1
                 courses.forEach { course ->
-                    val startPeriod = course.periodStart ?: 1
-                    val endPeriod = course.periodEnd ?: 1
-                    val duration = endPeriod - startPeriod + 1
+                    // 找到课程开始时间对应的节次
+                    val startPeriodIndex = periods.indexOfFirst { 
+                        !course.startTime.isBefore(it.startTime) && course.startTime.isBefore(it.endTime)
+                    }.takeIf { it >= 0 } ?: 0
+                    
+                    // 找到课程结束时间对应的节次
+                    val endPeriodIndex = periods.indexOfLast { 
+                        course.endTime.isAfter(it.startTime) && !course.endTime.isAfter(it.endTime)
+                    }.takeIf { it >= 0 } ?: (periods.size - 1)
+                    
+                    // 计算在第一个节次内的偏移
+                    val startPeriod = periods.getOrNull(startPeriodIndex)
+                    val offsetInPeriod = if (startPeriod != null) {
+                        val minutesInPeriod = java.time.temporal.ChronoUnit.MINUTES.between(startPeriod.startTime, course.startTime)
+                        val periodDuration = java.time.temporal.ChronoUnit.MINUTES.between(startPeriod.startTime, startPeriod.endTime)
+                        (periodHeight.value * minutesInPeriod / periodDuration).dp
+                    } else 0.dp
+                    
+                    // 计算课程卡片的实际高度
+                    val courseDurationMinutes = java.time.temporal.ChronoUnit.MINUTES.between(course.startTime, course.endTime)
+                    val avgPeriodDuration = if (periods.isNotEmpty()) {
+                        periods.map { java.time.temporal.ChronoUnit.MINUTES.between(it.startTime, it.endTime) }.average()
+                    } else 45.0
+                    val cardHeight = (periodHeight.value * courseDurationMinutes / avgPeriodDuration).dp.coerceAtLeast(40.dp)
                     
                     CourseCardItem(
                         course = course,
                         modifier = Modifier
                             .width(dayWidth)
-                            .height(periodHeight * duration.toFloat())
-                            .offset(x = dayWidth * dayIndex.toFloat(), y = periodHeight * (startPeriod - 1).toFloat())
+                            .height(cardHeight)
+                            .offset(
+                                x = dayWidth * dayIndex.toFloat(), 
+                                y = periodHeight * startPeriodIndex.toFloat() + offsetInPeriod
+                            )
                             .padding(2.dp),
                         onClick = { onCourseClick(course.id) }
                     )
