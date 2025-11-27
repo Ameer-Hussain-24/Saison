@@ -13,12 +13,12 @@
     <string name="nav_settings">設定</string>
     
     <!-- Navigation - Abbreviated -->
-    <string name="nav_calendar_short">日历</string>
+    <string name="nav_calendar_short">暦</string>
     <string name="nav_course_short">授業</string>
-    <string name="nav_tasks_short">任务</string>
+    <string name="nav_tasks_short">タスク</string>
     <string name="nav_pomodoro_short">集中</string>
-    <string name="nav_subscription_short">订阅</string>
-    <string name="nav_settings_short">设定</string>
+    <string name="nav_subscription_short">サブ</string>
+    <string name="nav_settings_short">設定</string>
     
     <!-- Common Actions -->
     <string name="action_add">追加</string>
@@ -168,26 +168,26 @@
     
     <string name="settings_theme_title">テーマ</string>
     <string name="settings_dark_mode_title">ダークモード</string>
-    <string name="settings_dark_mode_subtitle">ダークテーマを使用</string>
+    <string name="settings_dark_mode_subtitle">ダークテーマ</string>
     <string name="settings_bottom_nav_title">ボトムナビゲーション</string>
-    <string name="settings_bottom_nav_subtitle">ナビゲーション項目をカスタマイズ</string>
+    <string name="settings_bottom_nav_subtitle">ナビ項目設定</string>
     <string name="settings_language_title">アプリの言語</string>
     
     <string name="settings_notifications_enable_title">通知を有効にする</string>
-    <string name="settings_notifications_enable_subtitle">タスクと授業のリマインダーを受け取る</string>
+    <string name="settings_notifications_enable_subtitle">タスク・授業通知</string>
     <string name="settings_task_reminders_title">タスクリマインダー</string>
-    <string name="settings_task_reminders_subtitle">タスクの期限リマインダーを受け取る</string>
+    <string name="settings_task_reminders_subtitle">期限通知</string>
     <string name="settings_course_reminders_title">授業リマインダー</string>
-    <string name="settings_course_reminders_subtitle">授業開始のリマインダーを受け取る</string>
+    <string name="settings_course_reminders_subtitle">開始時刻通知</string>
     <string name="settings_pomodoro_reminders_title">ポモドーロリマインダー</string>
-    <string name="settings_pomodoro_reminders_subtitle">ポモドーロ完了のリマインダーを受け取る</string>
+    <string name="settings_pomodoro_reminders_subtitle">完了通知</string>
     
     <string name="settings_auto_sync_title">自動同期</string>
-    <string name="settings_auto_sync_subtitle">WebDAVに自動同期</string>
+    <string name="settings_auto_sync_subtitle">WebDAV自動同期</string>
     <string name="settings_wifi_only_title">WiFiのみ同期</string>
-    <string name="settings_wifi_only_subtitle">WiFiネットワークでのみ同期</string>
+    <string name="settings_wifi_only_subtitle">WiFiのみ</string>
     <string name="settings_webdav_title">WebDAV設定</string>
-    <string name="settings_webdav_subtitle">WebDAVサーバーを設定</string>
+    <string name="settings_webdav_subtitle">サーバー設定</string>
     <string name="settings_sync_now_title">今すぐ同期</string>
     <string name="settings_sync_last_time">最終同期: %s</string>
     <string name="settings_sync_not_yet">まだ同期していません</string>
@@ -765,4 +765,47 @@
     <string name="pomodoro_remaining_cycles">残り%1$dサイクル</string>
     <string name="pomodoro_cycle_progress">サイクル%1$d</string>
     <string name="pomodoro_session_index">%1$d / %2$d</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_title">通知</string>
+    <string name="settings_notifications_enabled">有効</string>
+    <string name="settings_notifications_disabled">無効</string>
+    <string name="settings_notifications_general">一般通知</string>
+    <string name="settings_notifications_types">通知タイプ</string>
+    
+    <!-- Saison Plus -->
+    <string name="plus_title">Saison Plus</string>
+    <string name="plus_subtitle_inactive">プレミアム機能をアンロック</string>
+    <string name="plus_subtitle_active">有効化済み</string>
+    <string name="plus_features_title">Plus 機能</string>
+    <string name="plus_payment_button">開発者をサポート</string>
+    <string name="plus_payment_title">開発者をサポート</string>
+    <string name="plus_qr_code_desc">支払いQRコード</string>
+    <string name="plus_payment_links_title">支払いリンク</string>
+    <string name="plus_activation_title">Saison Plus</string>
+    <string name="plus_activation_button">Plus を有効化</string>
+    <string name="plus_activation_success">Saison Plus が有効化されました！</string>
+    <string name="plus_status_activated">有効化済み</string>
+    <string name="plus_status_not_activated">未有効化</string>
+    <string name="plus_feature_locked">Plus が必要</string>
+    <string name="plus_feature_unlocked">アンロック済み</string>
+    <string name="plus_error_activation_failed">有効化に失敗しました。もう一度お試しください</string>
+    <string name="plus_error_load_status_failed">Plus ステータスの読み込みに失敗しました</string>
+    <string name="plus_error_open_link_failed">リンクを開けません。クリップボードにコピーしました</string>
+    <string name="plus_error_image_load_failed">画像の読み込みに失敗しました</string>
+    <string name="plus_thank_you">ご支援ありがとうございます！</string>
+    <string name="plus_description">Saison の開発をサポートし、プレミアム機能をアンロック</string>
+    
+    <!-- Plus 制限関連 -->
+    <string name="plus_required_title">Saison Plus が必要</string>
+    <string name="plus_required_message">「%s」はプレミアムテーマです。Saison Plus を有効化してご利用ください</string>
+    <string name="plus_required_action_go">有効化する</string>
+    <string name="plus_required_action_cancel">キャンセル</string>
+    <string name="plus_badge">Plus</string>
+    
+    <!-- 更新された機能説明 -->
+    <string name="plus_feature_webdav_title">WebDAV クラウドバックアップ</string>
+    <string name="plus_feature_webdav_desc">デバイス間でデータを同期、自動バックアップと手動復元をサポート</string>
+    <string name="plus_feature_themes_title">プレミアムテーマ</string>
+    <string name="plus_feature_themes_desc">8つの美しいテーマ：桜、ミント、アンバー、オーシャン、サンセット、フォレスト、オーロラ、レイン</string>
 </resources>

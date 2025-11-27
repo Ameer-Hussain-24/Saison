@@ -615,7 +615,7 @@ fun ScheduleList(
         if (courses.isEmpty() && tasks.isEmpty() && events.isEmpty() && routineTasks.isEmpty() && subscriptions.isEmpty()) {
             item {
                 Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
-                    Text("No schedule for today", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("今天没有任务", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }

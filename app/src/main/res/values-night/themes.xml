@@ -12,6 +12,9 @@
         <item name="android:windowLightStatusBar">false</item>
         <!-- 导航栏图标为浅色（深色模式） -->
         <item name="android:windowLightNavigationBar">false</item>
+        <!-- 禁用系统强制对比度保护，实现完全沉浸式 -->
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
         
         <!-- Splash Screen 配置 (Android 12+) -->
         <item name="android:windowSplashScreenBackground">@android:color/black</item>

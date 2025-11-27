@@ -15,7 +15,8 @@ import javax.inject.Singleton
 class CourseRepository @Inject constructor(
     private val courseDao: CourseDao,
     private val widgetScheduler: CourseWidgetScheduler,
-    @javax.inject.Named("applicationContext") private val context: android.content.Context
+    @javax.inject.Named("applicationContext") private val context: android.content.Context,
+    private val notificationManager: takagi.ru.saison.notification.SaisonNotificationManager
 ) {
     
     // Lazy inject to avoid circular dependency
@@ -52,6 +53,15 @@ class CourseRepository @Inject constructor(
         val result = courseDao.insert(course.toEntity())
         widgetScheduler.updateNow()
         
+        // Schedule course reminder
+        try {
+            val courseWithId = course.copy(id = result)
+            notificationManager.scheduleCourseReminder(courseWithId)
+            android.util.Log.d("CourseRepository", "Course reminder scheduled for course $result")
+        } catch (e: Exception) {
+            android.util.Log.e("CourseRepository", "Failed to schedule course reminder", e)
+        }
+        
         // Trigger widget update via coordinator
         try {
             widgetUpdateCoordinator.onCourseChanged(context)
@@ -66,6 +76,17 @@ class CourseRepository @Inject constructor(
     suspend fun insertCourses(courses: List<Course>): List<Long> {
         val result = courseDao.insertAll(courses.map { it.toEntity() })
         widgetScheduler.updateNow()
+        
+        // Schedule course reminders for all courses
+        courses.forEachIndexed { index, course ->
+            try {
+                val courseWithId = course.copy(id = result[index])
+                notificationManager.scheduleCourseReminder(courseWithId)
+                android.util.Log.d("CourseRepository", "Course reminder scheduled for course ${result[index]}")
+            } catch (e: Exception) {
+                android.util.Log.e("CourseRepository", "Failed to schedule course reminder", e)
+            }
+        }
         
         // Trigger widget update via coordinator
         try {
@@ -82,6 +103,15 @@ class CourseRepository @Inject constructor(
         courseDao.update(course.toEntity())
         widgetScheduler.updateNow()
         
+        // Update course reminder (cancel old and schedule new)
+        try {
+            notificationManager.cancelCourseReminder(course.id)
+            notificationManager.scheduleCourseReminder(course)
+            android.util.Log.d("CourseRepository", "Course reminder updated for course ${course.id}")
+        } catch (e: Exception) {
+            android.util.Log.e("CourseRepository", "Failed to update course reminder", e)
+        }
+        
         // Trigger widget update via coordinator
         try {
             widgetUpdateCoordinator.onCourseChanged(context)
@@ -92,6 +122,14 @@ class CourseRepository @Inject constructor(
     }
     
     suspend fun deleteCourse(courseId: Long) {
+        // Cancel course reminder before deleting
+        try {
+            notificationManager.cancelCourseReminder(courseId)
+            android.util.Log.d("CourseRepository", "Course reminder cancelled for deleted course $courseId")
+        } catch (e: Exception) {
+            android.util.Log.e("CourseRepository", "Failed to cancel course reminder", e)
+        }
+        
         courseDao.deleteById(courseId)
         widgetScheduler.updateNow()
         

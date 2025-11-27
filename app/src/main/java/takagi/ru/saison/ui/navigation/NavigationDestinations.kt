@@ -26,6 +26,7 @@ sealed class Screen(val route: String) {
     object Metronome : Screen("metronome")
     object Settings : Screen("settings")
     object BottomNavSettings : Screen("bottom_nav_settings")
+    object NotificationSettings : Screen("notification_settings")
     object Routine : Screen("routine")
     object RoutineDetail : Screen("routine_detail/{taskId}") {
         fun createRoute(taskId: Long) = "routine_detail/$taskId"
@@ -34,4 +35,6 @@ sealed class Screen(val route: String) {
     object SubscriptionDetail : Screen("subscription_detail/{subscriptionId}") {
         fun createRoute(subscriptionId: Long) = "subscription_detail/$subscriptionId"
     }
+    object SaisonPlus : Screen("saison_plus")
+    object Payment : Screen("saison_plus/payment")
 }

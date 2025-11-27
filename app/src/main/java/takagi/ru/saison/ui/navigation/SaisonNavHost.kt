@@ -246,12 +246,68 @@ fun SaisonNavHost(
                 },
                 onNavigateToBottomNavSettings = {
                     navController.navigate(Screen.BottomNavSettings.route)
+                },
+                onNavigateToNotificationSettings = {
+                    navController.navigate(Screen.NotificationSettings.route)
+                },
+                onNavigateToWebDavBackup = {
+                    navController.navigate("webdav_backup")
+                },
+                onNavigateToSaisonPlus = {
+                    navController.navigate(Screen.SaisonPlus.route)
+                }
+            )
+        }
+        
+        composable(Screen.SaisonPlus.route) {
+            takagi.ru.saison.ui.screens.plus.SaisonPlusScreen(
+                onNavigateBack = {
+                    if (navController.currentBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                },
+                onNavigateToPayment = {
+                    navController.navigate(Screen.Payment.route)
+                }
+            )
+        }
+        
+        composable(Screen.Payment.route) {
+            takagi.ru.saison.ui.screens.plus.PaymentScreen(
+                onNavigateBack = {
+                    if (navController.currentBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                },
+                onActivationSuccess = {
+                    // 返回到设置页面
+                    navController.popBackStack(Screen.Settings.route, inclusive = false)
+                }
+            )
+        }
+        
+        composable("webdav_backup") {
+            takagi.ru.saison.ui.screens.settings.webdav.WebDavBackupSettingsScreen(
+                onNavigateBack = {
+                    if (navController.currentBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
                 }
             )
         }
         
         composable(Screen.BottomNavSettings.route) {
             takagi.ru.saison.ui.screens.settings.BottomNavSettingsScreen(
+                onNavigateBack = { 
+                    if (navController.currentBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                }
+            )
+        }
+        
+        composable(Screen.NotificationSettings.route) {
+            takagi.ru.saison.ui.screens.settings.NotificationSettingsScreen(
                 onNavigateBack = { 
                     if (navController.currentBackStackEntry != null) {
                         navController.popBackStack()

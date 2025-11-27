@@ -61,6 +61,9 @@ material3Adaptive = "1.0.0"
 # Biometric
 biometric = "1.2.0-alpha05"
 
+# Sardine (WebDAV)
+sardine = "0.8"
+
 [libraries]
 # Core Android
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -134,6 +137,9 @@ accompanist-permissions = { group = "com.google.accompanist", name = "accompanis
 
 # Biometric
 biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometric" }
+
+# Sardine (WebDAV)
+sardine-android = { group = "com.github.thegrizzlylabs", name = "sardine-android", version.ref = "sardine" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

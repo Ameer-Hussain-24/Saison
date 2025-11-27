@@ -1,31 +1,25 @@
 package takagi.ru.saison
 
 import android.content.Context
-import android.content.res.Configuration
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import android.content.Intent
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import takagi.ru.saison.data.local.datastore.BottomNavTab
 import takagi.ru.saison.data.local.datastore.PreferencesManager
 import takagi.ru.saison.ui.navigation.Screen
@@ -46,26 +40,26 @@ class MainActivity : ComponentActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         // 安装 Splash Screen（必须在 super.onCreate 之前）
-        installSplashScreen()
+        val splashScreen = installSplashScreen()
         
         super.onCreate(savedInstanceState)
         
         // 处理从小组件传递的Intent
         handleWidgetIntent(intent)
         
-        // 启用沉浸式状态栏（参考 Monica 的实现）
+        // 启用沉浸式状态栏
         enableEdgeToEdge()
         
-        // 立即设置状态栏为透明，避免启动时闪白
-        window.statusBarColor = android.graphics.Color.TRANSPARENT
-        window.navigationBarColor = android.graphics.Color.TRANSPARENT
-        
-        // 根据系统夜间模式设置状态栏图标颜色
-        val isNightMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        WindowCompat.getInsetsController(window, window.decorView).apply {
-            isAppearanceLightStatusBars = !isNightMode
-            isAppearanceLightNavigationBars = !isNightMode
-        }
+        // 根据系统主题设置初始窗口背景，避免闪白
+        val isDarkMode = (resources.configuration.uiMode and 
+            android.content.res.Configuration.UI_MODE_NIGHT_MASK) == 
+            android.content.res.Configuration.UI_MODE_NIGHT_YES
+        window.setBackgroundDrawable(
+            android.graphics.drawable.ColorDrawable(
+                if (isDarkMode) android.graphics.Color.BLACK 
+                else android.graphics.Color.WHITE
+            )
+        )
         
         setContent {
             SaisonAppWithTheme(
@@ -88,6 +82,7 @@ class MainActivity : ComponentActivity() {
     
     private fun handleWidgetIntent(intent: Intent?) {
         intent?.let {
+            // 处理小组件导航
             val taskId = it.getLongExtra("widget_task_id", -1L)
             val navigateTo = it.getStringExtra("widget_navigate_to")
             
@@ -96,26 +91,58 @@ class MainActivity : ComponentActivity() {
                 widgetTaskId = taskId
                 widgetNavigateTo = navigateTo
             }
+            
+            // 处理通知导航
+            val notificationNavType = it.getStringExtra(
+                takagi.ru.saison.notification.NotificationNavigationHandler.EXTRA_NAVIGATION_TYPE
+            )
+            val itemId = it.getLongExtra(
+                takagi.ru.saison.notification.NotificationNavigationHandler.EXTRA_ITEM_ID,
+                -1L
+            )
+            
+            if (notificationNavType != null) {
+                android.util.Log.d("MainActivity", "Notification intent: type=$notificationNavType, itemId=$itemId")
+                when (notificationNavType) {
+                    takagi.ru.saison.notification.NotificationNavigationHandler.NAV_TASK_DETAIL -> {
+                        if (itemId != -1L) {
+                            widgetTaskId = itemId
+                            widgetNavigateTo = "task_detail"
+                        }
+                    }
+                    takagi.ru.saison.notification.NotificationNavigationHandler.NAV_COURSE_DETAIL -> {
+                        if (itemId != -1L) {
+                            widgetTaskId = itemId
+                            widgetNavigateTo = "course_detail"
+                        }
+                    }
+                    takagi.ru.saison.notification.NotificationNavigationHandler.NAV_POMODORO -> {
+                        widgetNavigateTo = "pomodoro"
+                    }
+                    takagi.ru.saison.notification.NotificationNavigationHandler.NAV_TASK_LIST -> {
+                        widgetNavigateTo = "task_list"
+                    }
+                }
+            }
         }
     }
     
-    /**
-     * 启用沉浸式边到边显示
-     * 参考 Monica 的实现，让系统栏完全透明，由 Compose 主题自动处理颜色
-     */
-    private fun enableEdgeToEdge() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-    }
-    
     override fun attachBaseContext(newBase: Context) {
-        // 从 SharedPreferences 读取语言设置以便初始化
-        val prefs = newBase.getSharedPreferences("app_language", Context.MODE_PRIVATE)
-        val languageCode = prefs.getString("language_code", "zh") ?: "zh"
+        // 强制使用中文
+        val languageCode = "zh"
         
-        android.util.Log.d("MainActivity", "attachBaseContext: languageCode = $languageCode")
+        android.util.Log.d("MainActivity", "attachBaseContext: languageCode = $languageCode (forced)")
         
         val context = LocaleHelper.setLocale(newBase, languageCode)
         super.attachBaseContext(context)
+    }
+    
+    /**
+     * 启用沉浸式边到边模式
+     * 完全参考 Monica 的实现
+     */
+    private fun enableEdgeToEdge() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 }
 
@@ -211,6 +238,7 @@ fun SaisonApp(
     
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             NavigationBar(
                 windowInsets = WindowInsets.systemBars

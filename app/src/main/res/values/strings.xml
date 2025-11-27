@@ -14,9 +14,9 @@
     
     <!-- Navigation - Abbreviated -->
     <string name="nav_calendar_short">Cal</string>
-    <string name="nav_course_short">Course</string>
-    <string name="nav_tasks_short">Tasks</string>
-    <string name="nav_pomodoro_short">Timer</string>
+    <string name="nav_course_short">Crs</string>
+    <string name="nav_tasks_short">Task</string>
+    <string name="nav_pomodoro_short">Time</string>
     <string name="nav_subscription_short">Sub</string>
     <string name="nav_settings_short">Set</string>
     
@@ -176,26 +176,26 @@
     
     <string name="settings_theme_title">Theme</string>
     <string name="settings_dark_mode_title">Dark Mode</string>
-    <string name="settings_dark_mode_subtitle">Use dark theme</string>
+    <string name="settings_dark_mode_subtitle">Dark theme</string>
     <string name="settings_bottom_nav_title">Bottom Navigation</string>
-    <string name="settings_bottom_nav_subtitle">Customize navigation items</string>
+    <string name="settings_bottom_nav_subtitle">Customize nav items</string>
     <string name="settings_language_title">App Language</string>
     
     <string name="settings_notifications_enable_title">Enable Notifications</string>
-    <string name="settings_notifications_enable_subtitle">Receive task and course reminders</string>
+    <string name="settings_notifications_enable_subtitle">Task and course reminders</string>
     <string name="settings_task_reminders_title">Task Reminders</string>
-    <string name="settings_task_reminders_subtitle">Receive task due date reminders</string>
+    <string name="settings_task_reminders_subtitle">Due date reminders</string>
     <string name="settings_course_reminders_title">Course Reminders</string>
-    <string name="settings_course_reminders_subtitle">Receive course start reminders</string>
+    <string name="settings_course_reminders_subtitle">Start time reminders</string>
     <string name="settings_pomodoro_reminders_title">Pomodoro Reminders</string>
-    <string name="settings_pomodoro_reminders_subtitle">Receive pomodoro completion reminders</string>
+    <string name="settings_pomodoro_reminders_subtitle">Completion reminders</string>
     
     <string name="settings_auto_sync_title">Auto Sync</string>
-    <string name="settings_auto_sync_subtitle">Automatically sync to WebDAV</string>
+    <string name="settings_auto_sync_subtitle">Auto sync to WebDAV</string>
     <string name="settings_wifi_only_title">WiFi Only Sync</string>
-    <string name="settings_wifi_only_subtitle">Sync only on WiFi network</string>
+    <string name="settings_wifi_only_subtitle">WiFi only</string>
     <string name="settings_webdav_title">WebDAV Configuration</string>
-    <string name="settings_webdav_subtitle">Configure WebDAV server</string>
+    <string name="settings_webdav_subtitle">Config WebDAV server</string>
     <string name="settings_sync_now_title">Sync Now</string>
     <string name="settings_sync_last_time">Last sync: %s</string>
     <string name="settings_sync_not_yet">Not synced yet</string>
@@ -216,9 +216,9 @@
     <!-- Data Management -->
     <string name="settings_section_data_management">Data Management</string>
     <string name="settings_import_semester_title">Import Semester</string>
-    <string name="settings_import_semester_subtitle">Import course schedule from ICS file</string>
+    <string name="settings_import_semester_subtitle">Import from ICS file</string>
     <string name="settings_export_semester_title">Export Semester</string>
-    <string name="settings_export_semester_subtitle">Export course schedule to ICS file</string>
+    <string name="settings_export_semester_subtitle">Export to ICS file</string>
     
     <!-- Export Options -->
     <string name="export_options_title">Export Options</string>
@@ -837,4 +837,62 @@
     <string name="task_widget_in_progress">In Progress</string>
     <string name="task_widget_no_tasks">No tasks yet</string>
     <string name="task_widget_add">Add</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notifications_enabled">Enabled</string>
+    <string name="settings_notifications_disabled">Disabled</string>
+    <string name="settings_notifications_general">General Notifications</string>
+    <string name="settings_notifications_types">Notification Types</string>
+    
+    <!-- Pomodoro Cycle Enhancement -->
+    <string name="pomodoro_break_mode">Break Mode</string>
+    <string name="pomodoro_cycle_pattern_label">Cycle Pattern</string>
+    <string name="pomodoro_work_count">Work</string>
+    <string name="pomodoro_short_break_count">Short Break</string>
+    <string name="pomodoro_long_break_count">Long Break</string>
+    <string name="pomodoro_total_cycles">Cycle Count</string>
+    <string name="pomodoro_total_cycles_hint">0 for infinite</string>
+    <string name="pomodoro_session_work">Work Session</string>
+    <string name="pomodoro_session_short_break">Short Break</string>
+    <string name="pomodoro_session_long_break">Long Break</string>
+    <string name="pomodoro_remaining_cycles">%1$d cycles remaining</string>
+    <string name="pomodoro_cycle_progress">Cycle %1$d</string>
+    <string name="pomodoro_session_index">%1$d / %2$d</string>
+    
+    <!-- Saison Plus -->
+    <string name="plus_title">Saison Plus</string>
+    <string name="plus_subtitle_inactive">Unlock Premium Features</string>
+    <string name="plus_subtitle_active">Activated</string>
+    <string name="plus_features_title">Plus Features</string>
+    <string name="plus_payment_button">Support Developer</string>
+    <string name="plus_payment_title">Support the Developer</string>
+    <string name="plus_qr_code_desc">Payment QR Code</string>
+    <string name="plus_payment_links_title">Payment Links</string>
+    <string name="plus_activation_title">Saison Plus</string>
+    <string name="plus_activation_button">Activate Plus</string>
+    <string name="plus_activation_success">Saison Plus Activated!</string>
+    <string name="plus_status_activated">Activated</string>
+    <string name="plus_status_not_activated">Not Activated</string>
+    <string name="plus_feature_locked">Requires Plus</string>
+    <string name="plus_feature_unlocked">Unlocked</string>
+    <string name="plus_error_activation_failed">Activation failed, please try again</string>
+    <string name="plus_error_load_status_failed">Failed to load Plus status</string>
+    <string name="plus_error_open_link_failed">Cannot open link, copied to clipboard</string>
+    <string name="plus_error_image_load_failed">Image loading failed</string>
+    <string name="plus_thank_you">Thank you for your support!</string>
+    <string name="plus_description">Support the development of Saison and unlock premium features</string>
+    
+    <!-- Plus Restrictions -->
+    <string name="plus_required_title">Saison Plus Required</string>
+    <string name="plus_required_message">"%s" is a premium theme. Activate Saison Plus to use it</string>
+    <string name="plus_required_action_go">Activate</string>
+    <string name="plus_required_action_cancel">Cancel</string>
+    <string name="plus_badge">Plus</string>
+    
+    <!-- Updated Feature Descriptions -->
+    <string name="plus_feature_webdav_title">WebDAV Cloud Backup</string>
+    <string name="plus_feature_webdav_desc">Sync your data across devices with automatic backup and manual restore</string>
+    <string name="plus_feature_themes_title">Premium Themes</string>
+    <string name="plus_feature_themes_desc">8 beautiful themes: Sakura, Mint, Amber, Ocean, Sunset, Forest, Aurora, Rain</string>
 </resources>

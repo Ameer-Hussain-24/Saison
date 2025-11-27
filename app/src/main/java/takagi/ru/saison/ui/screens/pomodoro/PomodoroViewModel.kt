@@ -28,7 +28,8 @@ class PomodoroViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
     private val preferencesManager: PreferencesManager,
     private val notificationManager: PomodoroNotificationManager,
-    private val vibrationManager: VibrationManager
+    private val vibrationManager: VibrationManager,
+    private val saisonNotificationManager: takagi.ru.saison.notification.SaisonNotificationManager
 ) : ViewModel() {
     
     // UI State
@@ -168,6 +169,14 @@ class PomodoroViewModel @Inject constructor(
                 remainingSeconds = duration * 60
             )}
             
+            // 调度番茄钟完成通知
+            val completionTime = sessionStartTime + (duration * 60 * 1000)
+            saisonNotificationManager.schedulePomodoroReminder(
+                sessionId = currentSessionId ?: 0,
+                isWorkEnd = true,
+                triggerTime = completionTime
+            )
+            
             startTimerLoop()
         }
     }
@@ -193,6 +202,8 @@ class PomodoroViewModel @Inject constructor(
         viewModelScope.launch {
             currentSessionId?.let { sessionId ->
                 pomodoroRepository.markSessionInterrupted(sessionId)
+                // 取消番茄钟通知
+                saisonNotificationManager.cancelPomodoroReminder(sessionId)
             }
         }
         resetTimer()
@@ -234,6 +245,8 @@ class PomodoroViewModel @Inject constructor(
                         )
                     )
                 }
+                // 取消番茄钟通知
+                saisonNotificationManager.cancelPomodoroReminder(sessionId)
             }
             
             _uiState.update { it.copy(
@@ -294,6 +307,8 @@ class PomodoroViewModel @Inject constructor(
             // 完成会话
             currentSessionId?.let { sessionId ->
                 pomodoroRepository.completeSession(sessionId)
+                // 用户在应用内看到完成，取消通知（如果还未触发）
+                saisonNotificationManager.cancelPomodoroReminder(sessionId)
             }
             
             // 完成时打卡

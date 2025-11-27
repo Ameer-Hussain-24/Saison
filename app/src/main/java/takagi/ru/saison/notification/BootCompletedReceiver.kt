@@ -1,0 +1,55 @@
+package takagi.ru.saison.notification
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+/**
+ * 设备重启接收器
+ * 在设备重启后重新调度所有通知
+ */
+@AndroidEntryPoint
+class BootCompletedReceiver : BroadcastReceiver() {
+    
+    @Inject
+    lateinit var taskRepository: takagi.ru.saison.data.repository.TaskRepository
+    
+    @Inject
+    lateinit var courseRepository: takagi.ru.saison.data.repository.CourseRepository
+    
+    @Inject
+    lateinit var saisonNotificationManager: SaisonNotificationManager
+    
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+            // 在后台重新调度所有通知
+            CoroutineScope(Dispatchers.IO).launch {
+                rescheduleAllNotifications()
+            }
+        }
+    }
+    
+    /**
+     * 重新调度所有通知
+     */
+    private suspend fun rescheduleAllNotifications() {
+        // 重新调度所有未完成任务的提醒
+        taskRepository.getAllTasks().collect { tasks ->
+            tasks.filter { !it.isCompleted && it.dueDate != null }.forEach { task ->
+                saisonNotificationManager.scheduleTaskReminder(task)
+            }
+        }
+        
+        // 重新调度所有课程的提醒
+        courseRepository.getAllCourses().collect { courses ->
+            courses.forEach { course ->
+                saisonNotificationManager.scheduleCourseReminder(course)
+            }
+        }
+    }
+}

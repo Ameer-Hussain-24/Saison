@@ -24,6 +24,7 @@ object LocaleHelper {
     
     /**
      * 在运行时更新 Activity 的语言配置（无需重启）
+     * 注意：此方法会触发配置变更，Activity的onConfigurationChanged会被调用
      */
     fun updateActivityLocale(activity: Activity, languageCode: String) {
         val locale = getLocaleFromCode(languageCode)
@@ -36,24 +37,6 @@ object LocaleHelper {
         
         @Suppress("DEPRECATION")
         resources.updateConfiguration(configuration, resources.displayMetrics)
-        
-        // 重新应用系统栏颜色，防止变白
-        if (activity is androidx.activity.ComponentActivity) {
-            try {
-                val window = activity.window
-                val insetsController = androidx.core.view.WindowCompat.getInsetsController(window, window.decorView)
-                
-                // 读取当前主题模式
-                val nightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                val isDark = nightMode == Configuration.UI_MODE_NIGHT_YES
-                
-                // 重新设置系统栏图标颜色
-                insetsController.isAppearanceLightStatusBars = !isDark
-                insetsController.isAppearanceLightNavigationBars = !isDark
-            } catch (e: Exception) {
-                // 忽略错误
-            }
-        }
     }
     
     /**

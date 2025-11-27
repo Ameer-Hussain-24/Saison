@@ -166,6 +166,9 @@ dependencies {
     // Biometric
     implementation(libs.biometric)
 
+    // Sardine (WebDAV) - Not needed, using OkHttp directly
+    // implementation(libs.sardine.android)
+
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

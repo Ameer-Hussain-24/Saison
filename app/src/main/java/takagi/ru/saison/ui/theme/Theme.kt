@@ -28,11 +28,18 @@ fun SaisonTheme(
     }
     
     val view = LocalView.current
+    val context = LocalContext.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
+            // 设置窗口背景为当前主题的背景色，避免启动时闪白
+            window.setBackgroundDrawable(
+                android.graphics.drawable.ColorDrawable(colorScheme.background.toArgb())
+            )
+            // 确保系统栏始终透明
             window.statusBarColor = android.graphics.Color.TRANSPARENT
             window.navigationBarColor = android.graphics.Color.TRANSPARENT
+            // 设置系统栏图标颜色
             val insetsController = WindowCompat.getInsetsController(window, view)
             insetsController.isAppearanceLightStatusBars = !darkTheme
             insetsController.isAppearanceLightNavigationBars = !darkTheme
@@ -41,9 +48,15 @@ fun SaisonTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+        typography = Typography
+    ) {
+        // 设置 TopAppBar 的默认颜色，避免启动时闪白
+        androidx.compose.runtime.CompositionLocalProvider(
+            androidx.compose.material3.LocalContentColor provides colorScheme.onBackground
+        ) {
+            content()
+        }
+    }
 }
 
 private fun getSeasonalColorScheme(theme: SeasonalTheme, darkTheme: Boolean): ColorScheme {

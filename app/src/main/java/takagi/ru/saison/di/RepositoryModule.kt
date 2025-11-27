@@ -17,6 +17,8 @@ import takagi.ru.saison.data.repository.SemesterRepository
 import takagi.ru.saison.data.repository.SemesterRepositoryImpl
 import takagi.ru.saison.data.repository.TaskWidgetRepository
 import takagi.ru.saison.data.repository.TaskWidgetRepositoryImpl
+import takagi.ru.saison.data.repository.backup.WebDavBackupRepository
+import takagi.ru.saison.data.repository.backup.WebDavBackupRepositoryImpl
 import takagi.ru.saison.domain.repository.CourseSettingsRepository
 import takagi.ru.saison.domain.repository.EventRepository
 import takagi.ru.saison.util.CycleCalculator
@@ -67,6 +69,12 @@ abstract class RepositoryModule {
     abstract fun bindTaskWidgetRepository(
         taskWidgetRepositoryImpl: TaskWidgetRepositoryImpl
     ): TaskWidgetRepository
+    
+    @Binds
+    @Singleton
+    abstract fun bindWebDavBackupRepository(
+        webDavBackupRepositoryImpl: WebDavBackupRepositoryImpl
+    ): WebDavBackupRepository
     
     companion object {
         @Provides

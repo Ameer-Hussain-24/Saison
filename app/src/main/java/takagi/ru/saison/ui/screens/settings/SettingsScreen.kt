@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -39,6 +40,9 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {},
     onNavigateToBottomNavSettings: () -> Unit = {},
+    onNavigateToNotificationSettings: () -> Unit = {},
+    onNavigateToWebDavBackup: () -> Unit = {},
+    onNavigateToSaisonPlus: () -> Unit = {},
     onNavigateToImportPreview: (android.net.Uri, Long) -> Unit = { _, _ -> },
     onNavigateToExport: () -> Unit = {},
     modifier: Modifier = Modifier
@@ -47,13 +51,12 @@ fun SettingsScreen(
     val themeMode by viewModel.themeMode.collectAsState()
     val currentLanguage by viewModel.currentLanguage.collectAsState()
     val notificationsEnabled by viewModel.notificationsEnabled.collectAsState()
-    val autoSyncEnabled by viewModel.autoSyncEnabled.collectAsState()
+    val isPlusActivated by viewModel.isPlusActivated.collectAsState()
     
     var showThemeBottomSheet by remember { mutableStateOf(false) }
     var showThemeModeDialog by remember { mutableStateOf(false) }
     var showBottomNavBottomSheet by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
-    var showWebDavDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
     
     // 获取 Context
@@ -150,6 +153,25 @@ fun SettingsScreen(
                 .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
+            // Saison Plus 卡片
+            val isPlusActivated by viewModel.isPlusActivated.collectAsState()
+            takagi.ru.saison.ui.components.SaisonPlusCard(
+                isPlusActivated = isPlusActivated,
+                onClick = onNavigateToSaisonPlus
+            )
+            
+            // 同步设置 - 仅 Plus 会员可见，放在最上面
+            if (isPlusActivated) {
+                SettingsSection(title = stringResource(R.string.settings_section_sync)) {
+                    SettingsItem(
+                        icon = Icons.Default.Backup,
+                        title = "WebDAV 备份",
+                        subtitle = "配置和管理 WebDAV 备份",
+                        onClick = onNavigateToWebDavBackup
+                    )
+                }
+            }
+            
             // 外观设置
             SettingsSection(title = stringResource(R.string.settings_section_appearance)) {
                 SettingsItem(
@@ -174,147 +196,28 @@ fun SettingsScreen(
                 )
             }
             
-            // 语言设置
-            SettingsSection(title = stringResource(R.string.settings_section_language)) {
-                SettingsItem(
-                    icon = Icons.Default.Language,
-                    title = stringResource(R.string.settings_language_title),
-                    subtitle = getLanguageName(currentLanguage),
-                    onClick = { showLanguageDialog = true }
-                )
-            }
+            // 语言设置 - 暂时隐藏，仅支持中文
+            // SettingsSection(title = stringResource(R.string.settings_section_language)) {
+            //     SettingsItem(
+            //         icon = Icons.Default.Language,
+            //         title = stringResource(R.string.settings_language_title),
+            //         subtitle = getLanguageName(currentLanguage),
+            //         onClick = { showLanguageDialog = true }
+            //     )
+            // }
             
             // 通知设置
             SettingsSection(title = stringResource(R.string.settings_section_notifications)) {
-                val taskRemindersEnabled by viewModel.taskRemindersEnabled.collectAsState()
-                val courseRemindersEnabled by viewModel.courseRemindersEnabled.collectAsState()
-                val pomodoroRemindersEnabled by viewModel.pomodoroRemindersEnabled.collectAsState()
-                
-                SettingsSwitchItem(
-                    icon = Icons.Default.Notifications,
-                    title = stringResource(R.string.settings_notifications_enable_title),
-                    subtitle = stringResource(R.string.settings_notifications_enable_subtitle),
-                    checked = notificationsEnabled,
-                    onCheckedChange = { viewModel.setNotificationsEnabled(it) }
-                )
-                
-                SettingsSwitchItem(
-                    icon = Icons.Default.Task,
-                    title = stringResource(R.string.settings_task_reminders_title),
-                    subtitle = stringResource(R.string.settings_task_reminders_subtitle),
-                    checked = taskRemindersEnabled,
-                    enabled = notificationsEnabled,
-                    onCheckedChange = { viewModel.setTaskRemindersEnabled(it) }
-                )
-                
-                SettingsSwitchItem(
-                    icon = Icons.Default.School,
-                    title = stringResource(R.string.settings_course_reminders_title),
-                    subtitle = stringResource(R.string.settings_course_reminders_subtitle),
-                    checked = courseRemindersEnabled,
-                    enabled = notificationsEnabled,
-                    onCheckedChange = { viewModel.setCourseRemindersEnabled(it) }
-                )
-                
-                SettingsSwitchItem(
-                    icon = Icons.Default.Timer,
-                    title = stringResource(R.string.settings_pomodoro_reminders_title),
-                    subtitle = stringResource(R.string.settings_pomodoro_reminders_subtitle),
-                    checked = pomodoroRemindersEnabled,
-                    enabled = notificationsEnabled,
-                    onCheckedChange = { viewModel.setPomodoroRemindersEnabled(it) }
-                )
-            }
-            
-            // 同步设置
-            SettingsSection(title = stringResource(R.string.settings_section_sync)) {
-                val syncOnWifiOnly by viewModel.syncOnWifiOnly.collectAsState()
-                val syncStatus by viewModel.syncStatus.collectAsState()
-                
-                SettingsSwitchItem(
-                    icon = Icons.Default.Sync,
-                    title = stringResource(R.string.settings_auto_sync_title),
-                    subtitle = stringResource(R.string.settings_auto_sync_subtitle),
-                    checked = autoSyncEnabled,
-                    onCheckedChange = { viewModel.setAutoSyncEnabled(it) }
-                )
-                
-                SettingsSwitchItem(
-                    icon = Icons.Default.Wifi,
-                    title = stringResource(R.string.settings_wifi_only_title),
-                    subtitle = stringResource(R.string.settings_wifi_only_subtitle),
-                    checked = syncOnWifiOnly,
-                    enabled = autoSyncEnabled,
-                    onCheckedChange = { viewModel.setSyncOnWifiOnly(it) }
-                )
-                
                 SettingsItem(
-                    icon = Icons.Default.Cloud,
-                    title = stringResource(R.string.settings_webdav_title),
-                    subtitle = stringResource(R.string.settings_webdav_subtitle),
-                    onClick = { showWebDavDialog = true }
+                    icon = Icons.Default.Notifications,
+                    title = stringResource(R.string.settings_notifications_title),
+                    subtitle = if (notificationsEnabled) {
+                        stringResource(R.string.settings_notifications_enabled)
+                    } else {
+                        stringResource(R.string.settings_notifications_disabled)
+                    },
+                    onClick = onNavigateToNotificationSettings
                 )
-                
-                // 同步状态和手动同步按钮
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
-                ) {
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_sync_now_title)) },
-                        supportingContent = {
-                            Column {
-                                if (syncStatus.lastSyncTime != null) {
-                                    val timeAgo = remember(syncStatus.lastSyncTime) {
-                                        val diff = System.currentTimeMillis() - syncStatus.lastSyncTime!!
-                                        when {
-                                            diff < 60000 -> context.getString(R.string.time_just_now)
-                                            diff < 3600000 -> context.getString(R.string.time_minutes_ago, diff / 60000)
-                                            diff < 86400000 -> context.getString(R.string.time_hours_ago, diff / 3600000)
-                                            else -> context.getString(R.string.time_days_ago, diff / 86400000)
-                                        }
-                                    }
-                                    Text(stringResource(R.string.settings_sync_last_time, timeAgo))
-                                } else {
-                                    Text(stringResource(R.string.settings_sync_not_yet))
-                                }
-                                if (syncStatus.errorMessage != null) {
-                                    Text(
-                                        text = stringResource(R.string.settings_sync_error, syncStatus.errorMessage!!),
-                                        color = MaterialTheme.colorScheme.error,
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                }
-                            }
-                        },
-                        leadingContent = {
-                            if (syncStatus.isSyncing) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(24.dp),
-                                    strokeWidth = 2.dp
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.Default.CloudSync,
-                                    contentDescription = stringResource(R.string.cd_sync_now)
-                                )
-                            }
-                        },
-                        trailingContent = {
-                            Button(
-                                onClick = { viewModel.triggerManualSync() },
-                                enabled = !syncStatus.isSyncing
-                            ) {
-                                Text(stringResource(R.string.settings_sync_button))
-                            }
-                        }
-                    )
-                }
             }
             
             // 关于
@@ -340,9 +243,11 @@ fun SettingsScreen(
     if (showThemeBottomSheet) {
         ThemeBottomSheet(
             currentTheme = currentTheme,
+            isPlusActivated = isPlusActivated,
             onThemeSelected = { theme ->
                 viewModel.setTheme(theme)
             },
+            onNavigateToPlus = onNavigateToSaisonPlus,
             onDismiss = { showThemeBottomSheet = false }
         )
     }
@@ -375,18 +280,6 @@ fun SettingsScreen(
                 showLanguageDialog = false
             },
             onDismiss = { showLanguageDialog = false }
-        )
-    }
-    
-    // WebDAV 配置对话框
-    if (showWebDavDialog) {
-        WebDavConfigDialog(
-            viewModel = viewModel,
-            onDismiss = { showWebDavDialog = false },
-            onSave = { url, username, password ->
-                viewModel.setWebDavConfig(url, username, password)
-                showWebDavDialog = false
-            }
         )
     }
     
@@ -582,13 +475,19 @@ private fun ThemePreviewCard(
     theme: SeasonalTheme,
     themeName: String,
     isSelected: Boolean,
+    isPremium: Boolean = false,
+    isPlusActivated: Boolean = true,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    // 会员主题且未激活时使用半透明
+    val alpha = if (isPremium && !isPlusActivated) 0.5f else 1f
+    
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
+            .clickable(onClick = onClick)
+            .alpha(alpha),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) 
                 MaterialTheme.colorScheme.primaryContainer 
@@ -611,11 +510,20 @@ private fun ThemePreviewCard(
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = themeName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = themeName,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                    )
+                    // 显示 Plus 徽章
+                    if (isPremium) {
+                        takagi.ru.saison.ui.components.PlusBadge()
+                    }
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 // 主题颜色预览条 - 显示4种代表性颜色
                 val themeColors = getThemePreviewColors(theme)
@@ -696,7 +604,9 @@ private fun ThemePreviewCard(
 @Composable
 private fun ThemeBottomSheet(
     currentTheme: SeasonalTheme,
+    isPlusActivated: Boolean,
     onThemeSelected: (SeasonalTheme) -> Unit,
+    onNavigateToPlus: () -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -706,6 +616,10 @@ private fun ThemeBottomSheet(
     val scope = rememberCoroutineScope()
     val configuration = androidx.compose.ui.platform.LocalConfiguration.current
     val context = androidx.compose.ui.platform.LocalContext.current
+    
+    // Plus 提示对话框状态
+    var showPlusDialog by remember { mutableStateOf(false) }
+    var selectedPremiumTheme by remember { mutableStateOf<SeasonalTheme?>(null) }
     
     // 响应式设计：判断是否为平板
     val isTablet = configuration.screenWidthDp >= 600
@@ -756,13 +670,26 @@ private fun ThemeBottomSheet(
                 modifier = Modifier.padding(vertical = 16.dp)
             )
             
-            // 主题列表
+            // 主题列表 - 根据 Plus 状态排序
+            val sortedThemes = remember(isPlusActivated) {
+                val allThemes = SeasonalTheme.values().toList()
+                if (isPlusActivated) {
+                    // Plus 已激活：保持原始顺序
+                    allThemes
+                } else {
+                    // Plus 未激活：免费主题在前，会员主题在后
+                    allThemes.sortedBy { theme ->
+                        takagi.ru.saison.domain.model.plus.PremiumThemes.isPremiumTheme(theme)
+                    }
+                }
+            }
+            
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 items(
-                    items = SeasonalTheme.values().toList(),
+                    items = sortedThemes,
                     key = { it.name }
                 ) { theme ->
                     // 使用 derivedStateOf 优化 isSelected 状态
@@ -771,44 +698,75 @@ private fun ThemeBottomSheet(
                     }
                     
                     val themeName = getThemeName(theme)
+                    val isPremium = takagi.ru.saison.domain.model.plus.PremiumThemes.isPremiumTheme(theme)
                     
                     ThemePreviewCard(
                         theme = theme,
                         themeName = themeName,
                         isSelected = isSelected,
+                        isPremium = isPremium,
+                        isPlusActivated = isPlusActivated,
                         onClick = {
-                            // 错误处理：主题应用
-                            try {
-                                onThemeSelected(theme)
-                                
-                                // 无障碍支持：宣布主题已选中
-                                val accessibilityManager = context.getSystemService(android.content.Context.ACCESSIBILITY_SERVICE) 
-                                    as? android.view.accessibility.AccessibilityManager
-                                if (accessibilityManager?.isEnabled == true) {
-                                    val event = android.view.accessibility.AccessibilityEvent.obtain().apply {
-                                        eventType = android.view.accessibility.AccessibilityEvent.TYPE_ANNOUNCEMENT
-                                        text.add("已选择${themeName}主题")
+                            // 检查是否为会员主题且未激活
+                            if (isPremium && !isPlusActivated) {
+                                selectedPremiumTheme = theme
+                                showPlusDialog = true
+                            } else {
+                                // 错误处理：主题应用
+                                try {
+                                    onThemeSelected(theme)
+                                    
+                                    // 无障碍支持：宣布主题已选中
+                                    val accessibilityManager = context.getSystemService(android.content.Context.ACCESSIBILITY_SERVICE) 
+                                        as? android.view.accessibility.AccessibilityManager
+                                    if (accessibilityManager?.isEnabled == true) {
+                                        val event = android.view.accessibility.AccessibilityEvent.obtain().apply {
+                                            eventType = android.view.accessibility.AccessibilityEvent.TYPE_ANNOUNCEMENT
+                                            text.add("已选择${themeName}主题")
+                                        }
+                                        accessibilityManager.sendAccessibilityEvent(event)
                                     }
-                                    accessibilityManager.sendAccessibilityEvent(event)
-                                }
-                                
-                                // 关闭 Bottom Sheet
-                                scope.launch {
-                                    sheetState.hide()
-                                }.invokeOnCompletion {
-                                    if (!sheetState.isVisible) {
-                                        onDismiss()
+                                    
+                                    // 关闭 Bottom Sheet
+                                    scope.launch {
+                                        sheetState.hide()
+                                    }.invokeOnCompletion {
+                                        if (!sheetState.isVisible) {
+                                            onDismiss()
+                                        }
                                     }
+                                } catch (e: Exception) {
+                                    // 错误处理将在 SettingsScreen 的 Snackbar 中显示
+                                    e.printStackTrace()
                                 }
-                            } catch (e: Exception) {
-                                // 错误处理将在 SettingsScreen 的 Snackbar 中显示
-                                e.printStackTrace()
                             }
                         }
                     )
                 }
             }
         }
+    }
+    
+    // 显示 Plus 提示对话框
+    if (showPlusDialog && selectedPremiumTheme != null) {
+        takagi.ru.saison.ui.components.PlusRequiredDialog(
+            themeName = getThemeName(selectedPremiumTheme!!),
+            onNavigateToPlus = {
+                showPlusDialog = false
+                scope.launch {
+                    sheetState.hide()
+                }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        onDismiss()
+                        onNavigateToPlus()
+                    }
+                }
+            },
+            onDismiss = {
+                showPlusDialog = false
+                selectedPremiumTheme = null
+            }
+        )
     }
 }
 
@@ -1004,10 +962,10 @@ private fun AboutDialog(onDismiss: () -> Unit) {
                     fontWeight = FontWeight.Bold
                 )
                 Text("版本: 1.0.0")
-                Text("一款优雅的任务管理应用，支持日历、课程表、番茄钟等功能。")
+                Text("一款任务管理应用，支持日历、课程表、番茄钟等功能，欢迎大家使用")
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "© 2024 Saison",
+                    text = "© 2025 Saison",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

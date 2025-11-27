@@ -20,6 +20,18 @@ class SaisonApplication : Application() {
     @Inject
     lateinit var defaultSemesterInitializer: DefaultSemesterInitializer
     
+    @Inject
+    lateinit var notificationManager: takagi.ru.saison.notification.SaisonNotificationManager
+    
+    @Inject
+    lateinit var taskRepository: takagi.ru.saison.data.repository.TaskRepository
+    
+    @Inject
+    lateinit var courseRepository: takagi.ru.saison.data.repository.CourseRepository
+    
+    @Inject
+    lateinit var preferencesManager: takagi.ru.saison.data.local.datastore.PreferencesManager
+    
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     
     companion object {
@@ -28,6 +40,15 @@ class SaisonApplication : Application() {
     
     override fun onCreate() {
         super.onCreate()
+        
+        // 初始化通知系统
+        try {
+            Log.d(TAG, "Initializing notification system")
+            notificationManager.initialize()
+            Log.d(TAG, "Notification system initialized")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to initialize notification system", e)
+        }
         
         // 在后台线程确保默认学期存在
         // Requirements: 2.1, 2.2, 2.3, 2.4
@@ -44,5 +65,73 @@ class SaisonApplication : Application() {
         
         // 启动小组件定期更新
         widgetScheduler.schedulePeriodicUpdate()
+        
+        // 监听通知设置变化
+        setupNotificationSettingsObservers()
+    }
+    
+    /**
+     * 设置通知设置监听器
+     */
+    private fun setupNotificationSettingsObservers() {
+        // 监听任务提醒开关
+        applicationScope.launch {
+            var previousTaskRemindersEnabled: Boolean? = null
+            preferencesManager.taskRemindersEnabled.collect { enabled ->
+                if (previousTaskRemindersEnabled != null && previousTaskRemindersEnabled != enabled) {
+                    if (enabled) {
+                        // 启用时重新调度所有任务提醒
+                        Log.d(TAG, "Task reminders enabled, rescheduling all task notifications")
+                        rescheduleAllTaskReminders()
+                    } else {
+                        // 禁用时取消所有任务提醒
+                        Log.d(TAG, "Task reminders disabled, cancelling all task notifications")
+                        notificationManager.cancelAllTaskReminders()
+                    }
+                }
+                previousTaskRemindersEnabled = enabled
+            }
+        }
+        
+        // 监听课程提醒开关
+        applicationScope.launch {
+            var previousCourseRemindersEnabled: Boolean? = null
+            preferencesManager.courseRemindersEnabled.collect { enabled ->
+                if (previousCourseRemindersEnabled != null && previousCourseRemindersEnabled != enabled) {
+                    if (enabled) {
+                        // 启用时重新调度所有课程提醒
+                        Log.d(TAG, "Course reminders enabled, rescheduling all course notifications")
+                        rescheduleAllCourseReminders()
+                    } else {
+                        // 禁用时取消所有课程提醒
+                        Log.d(TAG, "Course reminders disabled, cancelling all course notifications")
+                        notificationManager.cancelAllCourseReminders()
+                    }
+                }
+                previousCourseRemindersEnabled = enabled
+            }
+        }
+    }
+    
+    /**
+     * 重新调度所有任务提醒
+     */
+    private suspend fun rescheduleAllTaskReminders() {
+        taskRepository.getAllTasks().collect { tasks ->
+            tasks.filter { !it.isCompleted && it.dueDate != null }.forEach { task ->
+                notificationManager.scheduleTaskReminder(task)
+            }
+        }
+    }
+    
+    /**
+     * 重新调度所有课程提醒
+     */
+    private suspend fun rescheduleAllCourseReminders() {
+        courseRepository.getAllCourses().collect { courses ->
+            courses.forEach { course ->
+                notificationManager.scheduleCourseReminder(course)
+            }
+        }
     }
 }

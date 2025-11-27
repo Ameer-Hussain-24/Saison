@@ -16,7 +16,8 @@ class TaskRepository @Inject constructor(
     private val taskDao: TaskDao,
     private val tagDao: TagDao,
     private val encryptionManager: EncryptionManager,
-    @javax.inject.Named("applicationContext") private val context: android.content.Context
+    @javax.inject.Named("applicationContext") private val context: android.content.Context,
+    private val notificationManager: takagi.ru.saison.notification.SaisonNotificationManager
 ) {
     
     // Lazy inject to avoid circular dependency
@@ -94,6 +95,17 @@ class TaskRepository @Inject constructor(
         val entity = task.toEntity(categoryId)
         val result = taskDao.insert(entity)
         
+        // Schedule notification if task has a due date
+        try {
+            val taskWithId = task.copy(id = result)
+            if (taskWithId.dueDate != null) {
+                notificationManager.scheduleTaskReminder(taskWithId)
+                android.util.Log.d("TaskRepository", "Task reminder scheduled for task $result")
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("TaskRepository", "Failed to schedule task reminder", e)
+        }
+        
         // Trigger widget update
         try {
             widgetUpdateCoordinator.onTaskChanged(context)
@@ -110,6 +122,19 @@ class TaskRepository @Inject constructor(
         val entity = task.toEntity(categoryId)
         taskDao.update(entity)
         
+        // Update notification if task has a due date, otherwise cancel it
+        try {
+            if (task.dueDate != null && !task.isCompleted) {
+                notificationManager.scheduleTaskReminder(task)
+                android.util.Log.d("TaskRepository", "Task reminder updated for task ${task.id}")
+            } else {
+                notificationManager.cancelTaskReminder(task.id)
+                android.util.Log.d("TaskRepository", "Task reminder cancelled for task ${task.id}")
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("TaskRepository", "Failed to update task reminder", e)
+        }
+        
         // Trigger widget update
         try {
             widgetUpdateCoordinator.onTaskChanged(context)
@@ -120,6 +145,14 @@ class TaskRepository @Inject constructor(
     }
     
     suspend fun deleteTask(taskId: Long) {
+        // Cancel notification before deleting task
+        try {
+            notificationManager.cancelTaskReminder(taskId)
+            android.util.Log.d("TaskRepository", "Task reminder cancelled for deleted task $taskId")
+        } catch (e: Exception) {
+            android.util.Log.e("TaskRepository", "Failed to cancel task reminder", e)
+        }
+        
         taskDao.deleteById(taskId)
         
         // Trigger widget update
@@ -134,6 +167,23 @@ class TaskRepository @Inject constructor(
     suspend fun toggleTaskCompletion(taskId: Long, isCompleted: Boolean) {
         val completedAt = if (isCompleted) System.currentTimeMillis() else null
         taskDao.updateCompletionStatus(taskId, isCompleted, completedAt)
+        
+        // Cancel notification when task is completed, reschedule when uncompleted
+        try {
+            if (isCompleted) {
+                notificationManager.cancelTaskReminder(taskId)
+                android.util.Log.d("TaskRepository", "Task reminder cancelled for completed task $taskId")
+            } else {
+                // Reschedule notification if task is uncompleted and has a due date
+                val task = getTaskById(taskId)
+                if (task?.dueDate != null) {
+                    notificationManager.scheduleTaskReminder(task)
+                    android.util.Log.d("TaskRepository", "Task reminder rescheduled for uncompleted task $taskId")
+                }
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("TaskRepository", "Failed to update task reminder on completion toggle", e)
+        }
         
         // Trigger widget update
         try {

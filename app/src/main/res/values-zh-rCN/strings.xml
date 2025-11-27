@@ -826,4 +826,47 @@
     <string name="task_widget_in_progress">进行中</string>
     <string name="task_widget_no_tasks">还没有任务</string>
     <string name="task_widget_add">添加</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_title">通知设置</string>
+    <string name="settings_notifications_enabled">已启用</string>
+    <string name="settings_notifications_disabled">已禁用</string>
+    <string name="settings_notifications_general">总开关</string>
+    <string name="settings_notifications_types">通知类型</string>
+    
+    <!-- Saison Plus -->
+    <string name="plus_title">Saison Plus</string>
+    <string name="plus_subtitle_inactive">解锁高级功能</string>
+    <string name="plus_subtitle_active">已激活</string>
+    <string name="plus_features_title">Plus 功能</string>
+    <string name="plus_payment_button">点击付款</string>
+    <string name="plus_payment_title">支持开发者</string>
+    <string name="plus_qr_code_desc">收款二维码</string>
+    <string name="plus_payment_links_title">支付链接</string>
+    <string name="plus_activation_title">Saison Plus</string>
+    <string name="plus_activation_button">激活 Plus</string>
+    <string name="plus_activation_success">Saison Plus 已激活！</string>
+    <string name="plus_status_activated">已激活</string>
+    <string name="plus_status_not_activated">未激活</string>
+    <string name="plus_feature_locked">需要 Plus</string>
+    <string name="plus_feature_unlocked">已解锁</string>
+    <string name="plus_error_activation_failed">激活失败，请稍后重试</string>
+    <string name="plus_error_load_status_failed">加载 Plus 状态失败</string>
+    <string name="plus_error_open_link_failed">无法打开链接，已复制到剪贴板</string>
+    <string name="plus_error_image_load_failed">图片加载失败</string>
+    <string name="plus_thank_you">感谢您的支持！</string>
+    <string name="plus_description">aison 的开发，解锁高级功能</string>
+    
+    <!-- Plus 限制相关 -->
+    <string name="plus_required_title">需要 Saison Plus</string>
+    <string name="plus_required_message">「%s」是会员专属主题，激活 Saison Plus 即可使用</string>
+    <string name="plus_required_action_go">前往激活</string>
+    <string name="plus_required_action_cancel">取消</string>
+    <string name="plus_badge">Plus</string>
+    
+    <!-- 更新的功能描述 -->
+    <string name="plus_feature_webdav_title">WebDAV 云备份</string>
+    <string name="plus_feature_webdav_desc">跨设备同步您的数据，支持自动备份和手动恢复</string>
+    <string name="plus_feature_themes_title">会员专属主题</string>
+    <string name="plus_feature_themes_desc">8 个精美主题：樱花、薄荷、琥珀、海洋、日落、森林、极光、雨季</string>
 </resources>

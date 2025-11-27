@@ -85,6 +85,9 @@ class PreferencesManager @Inject constructor(
         // Semester Settings
         val CURRENT_SEMESTER_ID = longPreferencesKey("current_semester_id")
         val SEMESTER_HISTORY = stringPreferencesKey("semester_history")
+        
+        // Saison Plus
+        val PLUS_ACTIVATED = booleanPreferencesKey("plus_activated")
     }
     
     // Theme Preferences
@@ -602,6 +605,32 @@ class PreferencesManager @Inject constructor(
             Log.d(TAG, "Semester added to history: $semesterId")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to add semester to history", e)
+        }
+    }
+    
+    // Saison Plus Settings
+    val isPlusActivated: Flow<Boolean> = dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                Log.e(TAG, "Error reading Plus activation status", exception)
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { preferences ->
+            preferences[PreferencesKeys.PLUS_ACTIVATED] ?: false
+        }
+    
+    suspend fun setPlusActivated(activated: Boolean) {
+        try {
+            dataStore.edit { preferences ->
+                preferences[PreferencesKeys.PLUS_ACTIVATED] = activated
+            }
+            Log.d(TAG, "Plus activation status saved: $activated")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to save Plus activation status", e)
+            throw e
         }
     }
     

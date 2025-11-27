@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.SharingStarted
 import takagi.ru.saison.data.local.datastore.PreferencesManager
 import takagi.ru.saison.data.repository.SyncRepository
+import takagi.ru.saison.domain.model.plus.PremiumThemes
 import takagi.ru.saison.ui.theme.ThemeManager
 import javax.inject.Inject
 
@@ -79,6 +80,10 @@ class SettingsViewModel @Inject constructor(
     val notificationsEnabled = preferencesManager.notificationsEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     
+    // Saison Plus Settings
+    val isPlusActivated = preferencesManager.isPlusActivated
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+    
     val taskRemindersEnabled = preferencesManager.taskRemindersEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     
@@ -122,6 +127,22 @@ class SettingsViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 15)
     
     // Theme Settings Functions
+    
+    /**
+     * 检查主题是否为会员专属主题
+     */
+    fun isThemePremium(theme: takagi.ru.saison.data.local.datastore.SeasonalTheme): Boolean {
+        return PremiumThemes.isPremiumTheme(theme)
+    }
+    
+    /**
+     * 检查是否可以选择指定主题
+     * 非会员主题或 Plus 已激活时返回 true
+     */
+    fun canSelectTheme(theme: takagi.ru.saison.data.local.datastore.SeasonalTheme): Boolean {
+        return !isThemePremium(theme) || isPlusActivated.value
+    }
+    
     fun setTheme(theme: takagi.ru.saison.data.local.datastore.SeasonalTheme) {
         viewModelScope.launch {
             try {

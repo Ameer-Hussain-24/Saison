@@ -67,6 +67,7 @@ fun TaskListScreen(
     
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             if (isMultiSelectMode) {
                 MultiSelectTopBar(
@@ -458,7 +459,10 @@ private fun MultiSelectTopBar(
             ) {
                 Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.action_delete))
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background
+        )
     )
 }
 
@@ -521,7 +525,10 @@ private fun TaskListTopBar(
             IconButton(onClick = onFilterClick) {
                 Icon(Icons.Default.FilterList, contentDescription = stringResource(R.string.cd_filter))
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background
+        )
     )
 }
 

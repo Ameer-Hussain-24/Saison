@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
@@ -91,6 +94,32 @@
                 android:resource="@xml/task_widget_info" />
         </receiver>
         -->
+        
+        <!-- Notification Alarm Receiver -->
+        <receiver
+            android:name=".notification.NotificationAlarmReceiver"
+            android:exported="false" />
+        
+        <!-- Notification Action Receiver -->
+        <receiver
+            android:name=".notification.NotificationActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="takagi.ru.saison.ACTION_MARK_COMPLETE" />
+                <action android:name="takagi.ru.saison.ACTION_SNOOZE" />
+                <action android:name="takagi.ru.saison.ACTION_VIEW_DETAILS" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- Boot Completed Receiver -->
+        <receiver
+            android:name=".notification.BootCompletedReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

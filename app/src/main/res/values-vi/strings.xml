@@ -14,9 +14,9 @@
     
     <!-- Navigation - Abbreviated -->
     <string name="nav_calendar_short">Lịch</string>
-    <string name="nav_course_short">Khóa</string>
+    <string name="nav_course_short">Học</string>
     <string name="nav_tasks_short">Việc</string>
-    <string name="nav_pomodoro_short">Tập</string>
+    <string name="nav_pomodoro_short">Giờ</string>
     <string name="nav_subscription_short">Sub</string>
     <string name="nav_settings_short">Cài</string>
     
@@ -130,17 +130,22 @@
     
     <!-- Task Module -->
     <string name="task_action_quick_add">Thêm nhanh</string>
+    <string name="task_multi_select_title">Đã chọn %d</string>
     <string name="task_filter_all">Tất cả</string>
-    <string name="task_filter_active">Đang thực hiện</string>
-    <string name="task_filter_completed">Đã hoàn thành</string>
-    <string name="task_stats_incomplete">Chưa hoàn thành</string>
-    <string name="task_stats_overdue">Quá hạn</string>
+    <string name="task_filter_active">Đang làm</string>
+    <string name="task_filter_completed">Hoàn thành</string>
+    <string name="task_filter_favorite">Yêu thích</string>
+    <string name="task_stats_incomplete">Chưa xong</string>
+    <string name="task_stats_favorite">Yêu thích</string>
+    <string name="task_stats_overdue">Trễ hạn</string>
+    <string name="task_stats_today_completed">Hôm nay</string>
     <string name="task_search_placeholder">Tìm kiếm việc...</string>
     <string name="task_search_no_results">Không tìm thấy việc nào</string>
     <string name="task_search_query_format">Tìm kiếm: \"%s\"</string>
     <string name="task_empty_no_tasks">Chưa có việc nào</string>
-    <string name="task_empty_no_active">Không có việc đang thực hiện</string>
-    <string name="task_empty_no_completed">Chưa có việc hoàn thành</string>
+    <string name="task_empty_no_active">Không có việc đang làm</string>
+    <string name="task_empty_no_completed">Chưa có việc nào hoàn thành</string>
+    <string name="task_empty_no_favorite">Chưa có việc yêu thích</string>
     <string name="task_empty_hint">Nhấn nút bên dưới để thêm việc mới</string>
     <string name="task_dialog_quick_add_title">Thêm nhanh việc</string>
     <string name="task_dialog_description_label">Mô tả việc</string>
@@ -168,26 +173,26 @@
     
     <string name="settings_theme_title">Chủ đề</string>
     <string name="settings_dark_mode_title">Chế độ tối</string>
-    <string name="settings_dark_mode_subtitle">Sử dụng chủ đề tối</string>
+    <string name="settings_dark_mode_subtitle">Chủ đề tối</string>
     <string name="settings_bottom_nav_title">Thanh điều hướng</string>
-    <string name="settings_bottom_nav_subtitle">Tùy chỉnh các mục điều hướng</string>
+    <string name="settings_bottom_nav_subtitle">Tùy chỉnh mục</string>
     <string name="settings_language_title">Ngôn ngữ ứng dụng</string>
     
     <string name="settings_notifications_enable_title">Bật thông báo</string>
-    <string name="settings_notifications_enable_subtitle">Nhận nhắc nhở về việc và khóa học</string>
+    <string name="settings_notifications_enable_subtitle">Nhắc việc và khóa học</string>
     <string name="settings_task_reminders_title">Nhắc nhở việc</string>
-    <string name="settings_task_reminders_subtitle">Nhận nhắc nhở hạn chót của việc</string>
+    <string name="settings_task_reminders_subtitle">Nhắc hạn chót</string>
     <string name="settings_course_reminders_title">Nhắc nhở khóa học</string>
-    <string name="settings_course_reminders_subtitle">Nhận nhắc nhở bắt đầu khóa học</string>
+    <string name="settings_course_reminders_subtitle">Nhắc bắt đầu</string>
     <string name="settings_pomodoro_reminders_title">Nhắc nhở Pomodoro</string>
-    <string name="settings_pomodoro_reminders_subtitle">Nhận nhắc nhở hoàn thành Pomodoro</string>
+    <string name="settings_pomodoro_reminders_subtitle">Nhắc hoàn thành</string>
     
     <string name="settings_auto_sync_title">Tự động đồng bộ</string>
-    <string name="settings_auto_sync_subtitle">Tự động đồng bộ với WebDAV</string>
+    <string name="settings_auto_sync_subtitle">Tự động WebDAV</string>
     <string name="settings_wifi_only_title">Chỉ đồng bộ qua WiFi</string>
-    <string name="settings_wifi_only_subtitle">Chỉ đồng bộ khi kết nối WiFi</string>
+    <string name="settings_wifi_only_subtitle">Chỉ WiFi</string>
     <string name="settings_webdav_title">Cấu hình WebDAV</string>
-    <string name="settings_webdav_subtitle">Cấu hình máy chủ WebDAV</string>
+    <string name="settings_webdav_subtitle">Cấu hình máy chủ</string>
     <string name="settings_sync_now_title">Đồng bộ ngay</string>
     <string name="settings_sync_last_time">Đồng bộ lần cuối: %s</string>
     <string name="settings_sync_not_yet">Chưa đồng bộ</string>
@@ -764,4 +769,47 @@
     <string name="pomodoro_remaining_cycles">Còn %1$d chu kỳ</string>
     <string name="pomodoro_cycle_progress">Chu kỳ %1$d</string>
     <string name="pomodoro_session_index">%1$d / %2$d</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_title">Thông báo</string>
+    <string name="settings_notifications_enabled">Đã bật</string>
+    <string name="settings_notifications_disabled">Đã tắt</string>
+    <string name="settings_notifications_general">Thông báo chung</string>
+    <string name="settings_notifications_types">Loại thông báo</string>
+    
+    <!-- Saison Plus -->
+    <string name="plus_title">Saison Plus</string>
+    <string name="plus_subtitle_inactive">Mở khóa tính năng cao cấp</string>
+    <string name="plus_subtitle_active">Đã kích hoạt</string>
+    <string name="plus_features_title">Tính năng Plus</string>
+    <string name="plus_payment_button">Hỗ trợ nhà phát triển</string>
+    <string name="plus_payment_title">Hỗ trợ nhà phát triển</string>
+    <string name="plus_qr_code_desc">Mã QR thanh toán</string>
+    <string name="plus_payment_links_title">Liên kết thanh toán</string>
+    <string name="plus_activation_title">Saison Plus</string>
+    <string name="plus_activation_button">Kích hoạt Plus</string>
+    <string name="plus_activation_success">Saison Plus đã được kích hoạt!</string>
+    <string name="plus_status_activated">Đã kích hoạt</string>
+    <string name="plus_status_not_activated">Chưa kích hoạt</string>
+    <string name="plus_feature_locked">Yêu cầu Plus</string>
+    <string name="plus_feature_unlocked">Đã mở khóa</string>
+    <string name="plus_error_activation_failed">Kích hoạt thất bại, vui lòng thử lại</string>
+    <string name="plus_error_load_status_failed">Không thể tải trạng thái Plus</string>
+    <string name="plus_error_open_link_failed">Không thể mở liên kết, đã sao chép vào clipboard</string>
+    <string name="plus_error_image_load_failed">Tải hình ảnh thất bại</string>
+    <string name="plus_thank_you">Cảm ơn sự hỗ trợ của bạn!</string>
+    <string name="plus_description">Hỗ trợ phát triển Saison và mở khóa tính năng cao cấp</string>
+    
+    <!-- Giới hạn Plus -->
+    <string name="plus_required_title">Yêu cầu Saison Plus</string>
+    <string name="plus_required_message">"%s" là chủ đề cao cấp. Kích hoạt Saison Plus để sử dụng</string>
+    <string name="plus_required_action_go">Kích hoạt</string>
+    <string name="plus_required_action_cancel">Hủy</string>
+    <string name="plus_badge">Plus</string>
+    
+    <!-- Mô tả tính năng đã cập nhật -->
+    <string name="plus_feature_webdav_title">Sao lưu đám mây WebDAV</string>
+    <string name="plus_feature_webdav_desc">Đồng bộ dữ liệu giữa các thiết bị với sao lưu tự động và khôi phục thủ công</string>
+    <string name="plus_feature_themes_title">Chủ đề cao cấp</string>
+    <string name="plus_feature_themes_desc">8 chủ đề đẹp: Sakura, Mint, Amber, Ocean, Sunset, Forest, Aurora, Rain</string>
 </resources>
