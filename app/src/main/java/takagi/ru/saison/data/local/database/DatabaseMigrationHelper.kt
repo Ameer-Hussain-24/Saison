@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import takagi.ru.saison.util.backup.BackupFileManager
@@ -25,7 +26,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class DatabaseMigrationHelper @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val backupFileManager: BackupFileManager
 ) {
     companion object {

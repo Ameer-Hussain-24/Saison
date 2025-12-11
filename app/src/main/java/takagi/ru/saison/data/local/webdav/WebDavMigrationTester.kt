@@ -121,7 +121,8 @@ class WebDavMigrationTester @Inject constructor(
             // 跳过密码检查（只检查是否存在）
             if (key == "has_password") continue
             
-            if (legacyValue != newValue) {
+            // 确保 newValue 不为 null
+            if (newValue != null && legacyValue != newValue) {
                 differences[key] = Pair(legacyValue, newValue)
                 android.util.Log.w(TAG, "配置不匹配: $key, 旧值=$legacyValue, 新值=$newValue")
             }

@@ -949,6 +949,11 @@
     <string name="export_no_data_selected">Please select at least one data type</string>
 
     <string name="error_storage_full">Insufficient storage space</string>
+    <string name="error_file_read">Cannot read file</string>
+    <string name="error_file_write">Cannot write file</string>
+    <string name="error_invalid_zip">Invalid ZIP file</string>
+    <string name="error_invalid_json">Invalid JSON file</string>
+    <string name="error_unknown_data_type">Unknown data type</string>
 
     <!-- Local Export/Import -->
     <string name="settings_section_data_sync">Data Sync</string>
@@ -964,6 +969,9 @@
     <string name="local_export_select_data_types">Select Data Types</string>
     <string name="local_export_select_all">Select All</string>
     <string name="local_export_deselect_all">Deselect All</string>
+    <string name="export_deselect_all">Deselect All</string>
+    <string name="export_success">Successfully exported %1$d items</string>
+    <string name="export_failed">Export failed: %1$s</string>
     <string name="local_export_item_count">%d items</string>
     <string name="local_export_select_data_type">Select Data Type</string>
     <string name="progress_title">Please Wait</string>
@@ -971,6 +979,16 @@
     <string name="progress_exporting">Exporting...</string>
     <string name="progress_importing">Importing...</string>
     <string name="local_import_title">Import Data</string>
+    <string name="import_title">Import</string>
+    <string name="import_from_zip">Import from ZIP</string>
+    <string name="import_from_json">Import from JSON</string>
+    <string name="import_preview_title">Import Preview</string>
+    <string name="import_confirm">Confirm Import</string>
+    <string name="import_success">Imported %1$d items, skipped %2$d duplicates</string>
+    <string name="import_failed">Import failed: %1$s</string>
+    <string name="import_total_items">Total items: %1$d</string>
+    <string name="import_new_items">New items: %1$d</string>
+    <string name="import_duplicate_items">Duplicates: %1$d</string>
     <string name="local_import_last_time">Last import: %s</string>
     <string name="local_import_from_zip">Import from ZIP</string>
     <string name="local_import_from_json">Import from JSON</string>

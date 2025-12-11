@@ -16,8 +16,8 @@
     <!-- 包含所有 SharedPreferences -->
     <include domain="sharedpref" path="." />
     
-    <!-- 包含应用内部文件（包括手动备份） -->
-    <include domain="file" path="database_backups/" />
+    <!-- 包含所有应用内部文件 -->
+    <include domain="file" path="." />
     
     <!-- 排除缓存目录 -->
     <exclude domain="file" path="cache/" />
