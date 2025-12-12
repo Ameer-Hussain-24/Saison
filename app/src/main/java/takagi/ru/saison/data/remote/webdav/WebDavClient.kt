@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -244,24 +245,43 @@ class WebDavClient @Inject constructor(
     suspend fun downloadFile(url: String, credentials: WebDavCredentials, outputFile: java.io.File): Boolean {
         return withContext(Dispatchers.IO) {
             try {
+                android.util.Log.d(TAG, "开始下载文件: $url")
+                android.util.Log.d(TAG, "输出路径: ${outputFile.absolutePath}")
+                
                 val request = Request.Builder()
                     .url(url)
                     .get()
                     .addHeader("Authorization", credentials.toAuthHeader())
                     .build()
                 
+                android.util.Log.d(TAG, "发送下载请求...")
                 val response = okHttpClient.newCall(request).execute()
+                
+                android.util.Log.d(TAG, "响应状态码: ${response.code}")
+                android.util.Log.d(TAG, "响应消息: ${response.message}")
+                
                 if (response.isSuccessful) {
+                    val contentLength = response.body?.contentLength() ?: 0
+                    android.util.Log.d(TAG, "文件大小: $contentLength bytes")
+                    
                     response.body?.byteStream()?.use { input ->
                         outputFile.outputStream().use { output ->
-                            input.copyTo(output)
+                            val bytesWritten = input.copyTo(output)
+                            android.util.Log.d(TAG, "写入字节数: $bytesWritten")
                         }
                     }
+                    
+                    android.util.Log.d(TAG, "文件下载成功")
                     true
                 } else {
+                    android.util.Log.e(TAG, "下载失败: HTTP ${response.code} - ${response.message}")
+                    android.util.Log.e(TAG, "响应体: ${response.body?.string()}")
                     false
                 }
             } catch (e: Exception) {
+                android.util.Log.e(TAG, "下载异常", e)
+                android.util.Log.e(TAG, "异常详情: ${e.message}")
+                e.printStackTrace()
                 false
             }
         }
@@ -372,6 +392,34 @@ class WebDavClient @Inject constructor(
     private fun parseWebDavResponse(xml: String, baseUrl: String): List<WebDavFileInfo> {
         val files = mutableListOf<WebDavFileInfo>()
         try {
+            // 从 baseUrl 提取服务器地址（scheme + host + port）
+            val serverUrl = try {
+                val url = baseUrl.toHttpUrlOrNull()
+                if (url != null) {
+                    val defaultPort = if (url.scheme == "https") 443 else 80
+                    "${url.scheme}://${url.host}${if (url.port != defaultPort) ":${url.port}" else ""}"
+                } else {
+                    // 如果解析失败，尝试手动提取
+                    val schemeEnd = baseUrl.indexOf("://")
+                    if (schemeEnd > 0) {
+                        val afterScheme = baseUrl.substring(schemeEnd + 3)
+                        val pathStart = afterScheme.indexOf("/")
+                        if (pathStart > 0) {
+                            baseUrl.substring(0, schemeEnd + 3 + pathStart)
+                        } else {
+                            baseUrl
+                        }
+                    } else {
+                        baseUrl
+                    }
+                }
+            } catch (e: Exception) {
+                android.util.Log.e(TAG, "无法解析服务器 URL: $baseUrl", e)
+                baseUrl.substringBefore("/dav") // 降级处理
+            }
+            
+            android.util.Log.d(TAG, "解析 WebDAV 响应，服务器 URL: $serverUrl")
+            
             // 简单的 XML 解析 - 查找 href 和 getlastmodified 标签
             val hrefPattern = "<d:href>([^<]+)</d:href>".toRegex()
             val sizePattern = "<d:getcontentlength>([^<]+)</d:getcontentlength>".toRegex()
@@ -392,12 +440,23 @@ class WebDavClient @Inject constructor(
                     if (href.endsWith(".zip")) {
                         val fileName = href.substringAfterLast("/")
                         val modifiedTime = parseHttpDate(modified)
-                        files.add(WebDavFileInfo(fileName, size, modifiedTime, href))
+                        
+                        // 构造完整 URL：如果 href 是相对路径，则拼接服务器地址
+                        val fullUrl = if (href.startsWith("http://") || href.startsWith("https://")) {
+                            href // 已经是完整 URL
+                        } else {
+                            // 确保路径以 / 开头
+                            val path = if (href.startsWith("/")) href else "/$href"
+                            "$serverUrl$path"
+                        }
+                        
+                        android.util.Log.d(TAG, "找到备份文件: $fileName, URL: $fullUrl")
+                        files.add(WebDavFileInfo(fileName, size, modifiedTime, fullUrl))
                     }
                 }
             }
         } catch (e: Exception) {
-            // 解析失败，返回空列表
+            android.util.Log.e(TAG, "解析 WebDAV 响应失败", e)
         }
         return files
     }

@@ -256,38 +256,131 @@ class WebDavBackupRepositoryImpl @Inject constructor(
     override suspend fun downloadAndRestoreBackup(backupFile: BackupFile): Result<BackupContent> {
         return try {
             android.util.Log.d(TAG, "开始下载并恢复备份: ${backupFile.name}")
+            android.util.Log.d(TAG, "备份 URL: ${backupFile.url}")
+            android.util.Log.d(TAG, "备份大小: ${backupFile.size} bytes")
             
             val config = getCurrentConfig() 
                 ?: return Result.failure(Exception("未配置 WebDAV"))
+            
+            android.util.Log.d(TAG, "WebDAV 配置: ${config.serverUrl}, ${config.username}")
             
             val credentials = getCredentials()
             
             // 下载备份文件
             val downloadedFile = File(context.cacheDir, "restore_${backupFile.name}")
-            android.util.Log.d(TAG, "下载到: ${downloadedFile.absolutePath}")
+            android.util.Log.d(TAG, "下载到缓存目录: ${downloadedFile.absolutePath}")
+            
+            // 确保缓存目录存在
+            if (!context.cacheDir.exists()) {
+                context.cacheDir.mkdirs()
+                android.util.Log.d(TAG, "创建缓存目录")
+            }
             
             val downloaded = webDavClient.downloadFile(backupFile.url, credentials, downloadedFile)
             
             if (!downloaded) {
-                android.util.Log.e(TAG, "下载失败")
-                return Result.failure(Exception("下载失败"))
+                android.util.Log.e(TAG, "下载失败 - WebDAV 客户端返回 false")
+                android.util.Log.e(TAG, "请检查: 1) 网络连接 2) 文件是否存在 3) 访问权限 4) URL 是否正确")
+                return Result.failure(Exception("下载失败：请检查网络连接和文件权限"))
             }
             
-            android.util.Log.d(TAG, "下载成功，开始解压")
-            // 解压备份文件
-            val extractedFiles = backupFileManager.extractZipArchive(downloadedFile)
+            // 验证下载的文件
+            if (!downloadedFile.exists()) {
+                android.util.Log.e(TAG, "下载后文件不存在: ${downloadedFile.absolutePath}")
+                return Result.failure(Exception("下载失败：文件未保存"))
+            }
             
-            android.util.Log.d(TAG, "解压成功，开始导入数据")
+            val fileSize = downloadedFile.length()
+            android.util.Log.d(TAG, "下载成功，文件大小: $fileSize bytes")
+            
+            if (fileSize == 0L) {
+                android.util.Log.e(TAG, "下载的文件为空")
+                downloadedFile.delete()
+                return Result.failure(Exception("下载失败：文件为空"))
+            }
+            
+            android.util.Log.d(TAG, "开始解压备份文件")
+            // 解压备份文件
+            val extractedFiles = try {
+                backupFileManager.extractZipArchive(downloadedFile)
+            } catch (e: Exception) {
+                android.util.Log.e(TAG, "解压失败", e)
+                downloadedFile.delete()
+                return Result.failure(Exception("解压失败：${e.message}"))
+            }
+            
+            android.util.Log.d(TAG, "解压成功，解压了 ${extractedFiles.size} 个文件")
+            android.util.Log.d(TAG, "文件列表: ${extractedFiles.keys.joinToString()}")
+            
+            // 记录每个文件的大小
+            extractedFiles.forEach { (name, content) ->
+                android.util.Log.d(TAG, "  - $name: ${content.length} 字符")
+            }
+            
+            android.util.Log.d(TAG, "开始导入数据")
             // 导入数据
-            val tasks = extractedFiles["tasks.json"]?.let { dataImporter.importTasks(it) } ?: emptyList()
-            val courses = extractedFiles["courses.json"]?.let { dataImporter.importCourses(it) } ?: emptyList()
-            val events = extractedFiles["events.json"]?.let { dataImporter.importEvents(it) } ?: emptyList()
-            val routines = extractedFiles["routines.json"]?.let { dataImporter.importRoutines(it) } ?: emptyList()
-            val subscriptions = extractedFiles["subscriptions.json"]?.let { dataImporter.importSubscriptions(it) } ?: emptyList()
-            val pomodoroSessions = extractedFiles["pomodoro_sessions.json"]?.let { dataImporter.importPomodoroSessions(it) } ?: emptyList()
-            val semesters = extractedFiles["semesters.json"]?.let { dataImporter.importSemesters(it) } ?: emptyList()
-            val categories = extractedFiles["categories.json"]?.let { dataImporter.importCategories(it) } ?: emptyList()
-            val preferences = extractedFiles["preferences.json"]?.let { dataImporter.importPreferences(it) } ?: emptyMap()
+            val tasks = extractedFiles["tasks.json"]?.let { 
+                android.util.Log.d(TAG, "导入任务数据...")
+                val result = dataImporter.importTasks(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个任务")
+                result
+            } ?: emptyList()
+            
+            val courses = extractedFiles["courses.json"]?.let { 
+                android.util.Log.d(TAG, "导入课程数据...")
+                val result = dataImporter.importCourses(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个课程")
+                result
+            } ?: emptyList()
+            
+            val events = extractedFiles["events.json"]?.let { 
+                android.util.Log.d(TAG, "导入事件数据...")
+                val result = dataImporter.importEvents(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个事件")
+                result
+            } ?: emptyList()
+            
+            val routines = extractedFiles["routines.json"]?.let { 
+                android.util.Log.d(TAG, "导入例程数据...")
+                val result = dataImporter.importRoutines(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个例程")
+                result
+            } ?: emptyList()
+            
+            val subscriptions = extractedFiles["subscriptions.json"]?.let { 
+                android.util.Log.d(TAG, "导入订阅数据...")
+                val result = dataImporter.importSubscriptions(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个订阅")
+                result
+            } ?: emptyList()
+            
+            val pomodoroSessions = extractedFiles["pomodoro_sessions.json"]?.let { 
+                android.util.Log.d(TAG, "导入番茄钟数据...")
+                val result = dataImporter.importPomodoroSessions(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个番茄钟")
+                result
+            } ?: emptyList()
+            
+            val semesters = extractedFiles["semesters.json"]?.let { 
+                android.util.Log.d(TAG, "导入学期数据...")
+                val result = dataImporter.importSemesters(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个学期")
+                result
+            } ?: emptyList()
+            
+            val categories = extractedFiles["categories.json"]?.let { 
+                android.util.Log.d(TAG, "导入分类数据...")
+                val result = dataImporter.importCategories(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个分类")
+                result
+            } ?: emptyList()
+            
+            val preferences = extractedFiles["preferences.json"]?.let { 
+                android.util.Log.d(TAG, "导入偏好设置...")
+                val result = dataImporter.importPreferences(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个偏好设置")
+                result
+            } ?: emptyMap()
             
             // 清理临时文件
             downloadedFile.delete()

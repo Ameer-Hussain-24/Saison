@@ -2,6 +2,8 @@ package takagi.ru.saison.ui.screens.subscription
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -76,19 +78,26 @@ fun AddSubscriptionSheet(
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
-                .padding(bottom = 32.dp)
-                .navigationBarsPadding()
-                .imePadding(), // Avoid keyboard
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
         ) {
             Text(
                 text = if (isEditMode) 
                     stringResource(R.string.subscription_edit_title) 
                 else 
                     stringResource(R.string.subscription_add_title),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(bottom = 12.dp, top = 8.dp)
             )
+
+            // 可滚动内容区域
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
 
             OutlinedTextField(
                 value = name,
@@ -311,6 +320,9 @@ fun AddSubscriptionSheet(
                 )
             }
 
+            } // 关闭可滚动Column
+
+            // 底部按钮区域（固定在底部）
             Button(
                 onClick = {
                     // 验证日期
@@ -325,7 +337,9 @@ fun AddSubscriptionSheet(
                     onSave(existingSubscription?.id, name, category, priceVal, cycleType, durationVal, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysVal)
                     onDismiss()
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
                 enabled = name.isNotBlank() && price.isNotBlank() && dateValidationError == null
             ) {
                 Text(if (isEditMode) 
@@ -333,8 +347,8 @@ fun AddSubscriptionSheet(
                 else 
                     stringResource(R.string.subscription_add_button))
             }
-        }
-    }
+        } // 关闭外层Column
+    } // 关闭ModalBottomSheet
 
     // Start Date Picker Dialog
     if (showStartDatePicker) {

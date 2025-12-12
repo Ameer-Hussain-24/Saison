@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -78,13 +79,23 @@ fun AddTaskSheet(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            // 标题
-            Text(
-                text = if (isEditMode) "编辑任务" else "新建任务",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 12.dp, top = 8.dp)
-            )
+            // 标题栏
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp, top = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = if (isEditMode) "编辑任务" else "新建任务",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
+                IconButton(onClick = onDismiss) {
+                    Icon(Icons.Default.Close, contentDescription = "关闭")
+                }
+            }
             
             // 可滚动内容区域
             Column(
@@ -95,19 +106,52 @@ fun AddTaskSheet(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
             
-            // 任务标题输入
-            OutlinedTextField(
-                value = title,
-                onValueChange = { title = it },
+            // 任务标题输入和添加按钮
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("输入任务标题") },
-                singleLine = false,
-                maxLines = 3,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                OutlinedTextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    modifier = Modifier.weight(1f),
+                    placeholder = { Text("输入任务标题") },
+                    singleLine = false,
+                    maxLines = 3,
+                    shape = MaterialTheme.shapes.large,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                    )
                 )
-            )
+
+                FilledIconButton(
+                    onClick = {
+                        if (title.isNotBlank()) {
+                            val cleanTitle = if (isEditMode) title else (parsedTask?.title ?: title)
+                            onTaskAdd(
+                                cleanTitle,
+                                selectedDate,
+                                selectedPriority,
+                                if (isEditMode) emptyList() else (parsedTask?.tags ?: emptyList()),
+                                selectedRepeatType,
+                                reminderEnabled,
+                                selectedWeekDays,
+                                selectedTag
+                            )
+                        }
+                    },
+                    enabled = title.isNotBlank(),
+                    modifier = Modifier.size(56.dp),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    Icon(
+                        if (isEditMode) Icons.Filled.Save else Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = if (isEditMode) "保存" else "添加"
+                    )
+                }
+            }
             
             Spacer(modifier = Modifier.height(12.dp))
             
@@ -621,52 +665,7 @@ fun AddTaskSheet(
             }
             } // 关闭可滚动Column
             
-            // 底部按钮区域（固定在底部）
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp)
-            ) {
-                Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedButton(
-                    onClick = onDismiss,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("取消")
-                }
-                
-                Button(
-                    onClick = {
-                        if (title.isNotBlank()) {
-                            val cleanTitle = if (isEditMode) title else (parsedTask?.title ?: title)
-                            onTaskAdd(
-                                cleanTitle,
-                                selectedDate,
-                                selectedPriority,
-                                if (isEditMode) emptyList() else (parsedTask?.tags ?: emptyList()),
-                                selectedRepeatType,
-                                reminderEnabled,
-                                selectedWeekDays,
-                                selectedTag
-                            )
-                        }
-                    },
-                    modifier = Modifier.weight(1f),
-                    enabled = title.isNotBlank()
-                ) {
-                    Icon(
-                        if (isEditMode) Icons.Filled.Save else Icons.Filled.Add,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(if (isEditMode) "保存" else "添加")
-                }
-            }
-            } // 关闭底部按钮Column
+            Spacer(modifier = Modifier.height(16.dp))
         } // 关闭外层Column
     } // 关闭ModalBottomSheet
     
