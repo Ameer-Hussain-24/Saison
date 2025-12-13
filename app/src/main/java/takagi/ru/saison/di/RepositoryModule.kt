@@ -84,6 +84,12 @@ abstract class RepositoryModule {
         localExportImportRepositoryImpl: LocalExportImportRepositoryImpl
     ): LocalExportImportRepository
     
+    @Binds
+    @Singleton
+    abstract fun bindValueDayRepository(
+        valueDayRepositoryImpl: takagi.ru.saison.data.repository.ValueDayRepositoryImpl
+    ): takagi.ru.saison.data.repository.ValueDayRepository
+    
     companion object {
         @Provides
         @Singleton

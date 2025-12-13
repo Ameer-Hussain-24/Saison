@@ -3,6 +3,7 @@ package takagi.ru.saison.ui.screens.subscription
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -12,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
@@ -62,6 +64,11 @@ sealed class SubscriptionStatus {
     data class Overdue(val days: Long) : SubscriptionStatus()
 }
 
+enum class SubscriptionPage {
+    SUBSCRIPTION,
+    VALUE_DAY
+}
+
 @Composable
 fun getCycleTypeText(cycleType: String): String {
     return stringResource(
@@ -94,6 +101,8 @@ fun SubscriptionScreen(
     var subscriptionToEdit by remember { mutableStateOf<takagi.ru.saison.data.local.database.entities.SubscriptionEntity?>(null) }
     var isSearchActive by remember { mutableStateOf(false) }
     var showCategoryDrawer by remember { mutableStateOf(false) }
+    var showPageSwitcher by remember { mutableStateOf(false) }
+    var currentPage by remember { mutableStateOf(SubscriptionPage.SUBSCRIPTION) }
 
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
@@ -102,6 +111,7 @@ fun SubscriptionScreen(
                 isSearchActive = isSearchActive,
                 searchQuery = searchQuery,
                 selectedCategory = selectedCategory,
+                currentPage = currentPage,
                 onSearchQueryChange = { viewModel.setSearchQuery(it) },
                 onSearchToggle = { 
                     isSearchActive = !isSearchActive
@@ -109,94 +119,70 @@ fun SubscriptionScreen(
                         viewModel.setSearchQuery("")
                     }
                 },
-                onFilterClick = { showCategoryDrawer = true }
+                onFilterClick = { showCategoryDrawer = true },
+                onPageSwitcherClick = { showPageSwitcher = true }
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { showAddSheet = true }) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.subscription_add_action))
-            }
         }
     ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(
-                top = 8.dp,
-                bottom = 88.dp // 为浮动按钮留出空间
-            )
-        ) {
-            // 统计卡片 - 可滚动隐藏
-            item {
-                SubscriptionStatsCard(statistics = statistics)
-            }
-            
-            // 筛选组件 - 使用 stickyHeader 固定在顶部
-            stickyHeader {
-                SubscriptionFilterChips(
-                    selectedMode = filterMode,
-                    onModeSelected = { viewModel.setFilterMode(it) }
-                )
-            }
-            
-            // 空状态提示
-            if (filteredSubscriptions.isEmpty()) {
-                item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 32.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(R.string.subscription_empty_message),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            } else {
-                items(filteredSubscriptions) { subscription ->
-                    val stats = viewModel.calculateStats(subscription)
-                    val cycleTypeText = getCycleTypeText(subscription.cycleType)
-                    // Map Entity to UI Model on the fly or use Entity directly with helper
-                    SubscriptionCard(
-                        subscription = Subscription(
-                            id = subscription.id,
-                            name = subscription.name,
-                            category = subscription.category,
-                            type = cycleTypeText,
-                            accumulatedDuration = stats.accumulatedDuration,
-                            accumulatedCost = stats.accumulatedCost,
-                            nextRenewalDate = java.time.Instant.ofEpochMilli(subscription.nextRenewalDate)
-                                .atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
-                            status = stats.status,
-                            monthlyCost = stats.averageMonthlyCost,
-                            dailyCost = stats.averageDailyCost
-                        ),
-                        onDelete = { viewModel.deleteSubscription(subscription.id) },
-                        onEdit = { 
-                            subscriptionToEdit = subscription
-                            showAddSheet = true
-                        },
-                        onClick = {
-                            onNavigateToDetail(subscription.id)
-                        }
+        Box(modifier = Modifier.fillMaxSize()) {
+            // 根据当前页面显示不同内容
+            when (currentPage) {
+                SubscriptionPage.SUBSCRIPTION -> {
+                    SubscriptionContent(
+                        paddingValues = paddingValues,
+                        filteredSubscriptions = filteredSubscriptions,
+                        statistics = statistics,
+                        filterMode = filterMode,
+                        viewModel = viewModel,
+                        onNavigateToDetail = onNavigateToDetail,
+                        onEdit = { subscriptionToEdit = it }
                     )
+                }
+                SubscriptionPage.VALUE_DAY -> {
+                    takagi.ru.saison.ui.screens.valueday.ValueDayScreen(
+                        modifier = Modifier.padding(paddingValues)
+                    )
+                }
+            }
+            
+            // 只在订阅页面显示 FAB
+            if (currentPage == SubscriptionPage.SUBSCRIPTION) {
+                FloatingActionButton(
+                    onClick = { showAddSheet = true },
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.subscription_add_action))
                 }
             }
         }
     }
-
-    if (showAddSheet) {
+    
+    // 页面切换 Bottom Sheet
+    if (showPageSwitcher) {
+        PageSwitcherBottomSheet(
+            currentPage = currentPage,
+            onDismiss = { showPageSwitcher = false },
+            onPageSelected = { page ->
+                currentPage = page
+                showPageSwitcher = false
+                // 切换页面时清除搜索状态
+                if (isSearchActive) {
+                    isSearchActive = false
+                    viewModel.setSearchQuery("")
+                }
+            }
+        )
+    }
+    
+    // 添加/编辑订阅 Sheet
+    if (showAddSheet || subscriptionToEdit != null) {
         AddSubscriptionSheet(
             existingSubscription = subscriptionToEdit,
             categories = categories,
             lastSelectedCategory = lastSelectedAddCategory,
-            onDismiss = { 
+            onDismiss = {
                 showAddSheet = false
                 subscriptionToEdit = null
             },
@@ -235,8 +221,92 @@ fun SubscriptionScreen(
     }
 }
 
+// 原来的订阅内容单独提取
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SubscriptionCard(
+private fun SubscriptionContent(
+    paddingValues: PaddingValues,
+    filteredSubscriptions: List<takagi.ru.saison.data.local.database.entities.SubscriptionEntity>,
+    statistics: SubscriptionGlobalStats,
+    filterMode: SubscriptionFilterMode,
+    viewModel: SubscriptionViewModel,
+    onNavigateToDetail: (Long) -> Unit,
+    onEdit: (takagi.ru.saison.data.local.database.entities.SubscriptionEntity) -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(
+            top = 8.dp,
+            bottom = 88.dp // 为浮动按钮留出空间
+        )
+    ) {
+        // 统计卡片 - 可滚动隐藏
+        item {
+            SubscriptionStatsCard(statistics = statistics)
+        }
+        
+        // 筛选组件 - 使用 stickyHeader 固定在顶部
+        stickyHeader {
+            SubscriptionFilterChips(
+                selectedMode = filterMode,
+                onModeSelected = { viewModel.setFilterMode(it) }
+            )
+        }
+        
+        // 空状态提示
+        if (filteredSubscriptions.isEmpty()) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.subscription_empty_message),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        } else {
+            items(filteredSubscriptions) { subscription ->
+                val stats = viewModel.calculateStats(subscription)
+                val cycleTypeText = getCycleTypeText(subscription.cycleType)
+                // Map Entity to UI Model on the fly or use Entity directly with helper
+                SubscriptionCard(
+                    subscription = Subscription(
+                        id = subscription.id,
+                        name = subscription.name,
+                        category = subscription.category,
+                        type = cycleTypeText,
+                        accumulatedDuration = stats.accumulatedDuration,
+                        accumulatedCost = stats.accumulatedCost,
+                        nextRenewalDate = java.time.Instant.ofEpochMilli(subscription.nextRenewalDate)
+                            .atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
+                        status = stats.status,
+                        monthlyCost = stats.averageMonthlyCost,
+                        dailyCost = stats.averageDailyCost
+                    ),
+                    onDelete = { viewModel.deleteSubscription(subscription.id) },
+                    onEdit = { 
+                        onEdit(subscription)
+                    },
+                    onClick = {
+                        onNavigateToDetail(subscription.id)
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SubscriptionCard(
     subscription: Subscription,
     onDelete: () -> Unit = {},
     onEdit: () -> Unit = {},
@@ -718,9 +788,11 @@ private fun SubscriptionTopBar(
     isSearchActive: Boolean,
     searchQuery: String,
     selectedCategory: String?,
+    currentPage: SubscriptionPage,
     onSearchQueryChange: (String) -> Unit,
     onSearchToggle: () -> Unit,
-    onFilterClick: () -> Unit
+    onFilterClick: () -> Unit,
+    onPageSwitcherClick: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -737,34 +809,51 @@ private fun SubscriptionTopBar(
                     modifier = Modifier.fillMaxWidth()
                 )
             } else {
-                Text(
-                    text = stringResource(R.string.subscription_title),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
+                // 使用类似任务页面的下拉样式
+                Row(
+                    modifier = Modifier.clickable { onPageSwitcherClick() },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = when (currentPage) {
+                            SubscriptionPage.SUBSCRIPTION -> stringResource(R.string.subscription_title)
+                            SubscriptionPage.VALUE_DAY -> "买断"
+                        },
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "切换页面",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         },
         actions = {
-            IconButton(onClick = onSearchToggle) {
-                Icon(
-                    imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
-                    contentDescription = if (isSearchActive) "关闭搜索" else "搜索"
-                )
-            }
-            Card(
-                onClick = onFilterClick,
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                ),
-                modifier = Modifier.padding(end = 8.dp)
-            ) {
-                Text(
-                    text = selectedCategory ?: "全部",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-                )
+            // 只在订阅页面显示搜索和筛选按钮
+            if (currentPage == SubscriptionPage.SUBSCRIPTION) {
+                IconButton(onClick = onSearchToggle) {
+                    Icon(
+                        imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
+                        contentDescription = if (isSearchActive) "关闭搜索" else "搜索"
+                    )
+                }
+                Card(
+                    onClick = onFilterClick,
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                    ),
+                    modifier = Modifier.padding(end = 8.dp)
+                ) {
+                    Text(
+                        text = selectedCategory ?: "全部",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                    )
+                }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

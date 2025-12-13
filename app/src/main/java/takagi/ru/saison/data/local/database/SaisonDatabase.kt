@@ -22,9 +22,10 @@ import takagi.ru.saison.data.local.database.entity.CheckInRecordEntity
         SemesterEntity::class,
         SubscriptionEntity::class,
         SubscriptionHistoryEntity::class,
-        CategoryEntity::class
+        CategoryEntity::class,
+        ValueDayEntity::class
     ],
-    version = 15,
+    version = 16,
     exportSchema = true
 )
 abstract class SaisonDatabase : RoomDatabase() {
@@ -40,6 +41,7 @@ abstract class SaisonDatabase : RoomDatabase() {
     abstract fun subscriptionDao(): SubscriptionDao
     abstract fun subscriptionHistoryDao(): SubscriptionHistoryDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun valueDayDao(): ValueDayDao
     
     companion object {
         const val DATABASE_NAME = "saison_database"
@@ -355,6 +357,22 @@ abstract class SaisonDatabase : RoomDatabase() {
                     SELECT DISTINCT category, 0, $now, $now
                     FROM subscriptions
                     WHERE category NOT IN (SELECT name FROM categories)
+                """)
+            }
+        }
+        
+        val MIGRATION_15_16 = object : Migration(15, 16) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // 创建买断表
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS value_days (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        itemName TEXT NOT NULL,
+                        purchasePrice REAL NOT NULL,
+                        purchaseDate INTEGER NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL
+                    )
                 """)
             }
         }
