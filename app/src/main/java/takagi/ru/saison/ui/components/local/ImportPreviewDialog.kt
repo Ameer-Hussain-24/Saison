@@ -275,6 +275,7 @@ private fun getDataTypeNameRes(dataType: DataType): Int {
         DataType.EVENTS -> R.string.local_export_data_type_events
         DataType.ROUTINES -> R.string.local_export_data_type_routines
         DataType.SUBSCRIPTIONS -> R.string.local_export_data_type_subscriptions
+        DataType.VALUE_DAYS -> R.string.local_export_data_type_value_days
         DataType.POMODORO_SESSIONS -> R.string.local_export_data_type_pomodoros
         DataType.SEMESTERS -> R.string.local_export_data_type_semesters
         DataType.PREFERENCES -> R.string.local_export_data_type_semesters // 使用相同的字符串

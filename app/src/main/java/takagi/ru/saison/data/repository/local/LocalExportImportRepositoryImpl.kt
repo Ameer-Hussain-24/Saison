@@ -44,6 +44,7 @@ class LocalExportImportRepositoryImpl @Inject constructor(
     private val courseRepository: CourseRepository,
     private val routineRepository: RoutineRepositoryImpl,
     private val subscriptionRepository: SubscriptionRepository,
+    private val valueDayRepository: takagi.ru.saison.data.repository.ValueDayRepository,
     private val pomodoroRepository: PomodoroRepository,
     private val semesterRepository: SemesterRepositoryImpl,
     private val dataExporter: DataExporter,
@@ -145,6 +146,13 @@ class LocalExportImportRepositoryImpl @Inject constructor(
                 jsonFiles[DataType.SUBSCRIPTIONS.fileName] = dataExporter.exportSubscriptions(subscriptions)
                 totalItems += subscriptions.size
                 exportedTypes.add(DataType.SUBSCRIPTIONS)
+            }
+            
+            if (preferences.includeValueDays) {
+                val valueDays = valueDayRepository.getAllValueDays().first()
+                jsonFiles[DataType.VALUE_DAYS.fileName] = dataExporter.exportValueDays(valueDays)
+                totalItems += valueDays.size
+                exportedTypes.add(DataType.VALUE_DAYS)
             }
             
             if (preferences.includePomodoroSessions) {
@@ -272,6 +280,7 @@ class LocalExportImportRepositoryImpl @Inject constructor(
             var importedCourses = 0
             var importedRoutines = 0
             var importedSubscriptions = 0
+            var importedValueDays = 0
             var importedPomodoro = 0
             var importedSemesters = 0
             var skippedDuplicates = 0
@@ -337,6 +346,21 @@ class LocalExportImportRepositoryImpl @Inject constructor(
                 }
             }
             
+            // 导入买断
+            extractedFiles[DataType.VALUE_DAYS.fileName]?.let { json ->
+                val valueDays = dataImporter.importValueDays(json)
+                val existingValueDays = valueDayRepository.getAllValueDays().first()
+                
+                valueDays.forEach { valueDay ->
+                    if (!duplicateDetector.isValueDayDuplicate(valueDay, existingValueDays)) {
+                        valueDayRepository.insertValueDay(valueDay)
+                        importedValueDays++
+                    } else {
+                        skippedDuplicates++
+                    }
+                }
+            }
+            
             // 导入番茄钟记录
             extractedFiles[DataType.POMODORO_SESSIONS.fileName]?.let { json ->
                 val sessions = dataImporter.importPomodoroSessions(json)
@@ -373,6 +397,7 @@ class LocalExportImportRepositoryImpl @Inject constructor(
                     importedCourses = importedCourses,
                     importedRoutines = importedRoutines,
                     importedSubscriptions = importedSubscriptions,
+                    importedValueDays = importedValueDays,
                     importedPomodoroSessions = importedPomodoro,
                     importedSemesters = importedSemesters,
                     skippedDuplicates = skippedDuplicates
@@ -658,6 +683,7 @@ class LocalExportImportRepositoryImpl @Inject constructor(
             DataType.COURSES to courseRepository.getAllCourses().first().size,
             DataType.ROUTINES to routineRepository.getAllRoutineTasks().first().size,
             DataType.SUBSCRIPTIONS to subscriptionRepository.getAllSubscriptions().first().size,
+            DataType.VALUE_DAYS to valueDayRepository.getAllValueDays().first().size,
             DataType.POMODORO_SESSIONS to pomodoroRepository.getAllSessions().first().size,
             DataType.SEMESTERS to semesterRepository.getAllSemesters().first().size
         )

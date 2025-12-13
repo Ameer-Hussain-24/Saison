@@ -51,7 +51,8 @@ object DatabaseModule {
                 SaisonDatabase.MIGRATION_12_13,
                 SaisonDatabase.MIGRATION_13_14,
                 SaisonDatabase.MIGRATION_14_15,
-                SaisonDatabase.MIGRATION_15_16
+                SaisonDatabase.MIGRATION_15_16,
+                SaisonDatabase.MIGRATION_16_17
             )
             // ⚠️ 不使用 fallbackToDestructiveMigration() 或 fallbackToDestructiveMigrationOnDowngrade()
             // 这些配置会在迁移失败或版本降级时删除整个数据库，导致用户数据永久丢失

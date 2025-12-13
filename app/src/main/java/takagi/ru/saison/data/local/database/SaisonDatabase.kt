@@ -25,7 +25,7 @@ import takagi.ru.saison.data.local.database.entity.CheckInRecordEntity
         CategoryEntity::class,
         ValueDayEntity::class
     ],
-    version = 16,
+    version = 17,
     exportSchema = true
 )
 abstract class SaisonDatabase : RoomDatabase() {
@@ -374,6 +374,14 @@ abstract class SaisonDatabase : RoomDatabase() {
                         updatedAt INTEGER NOT NULL
                     )
                 """)
+            }
+        }
+        
+        val MIGRATION_16_17 = object : Migration(16, 17) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // 为 value_days 表添加 category 和 warrantyEndDate 字段
+                db.execSQL("ALTER TABLE value_days ADD COLUMN category TEXT NOT NULL DEFAULT '未分类'")
+                db.execSQL("ALTER TABLE value_days ADD COLUMN warrantyEndDate INTEGER")
             }
         }
     }

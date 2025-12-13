@@ -9,6 +9,7 @@ enum class DataType(val fileName: String, val displayNameKey: String) {
     EVENTS("events.json", "events"),
     ROUTINES("routines.json", "routines"),
     SUBSCRIPTIONS("subscriptions.json", "subscriptions"),
+    VALUE_DAYS("value_days.json", "value_days"),
     POMODORO_SESSIONS("pomodoro_sessions.json", "pomodoro_sessions"),
     SEMESTERS("semesters.json", "semesters"),
     PREFERENCES("preferences.json", "preferences");

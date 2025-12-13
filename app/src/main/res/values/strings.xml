@@ -1030,6 +1030,7 @@
     <string name="local_export_data_type_events">Events</string>
     <string name="local_export_data_type_routines">Routines</string>
     <string name="local_export_data_type_subscriptions">Subscriptions</string>
+    <string name="local_export_data_type_value_days">Value Days</string>
     <string name="local_export_data_type_pomodoros">Pomodoro Sessions</string>
     <string name="local_export_data_type_semesters">Semesters</string>
     <string name="local_export_data_type_preferences">Preferences</string>

@@ -354,6 +354,13 @@ class WebDavBackupRepositoryImpl @Inject constructor(
                 result
             } ?: emptyList()
             
+            val valueDays = extractedFiles["value_days.json"]?.let { 
+                android.util.Log.d(TAG, "导入买断数据...")
+                val result = dataImporter.importValueDays(it)
+                android.util.Log.d(TAG, "导入了 ${result.size} 个买断")
+                result
+            } ?: emptyList()
+            
             val pomodoroSessions = extractedFiles["pomodoro_sessions.json"]?.let { 
                 android.util.Log.d(TAG, "导入番茄钟数据...")
                 val result = dataImporter.importPomodoroSessions(it)
@@ -391,6 +398,7 @@ class WebDavBackupRepositoryImpl @Inject constructor(
                 events = events,
                 routines = routines,
                 subscriptions = subscriptions,
+                valueDays = valueDays,
                 pomodoroSessions = pomodoroSessions,
                 semesters = semesters,
                 categories = categories,

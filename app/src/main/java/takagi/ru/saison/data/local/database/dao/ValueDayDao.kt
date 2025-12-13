@@ -10,6 +10,12 @@ interface ValueDayDao {
     @Query("SELECT * FROM value_days ORDER BY purchaseDate DESC")
     fun getAllValueDays(): Flow<List<ValueDayEntity>>
     
+    @Query("SELECT * FROM value_days WHERE category = :category ORDER BY purchaseDate DESC")
+    fun getValueDaysByCategory(category: String): Flow<List<ValueDayEntity>>
+    
+    @Query("SELECT DISTINCT category FROM value_days ORDER BY category ASC")
+    fun getAllCategories(): Flow<List<String>>
+    
     @Query("SELECT * FROM value_days WHERE id = :id")
     suspend fun getValueDayById(id: Long): ValueDayEntity?
     

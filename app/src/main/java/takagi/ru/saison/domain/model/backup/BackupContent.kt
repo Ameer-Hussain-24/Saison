@@ -15,6 +15,7 @@ data class BackupContent(
     val events: List<Event> = emptyList(),
     val routines: List<RoutineTask> = emptyList(),
     val subscriptions: List<Subscription> = emptyList(),
+    val valueDays: List<takagi.ru.saison.data.local.database.entities.ValueDayEntity> = emptyList(),
     val pomodoroSessions: List<PomodoroSession> = emptyList(),
     val semesters: List<Semester> = emptyList(),
     val preferences: Map<String, Any> = emptyMap(),

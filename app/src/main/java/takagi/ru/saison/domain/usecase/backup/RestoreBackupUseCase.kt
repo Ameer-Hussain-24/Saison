@@ -24,6 +24,7 @@ class RestoreBackupUseCase @Inject constructor(
     private val eventRepository: EventRepository,
     private val routineRepository: RoutineRepository,
     private val subscriptionRepository: SubscriptionRepository,
+    private val valueDayRepository: takagi.ru.saison.data.repository.ValueDayRepository,
     private val pomodoroRepository: PomodoroRepository,
     private val semesterRepository: SemesterRepository,
     private val categoryRepository: CategoryRepository
@@ -44,6 +45,7 @@ class RestoreBackupUseCase @Inject constructor(
             var eventsImported = 0
             var routinesImported = 0
             var subscriptionsImported = 0
+            var valueDaysImported = 0
             var pomodoroSessionsImported = 0
             var semestersImported = 0
             var categoriesImported = 0
@@ -94,6 +96,15 @@ class RestoreBackupUseCase @Inject constructor(
                     }
                 }
                 
+                // 导入买断（检测重复）
+                content.valueDays.forEach { valueDay ->
+                    val exists = valueDayRepository.getValueDayById(valueDay.id) != null
+                    if (!exists) {
+                        valueDayRepository.insertValueDay(valueDay)
+                        valueDaysImported++
+                    }
+                }
+                
                 // 导入番茄钟会话（检测重复）
                 content.pomodoroSessions.forEach { session ->
                     val exists = pomodoroRepository.getSessionById(session.id) != null
@@ -138,6 +149,7 @@ class RestoreBackupUseCase @Inject constructor(
                 importedEvents = eventsImported,
                 importedRoutines = routinesImported,
                 importedSubscriptions = subscriptionsImported,
+                importedValueDays = valueDaysImported,
                 importedPomodoroSessions = pomodoroSessionsImported,
                 importedSemesters = semestersImported,
                 importedCategories = categoriesImported

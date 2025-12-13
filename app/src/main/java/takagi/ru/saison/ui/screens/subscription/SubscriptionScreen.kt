@@ -87,7 +87,8 @@ fun getCycleTypeText(cycleType: String): String {
 fun SubscriptionScreen(
     onNavigateBack: () -> Unit = {},
     onNavigateToDetail: (Long) -> Unit = {},
-    viewModel: SubscriptionViewModel = androidx.hilt.navigation.compose.hiltViewModel()
+    viewModel: SubscriptionViewModel = androidx.hilt.navigation.compose.hiltViewModel(),
+    valueDayViewModel: takagi.ru.saison.ui.screens.valueday.ValueDayViewModel = androidx.hilt.navigation.compose.hiltViewModel()
 ) {
     val filteredSubscriptions by viewModel.filteredSubscriptions.collectAsState()
     val statistics by viewModel.statistics.collectAsState()
@@ -97,8 +98,17 @@ fun SubscriptionScreen(
     val searchQuery by viewModel.searchQuery.collectAsState()
     val lastSelectedAddCategory by viewModel.lastSelectedAddCategory.collectAsState()
     
+    // 买断页面的状态
+    val valueDays by valueDayViewModel.valueDays.collectAsState()
+    val valueDayStatistics by valueDayViewModel.statistics.collectAsState()
+    val valueDayFilterMode by valueDayViewModel.filterMode.collectAsState()
+    val valueDayCategories by valueDayViewModel.categories.collectAsState()
+    val valueDaySelectedCategory by valueDayViewModel.selectedCategory.collectAsState()
+    val valueDaySearchQuery by valueDayViewModel.searchQuery.collectAsState()
+    
     var showAddSheet by remember { mutableStateOf(false) }
     var subscriptionToEdit by remember { mutableStateOf<takagi.ru.saison.data.local.database.entities.SubscriptionEntity?>(null) }
+    var editingValueDay by remember { mutableStateOf<takagi.ru.saison.data.local.database.entities.ValueDayEntity?>(null) }
     var isSearchActive by remember { mutableStateOf(false) }
     var showCategoryDrawer by remember { mutableStateOf(false) }
     var showPageSwitcher by remember { mutableStateOf(false) }
@@ -109,14 +119,28 @@ fun SubscriptionScreen(
         topBar = {
             SubscriptionTopBar(
                 isSearchActive = isSearchActive,
-                searchQuery = searchQuery,
-                selectedCategory = selectedCategory,
+                searchQuery = when (currentPage) {
+                    SubscriptionPage.SUBSCRIPTION -> searchQuery
+                    SubscriptionPage.VALUE_DAY -> valueDaySearchQuery
+                },
+                selectedCategory = when (currentPage) {
+                    SubscriptionPage.SUBSCRIPTION -> selectedCategory
+                    SubscriptionPage.VALUE_DAY -> valueDaySelectedCategory
+                },
                 currentPage = currentPage,
-                onSearchQueryChange = { viewModel.setSearchQuery(it) },
+                onSearchQueryChange = { query ->
+                    when (currentPage) {
+                        SubscriptionPage.SUBSCRIPTION -> viewModel.setSearchQuery(query)
+                        SubscriptionPage.VALUE_DAY -> valueDayViewModel.setSearchQuery(query)
+                    }
+                },
                 onSearchToggle = { 
                     isSearchActive = !isSearchActive
                     if (!isSearchActive) {
-                        viewModel.setSearchQuery("")
+                        when (currentPage) {
+                            SubscriptionPage.SUBSCRIPTION -> viewModel.setSearchQuery("")
+                            SubscriptionPage.VALUE_DAY -> valueDayViewModel.setSearchQuery("")
+                        }
                     }
                 },
                 onFilterClick = { showCategoryDrawer = true },
@@ -139,21 +163,39 @@ fun SubscriptionScreen(
                     )
                 }
                 SubscriptionPage.VALUE_DAY -> {
-                    takagi.ru.saison.ui.screens.valueday.ValueDayScreen(
-                        modifier = Modifier.padding(paddingValues)
+                    takagi.ru.saison.ui.screens.valueday.ValueDayContent(
+                        paddingValues = paddingValues,
+                        valueDays = valueDays,
+                        statistics = valueDayStatistics,
+                        filterMode = valueDayFilterMode,
+                        onEdit = { editingValueDay = it },
+                        onDelete = { valueDayViewModel.deleteValueDay(it) },
+                        onFilterModeChange = { valueDayViewModel.setFilterMode(it) }
                     )
                 }
             }
             
-            // 只在订阅页面显示 FAB
-            if (currentPage == SubscriptionPage.SUBSCRIPTION) {
-                FloatingActionButton(
-                    onClick = { showAddSheet = true },
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp)
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.subscription_add_action))
+            // 根据当前页面显示不同的 FAB
+            when (currentPage) {
+                SubscriptionPage.SUBSCRIPTION -> {
+                    FloatingActionButton(
+                        onClick = { showAddSheet = true },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(16.dp)
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.subscription_add_action))
+                    }
+                }
+                SubscriptionPage.VALUE_DAY -> {
+                    ExtendedFloatingActionButton(
+                        onClick = { showAddSheet = true },
+                        icon = { Icon(Icons.Default.Add, contentDescription = null) },
+                        text = { Text("添加买断") },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(16.dp)
+                    )
                 }
             }
         }
@@ -176,47 +218,112 @@ fun SubscriptionScreen(
         )
     }
     
-    // 添加/编辑订阅 Sheet
-    if (showAddSheet || subscriptionToEdit != null) {
-        AddSubscriptionSheet(
-            existingSubscription = subscriptionToEdit,
-            categories = categories,
-            lastSelectedCategory = lastSelectedAddCategory,
-            onDismiss = {
-                showAddSheet = false
-                subscriptionToEdit = null
-            },
-            onSave = { id, name, category, price, cycleType, duration, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysBefore ->
-                viewModel.saveSubscription(id, name, category, price, cycleType, duration, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysBefore)
-            },
-            onAddCategory = { categoryName ->
-                viewModel.addCategory(categoryName)
+    // 根据当前页面显示不同的 Sheet
+    when (currentPage) {
+        SubscriptionPage.SUBSCRIPTION -> {
+            // 添加/编辑订阅 Sheet
+            if (showAddSheet || subscriptionToEdit != null) {
+                AddSubscriptionSheet(
+                    existingSubscription = subscriptionToEdit,
+                    categories = categories,
+                    lastSelectedCategory = lastSelectedAddCategory,
+                    onDismiss = {
+                        showAddSheet = false
+                        subscriptionToEdit = null
+                    },
+                    onSave = { id, name, category, price, cycleType, duration, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysBefore ->
+                        viewModel.saveSubscription(id, name, category, price, cycleType, duration, startDate, endDate, note, autoRenewal, reminderEnabled, reminderDaysBefore)
+                    },
+                    onAddCategory = { categoryName ->
+                        viewModel.addCategory(categoryName)
+                    }
+                )
             }
-        )
+        }
+        SubscriptionPage.VALUE_DAY -> {
+            // 添加/编辑买断 Sheet
+            if (showAddSheet || editingValueDay != null) {
+                takagi.ru.saison.ui.screens.valueday.AddValueDaySheet(
+                    isEdit = editingValueDay != null,
+                    initialValueDay = editingValueDay,
+                    categories = valueDayCategories,
+                    onDismiss = {
+                        showAddSheet = false
+                        editingValueDay = null
+                    },
+                    onAdd = { itemName, price, date, category, warrantyEndDate ->
+                        if (editingValueDay != null) {
+                            valueDayViewModel.updateValueDay(
+                                editingValueDay!!.copy(
+                                    itemName = itemName,
+                                    purchasePrice = price,
+                                    purchaseDate = date.toEpochDay(),
+                                    category = category,
+                                    warrantyEndDate = warrantyEndDate?.toEpochDay(),
+                                    updatedAt = System.currentTimeMillis()
+                                )
+                            )
+                        } else {
+                            valueDayViewModel.addValueDay(itemName, price, date, category, warrantyEndDate)
+                        }
+                        showAddSheet = false
+                        editingValueDay = null
+                    },
+                    onAddCategory = { categoryName ->
+                        valueDayViewModel.addCategory(categoryName)
+                    }
+                )
+            }
+        }
     }
     
     // 分类筛选抽屉
     if (showCategoryDrawer) {
         Box(modifier = Modifier.fillMaxSize()) {
-            CategoryDrawer(
-                visible = showCategoryDrawer,
-                categories = categories,
-                selectedCategory = selectedCategory,
-                onDismiss = { showCategoryDrawer = false },
-                onCategorySelected = { category ->
-                    viewModel.setSelectedCategory(category)
-                    showCategoryDrawer = false
-                },
-                onAddCategory = { categoryName ->
-                    viewModel.addCategory(categoryName)
-                },
-                onDeleteCategory = { category ->
-                    viewModel.deleteCategory(category)
-                },
-                onRenameCategory = { oldName, newName ->
-                    viewModel.renameCategory(oldName, newName)
+            when (currentPage) {
+                SubscriptionPage.SUBSCRIPTION -> {
+                    CategoryDrawer(
+                        visible = showCategoryDrawer,
+                        categories = categories,
+                        selectedCategory = selectedCategory,
+                        onDismiss = { showCategoryDrawer = false },
+                        onCategorySelected = { category ->
+                            viewModel.setSelectedCategory(category)
+                            showCategoryDrawer = false
+                        },
+                        onAddCategory = { categoryName ->
+                            viewModel.addCategory(categoryName)
+                        },
+                        onDeleteCategory = { category ->
+                            viewModel.deleteCategory(category)
+                        },
+                        onRenameCategory = { oldName, newName ->
+                            viewModel.renameCategory(oldName, newName)
+                        }
+                    )
                 }
-            )
+                SubscriptionPage.VALUE_DAY -> {
+                    takagi.ru.saison.ui.screens.valueday.ValueDayCategoryDrawer(
+                        visible = showCategoryDrawer,
+                        categories = valueDayCategories,
+                        selectedCategory = valueDaySelectedCategory,
+                        onDismiss = { showCategoryDrawer = false },
+                        onCategorySelected = { category ->
+                            valueDayViewModel.setSelectedCategory(category)
+                            showCategoryDrawer = false
+                        },
+                        onAddCategory = { categoryName ->
+                            valueDayViewModel.addCategory(categoryName)
+                        },
+                        onDeleteCategory = { category ->
+                            valueDayViewModel.deleteCategory(category)
+                        },
+                        onRenameCategory = { oldName, newName ->
+                            valueDayViewModel.renameCategory(oldName, newName)
+                        }
+                    )
+                }
+            }
         }
     }
 }
@@ -831,29 +938,27 @@ private fun SubscriptionTopBar(
             }
         },
         actions = {
-            // 只在订阅页面显示搜索和筛选按钮
-            if (currentPage == SubscriptionPage.SUBSCRIPTION) {
-                IconButton(onClick = onSearchToggle) {
-                    Icon(
-                        imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
-                        contentDescription = if (isSearchActive) "关闭搜索" else "搜索"
-                    )
-                }
-                Card(
-                    onClick = onFilterClick,
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    modifier = Modifier.padding(end = 8.dp)
-                ) {
-                    Text(
-                        text = selectedCategory ?: "全部",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-                    )
-                }
+            // 在订阅和买断页面都显示搜索和筛选按钮
+            IconButton(onClick = onSearchToggle) {
+                Icon(
+                    imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
+                    contentDescription = if (isSearchActive) "关闭搜索" else "搜索"
+                )
+            }
+            Card(
+                onClick = onFilterClick,
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                ),
+                modifier = Modifier.padding(end = 8.dp)
+            ) {
+                Text(
+                    text = selectedCategory ?: "全部",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

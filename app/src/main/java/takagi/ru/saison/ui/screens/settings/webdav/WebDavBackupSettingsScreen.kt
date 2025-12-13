@@ -375,6 +375,9 @@ fun SelectiveBackupCard(
                 BackupToggleItem("订阅", preferences.includeSubscriptions) {
                     onPreferencesChange(preferences.copy(includeSubscriptions = it))
                 }
+                BackupToggleItem("买断", preferences.includeValueDays) {
+                    onPreferencesChange(preferences.copy(includeValueDays = it))
+                }
                 BackupToggleItem("番茄钟", preferences.includePomodoroSessions) {
                     onPreferencesChange(preferences.copy(includePomodoroSessions = it))
                 }

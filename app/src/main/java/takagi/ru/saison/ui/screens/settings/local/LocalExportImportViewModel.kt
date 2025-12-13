@@ -207,6 +207,7 @@ class LocalExportImportViewModel @Inject constructor(
             DataType.EVENTS -> currentPreferences.copy(includeEvents = enabled)
             DataType.ROUTINES -> currentPreferences.copy(includeRoutines = enabled)
             DataType.SUBSCRIPTIONS -> currentPreferences.copy(includeSubscriptions = enabled)
+            DataType.VALUE_DAYS -> currentPreferences.copy(includeValueDays = enabled)
             DataType.POMODORO_SESSIONS -> currentPreferences.copy(includePomodoroSessions = enabled)
             DataType.SEMESTERS -> currentPreferences.copy(includeSemesters = enabled)
             DataType.PREFERENCES -> currentPreferences.copy(includePreferences = enabled)

@@ -89,6 +89,20 @@ class DataImporter @Inject constructor(
         }
     }
     
+    fun importValueDays(jsonString: String): List<takagi.ru.saison.data.local.database.entities.ValueDayEntity> {
+        return try {
+            android.util.Log.d(TAG, "开始解析买断 JSON，长度: ${jsonString.length}")
+            val dtos = json.decodeFromString<List<ValueDayBackupDto>>(jsonString)
+            val result = dtos.map { it.toDomain() }
+            android.util.Log.d(TAG, "成功解析 ${result.size} 个买断")
+            result
+        } catch (e: Exception) {
+            android.util.Log.e(TAG, "解析买断失败", e)
+            android.util.Log.e(TAG, "JSON 内容预览: ${jsonString.take(200)}")
+            emptyList()
+        }
+    }
+    
     fun importPomodoroSessions(jsonString: String): List<PomodoroSession> {
         return try {
             android.util.Log.d(TAG, "开始解析番茄钟 JSON，长度: ${jsonString.length}")
@@ -231,6 +245,17 @@ class DataImporter @Inject constructor(
         isActive = isActive,
         category = category,
         icon = icon,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
+    
+    private fun ValueDayBackupDto.toDomain() = takagi.ru.saison.data.local.database.entities.ValueDayEntity(
+        id = id,
+        itemName = itemName,
+        purchasePrice = purchasePrice,
+        purchaseDate = purchaseDate,
+        category = category,
+        warrantyEndDate = warrantyEndDate,
         createdAt = createdAt,
         updatedAt = updatedAt
     )

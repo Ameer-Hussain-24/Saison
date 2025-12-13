@@ -9,6 +9,7 @@ data class RestoreSummary(
     val importedEvents: Int = 0,
     val importedRoutines: Int = 0,
     val importedSubscriptions: Int = 0,
+    val importedValueDays: Int = 0,
     val importedPomodoroSessions: Int = 0,
     val importedSemesters: Int = 0,
     val importedCategories: Int = 0,
@@ -16,6 +17,6 @@ data class RestoreSummary(
 ) {
     val totalImported: Int
         get() = importedTasks + importedCourses + importedEvents + 
-                importedRoutines + importedSubscriptions + 
+                importedRoutines + importedSubscriptions + importedValueDays +
                 importedPomodoroSessions + importedSemesters + importedCategories
 }

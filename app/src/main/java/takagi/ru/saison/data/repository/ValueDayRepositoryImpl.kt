@@ -15,6 +15,14 @@ class ValueDayRepositoryImpl @Inject constructor(
         return valueDayDao.getAllValueDays()
     }
     
+    override fun getValueDaysByCategory(category: String): Flow<List<ValueDayEntity>> {
+        return valueDayDao.getValueDaysByCategory(category)
+    }
+    
+    override fun getAllCategories(): Flow<List<String>> {
+        return valueDayDao.getAllCategories()
+    }
+    
     override suspend fun getValueDayById(id: Long): ValueDayEntity? {
         return valueDayDao.getValueDayById(id)
     }

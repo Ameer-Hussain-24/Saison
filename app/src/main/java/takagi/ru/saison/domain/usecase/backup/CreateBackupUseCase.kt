@@ -22,6 +22,7 @@ class CreateBackupUseCase @Inject constructor(
     private val eventRepository: EventRepository,
     private val routineRepository: RoutineRepository,
     private val subscriptionRepository: SubscriptionRepository,
+    private val valueDayRepository: takagi.ru.saison.data.repository.ValueDayRepository,
     private val pomodoroRepository: PomodoroRepository,
     private val semesterRepository: SemesterRepository,
     private val categoryRepository: CategoryRepository,
@@ -77,6 +78,12 @@ class CreateBackupUseCase @Inject constructor(
                 val subscriptions = subscriptionEntities.map { it.toDomain() }
                 android.util.Log.d("CreateBackupUseCase", "导出 ${subscriptions.size} 个订阅")
                 files["subscriptions.json"] = dataExporter.exportSubscriptions(subscriptions)
+            }
+            
+            if (preferences.includeValueDays) {
+                val valueDays = valueDayRepository.getAllValueDays().first()
+                android.util.Log.d("CreateBackupUseCase", "导出 ${valueDays.size} 个买断")
+                files["value_days.json"] = dataExporter.exportValueDays(valueDays)
             }
             
             if (preferences.includePomodoroSessions) {

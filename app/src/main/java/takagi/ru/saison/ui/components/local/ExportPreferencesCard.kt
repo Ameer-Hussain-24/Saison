@@ -167,6 +167,13 @@ fun ExportPreferencesCard(
                     )
                     
                     DataTypeItem(
+                        dataType = DataType.VALUE_DAYS,
+                        isEnabled = preferences.includeValueDays,
+                        count = dataCounts[DataType.VALUE_DAYS] ?: 0,
+                        onToggle = { onToggleDataType(DataType.VALUE_DAYS, it) }
+                    )
+                    
+                    DataTypeItem(
                         dataType = DataType.POMODORO_SESSIONS,
                         isEnabled = preferences.includePomodoroSessions,
                         count = dataCounts[DataType.POMODORO_SESSIONS] ?: 0,
@@ -253,6 +260,7 @@ private fun getDataTypeNameRes(dataType: DataType): Int {
         DataType.EVENTS -> R.string.local_export_data_type_events
         DataType.ROUTINES -> R.string.local_export_data_type_routines
         DataType.SUBSCRIPTIONS -> R.string.local_export_data_type_subscriptions
+        DataType.VALUE_DAYS -> R.string.local_export_data_type_value_days
         DataType.POMODORO_SESSIONS -> R.string.local_export_data_type_pomodoros
         DataType.SEMESTERS -> R.string.local_export_data_type_semesters
         DataType.PREFERENCES -> R.string.local_export_data_type_preferences

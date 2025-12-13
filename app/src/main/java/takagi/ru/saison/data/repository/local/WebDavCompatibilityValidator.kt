@@ -90,6 +90,7 @@ class WebDavCompatibilityValidator @Inject constructor(
             DataType.EVENTS -> "events"
             DataType.ROUTINES -> "routines"
             DataType.SUBSCRIPTIONS -> "subscriptions"
+            DataType.VALUE_DAYS -> "value_days"
             DataType.POMODORO_SESSIONS -> "pomodoro_sessions"
             DataType.SEMESTERS -> "semesters"
             DataType.PREFERENCES -> "preferences"
@@ -152,6 +153,7 @@ class WebDavCompatibilityValidator @Inject constructor(
                 DataType.EVENTS -> emptyList<Any>() // Events 暂未实现
                 DataType.ROUTINES -> dataImporter.importRoutines(jsonContent)
                 DataType.SUBSCRIPTIONS -> dataImporter.importSubscriptions(jsonContent)
+                DataType.VALUE_DAYS -> dataImporter.importValueDays(jsonContent)
                 DataType.POMODORO_SESSIONS -> dataImporter.importPomodoroSessions(jsonContent)
                 DataType.SEMESTERS -> dataImporter.importSemesters(jsonContent)
                 DataType.PREFERENCES -> dataImporter.importPreferences(jsonContent)

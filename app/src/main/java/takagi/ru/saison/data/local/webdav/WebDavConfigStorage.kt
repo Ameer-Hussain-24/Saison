@@ -47,6 +47,7 @@ class WebDavConfigStorage @Inject constructor(
             const val INCLUDE_EVENTS = "backup_include_events"
             const val INCLUDE_ROUTINES = "backup_include_routines"
             const val INCLUDE_SUBSCRIPTIONS = "backup_include_subscriptions"
+            const val INCLUDE_VALUE_DAYS = "backup_include_value_days"
             const val INCLUDE_POMODORO = "backup_include_pomodoro"
             const val INCLUDE_SEMESTERS = "backup_include_semesters"
             const val INCLUDE_PREFERENCES = "backup_include_preferences"
@@ -142,6 +143,7 @@ class WebDavConfigStorage @Inject constructor(
             putBoolean(BackupPreferenceKeys.INCLUDE_EVENTS, preferences.includeEvents)
             putBoolean(BackupPreferenceKeys.INCLUDE_ROUTINES, preferences.includeRoutines)
             putBoolean(BackupPreferenceKeys.INCLUDE_SUBSCRIPTIONS, preferences.includeSubscriptions)
+            putBoolean(BackupPreferenceKeys.INCLUDE_VALUE_DAYS, preferences.includeValueDays)
             putBoolean(BackupPreferenceKeys.INCLUDE_POMODORO, preferences.includePomodoroSessions)
             putBoolean(BackupPreferenceKeys.INCLUDE_SEMESTERS, preferences.includeSemesters)
             putBoolean(BackupPreferenceKeys.INCLUDE_PREFERENCES, preferences.includePreferences)
@@ -158,6 +160,7 @@ class WebDavConfigStorage @Inject constructor(
             includeEvents = prefs.getBoolean(BackupPreferenceKeys.INCLUDE_EVENTS, true),
             includeRoutines = prefs.getBoolean(BackupPreferenceKeys.INCLUDE_ROUTINES, true),
             includeSubscriptions = prefs.getBoolean(BackupPreferenceKeys.INCLUDE_SUBSCRIPTIONS, true),
+            includeValueDays = prefs.getBoolean(BackupPreferenceKeys.INCLUDE_VALUE_DAYS, true),
             includePomodoroSessions = prefs.getBoolean(BackupPreferenceKeys.INCLUDE_POMODORO, true),
             includeSemesters = prefs.getBoolean(BackupPreferenceKeys.INCLUDE_SEMESTERS, true),
             includePreferences = prefs.getBoolean(BackupPreferenceKeys.INCLUDE_PREFERENCES, true)

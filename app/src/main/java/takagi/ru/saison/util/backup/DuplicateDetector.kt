@@ -64,6 +64,19 @@ class DuplicateDetector @Inject constructor() {
     }
     
     /**
+     * 检测买断是否重复
+     * 使用 ID 或（商品名称 + 购买日期 + 购买价格）作为唯一标识
+     */
+    fun isValueDayDuplicate(valueDay: takagi.ru.saison.data.local.database.entities.ValueDayEntity, existing: List<takagi.ru.saison.data.local.database.entities.ValueDayEntity>): Boolean {
+        return existing.any { existingValueDay ->
+            existingValueDay.id == valueDay.id ||
+            (existingValueDay.itemName == valueDay.itemName &&
+             existingValueDay.purchaseDate == valueDay.purchaseDate &&
+             existingValueDay.purchasePrice == valueDay.purchasePrice)
+        }
+    }
+    
+    /**
      * 检测番茄钟记录是否重复
      * 使用 ID 或（开始时间 + 时长 + 任务ID）作为唯一标识
      */

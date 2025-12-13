@@ -41,6 +41,11 @@ class DataExporter @Inject constructor(
         return json.encodeToString(dtos)
     }
     
+    fun exportValueDays(valueDays: List<takagi.ru.saison.data.local.database.entities.ValueDayEntity>): String {
+        val dtos = valueDays.map { it.toBackupDto() }
+        return json.encodeToString(dtos)
+    }
+    
     fun exportPomodoroSessions(sessions: List<PomodoroSession>): String {
         val dtos = sessions.map { it.toBackupDto() }
         return json.encodeToString(dtos)
@@ -145,6 +150,17 @@ class DataExporter @Inject constructor(
         isActive = isActive,
         category = category,
         icon = icon,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
+    
+    private fun takagi.ru.saison.data.local.database.entities.ValueDayEntity.toBackupDto() = ValueDayBackupDto(
+        id = id,
+        itemName = itemName,
+        purchasePrice = purchasePrice,
+        purchaseDate = purchaseDate,
+        category = category,
+        warrantyEndDate = warrantyEndDate,
         createdAt = createdAt,
         updatedAt = updatedAt
     )
@@ -314,6 +330,18 @@ data class CategoryBackupDto(
     val id: Long,
     val name: String,
     val isDefault: Boolean,
+    val createdAt: Long,
+    val updatedAt: Long
+)
+
+@Serializable
+data class ValueDayBackupDto(
+    val id: Long,
+    val itemName: String,
+    val purchasePrice: Double,
+    val purchaseDate: Long,
+    val category: String,
+    val warrantyEndDate: Long?,
     val createdAt: Long,
     val updatedAt: Long
 )
